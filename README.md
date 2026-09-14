@@ -29,6 +29,39 @@ Layout uses a hand-rolled grid utility system instead of a framework:
 - `.s1`–`.s11` — `grid-column-start: N`.
 - Combine them, e.g. `class="c7 s4"` starts at column 4 and spans 7.
 
+## Screen treatment (grain, scanlines, glow)
+
+Three fixed overlays sit above the page: a tiled film-grain mask, a
+combined scanline + vignette layer, and an occasional flicker. Every
+knob lives in one place — the CRT block at the top of `style.css`:
+
+| Token | Does |
+| --- | --- |
+| `--grain-opacity` | strength of the film grain |
+| `--scanline-opacity` | horizontal scanline ruling |
+| `--vignette-opacity` | corner falloff |
+| `--glow` | phosphor bloom radius |
+| `--glow-accent` / `--glow-ink` | bloom colour |
+| `--plate-url` | the duotone placeholder image |
+
+Two implementation notes worth keeping:
+
+- The grain tile **must repeat at 1:1**. Stretching a small canvas across
+  the viewport smears it into blobs instead of grain.
+- Glow is applied to display type, accent and rules — **not** to body
+  copy. Glow on running text costs more legibility than it buys.
+
+Set `--glow: 0` to remove the bloom entirely; the layout is unaffected.
+
+### CRT mode
+
+A toggle in the nav swaps to a dark phosphor theme (ground and ink swap
+per the Foundations token spec; the cobalt accent is lifted because
+`#2340D9` measures 2.5:1 on ink and fails). The choice persists in
+`localStorage` and is applied by a small inline script in each `<head>`
+so there's no flash on load. Delete that script, the `.theme-toggle`
+block in `main.js`, and the `[data-theme="crt"]` token block to remove.
+
 ## Micro-interactions (assets/js/main.js)
 
 - Procedural film-grain canvas overlay (`mix-blend-mode: overlay`, kept

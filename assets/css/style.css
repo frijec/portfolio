@@ -33,6 +33,44 @@
   --ease-snap: cubic-bezier(.2,.9,.2,1);
   --dur-fast: 120ms;
   --dur-med: 260ms;
+
+  /* CRT / texture — every knob for the screen treatment lives here */
+  --grain-color:#111111;
+  --grain-opacity:.22;
+  --scanline-color:17 17 17;
+  --scanline-opacity:.04;
+  --vignette-opacity:.11;
+  --glow:10px;
+  --glow-accent:rgb(35 64 217 / .30);
+  --glow-ink:rgb(17 17 17 / .10);
+  --caption-halo:rgb(242 240 234 / .92);
+
+  --plate-url:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='640' height='420' preserveAspectRatio='none'%3E%3Cfilter id='p'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.006 0.011' numOctaves='3' seed='11'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeComponentTransfer%3E%3CfeFuncR type='linear' slope='2.0' intercept='-0.5'/%3E%3CfeFuncG type='linear' slope='2.0' intercept='-0.5'/%3E%3CfeFuncB type='linear' slope='2.0' intercept='-0.5'/%3E%3C/feComponentTransfer%3E%3CfeColorMatrix type='matrix' values='0.50 0 0 0 0.28 0.50 0 0 0 0.275 0.49 0 0 0 0.265 0 0 0 0 1'/%3E%3C/filter%3E%3Crect width='640' height='420' filter='url(%23p)'/%3E%3C/svg%3E");
+}
+
+/* CRT mode — ground and ink swap per the Foundations token spec.
+   Accent is lifted from #2340D9, which measures 2.5:1 on ink and fails. */
+:root[data-theme="crt"]{
+  --ground-bone:#0C0D10;
+  --ground-bone-2:#14161B;
+  --ground-bone-3:#1C1F26;
+  --ink:#E8E6DE;
+  --ink-muted:#8A897F;
+  --accent:#7D92FF;
+  --accent-deep:#A8B6FF;
+  --rule-grid:rgb(232 230 222 / .12);
+  --rule-leader:#4A4C55;
+  --signal-fail:#FF6B6B;
+
+  --grain-color:#D7E2FF;
+  --grain-opacity:.15;
+  --scanline-color:0 0 0;
+  --scanline-opacity:.30;
+  --vignette-opacity:.55;
+  --glow:14px;
+  --glow-accent:rgb(125 146 255 / .55);
+  --glow-ink:rgb(232 230 222 / .22);
+  --caption-halo:rgb(12 13 16 / .92);
 }
 
 @media (max-width:760px){
@@ -122,6 +160,18 @@ img{max-width:100%;display:block}
 }
 
 .section{border-top:1px solid var(--rule-hard);position:relative}
+/* accent sweeps along a section rule as it enters, then clears */
+.section::before{
+  content:"";position:absolute;top:-1px;left:0;right:0;height:1px;background:var(--accent);
+  transform:scaleX(0);transform-origin:left;opacity:0;pointer-events:none;
+}
+.section.in::before{animation:rule-sweep 900ms var(--ease-snap) forwards}
+@keyframes rule-sweep{
+  0%{transform:scaleX(0);opacity:1}
+  65%{transform:scaleX(1);opacity:1}
+  100%{transform:scaleX(1);opacity:0}
+}
+@media (prefers-reduced-motion:reduce){ .section.in::before{animation:none} }
 .section-pad{padding-block:14px var(--sp-9)}
 
 .gutter-label{
@@ -155,6 +205,13 @@ img{max-width:100%;display:block}
 .nav a:hover::after,.nav a.active::after{right:0}
 @media (max-width:760px){
   .nav-context{display:none}
+  .nav-row{gap:10px;padding-inline:var(--margin)}
+  .nav-links{gap:14px}
+  .nav-row > a:first-child{white-space:nowrap}
+}
+@media (max-width:420px){
+  .nav-links{gap:10px}
+  .nav-row,.nav-links{font-size:10px}
 }
 
 /* progress bar */
@@ -186,20 +243,52 @@ img{max-width:100%;display:block}
 /* ============================================================
    MEDIA PLACEHOLDER
    ============================================================ */
+/* Duotone halftone plate — stands in for photography at the right
+   texture, per the brief's imagery direction. Swap --plate-url for a
+   real image and the halftone/crop-mark furniture still applies. */
 .media{
-  position:relative;overflow:hidden;
-  background:repeating-linear-gradient(135deg,var(--ground-bone-3) 0 8px,var(--ground-bone-2) 8px 16px);
+  position:relative;overflow:hidden;isolation:isolate;
+  background:var(--ground-bone-2);
   border-block:1px solid var(--rule-hard);
 }
 .media::before{
-  content:"";position:absolute;inset:0;background-size:200% 200%;
-  background-image:repeating-linear-gradient(135deg,var(--ground-bone-3) 0 8px,var(--ground-bone-2) 8px 16px);
-  animation:stripe-drift 14s linear infinite;opacity:0;transition:opacity var(--dur-med)
+  content:"";position:absolute;inset:0;z-index:-1;
+  background-image:
+    radial-gradient(circle, rgb(17 17 17 / .50) 0 1.2px, transparent 1.6px),
+    var(--plate-url);
+  background-size:5px 5px, 100% 100%;
+  background-position:0 0, center;
+  background-repeat:repeat, no-repeat;
+  transform:scale(1.03);
+  transition:clip-path 760ms var(--ease-snap), transform 1200ms var(--ease-snap);
 }
-.media:hover::before{opacity:1}
-@keyframes stripe-drift{to{background-position:200px 0}}
+.js .media::before{clip-path:inset(0 0 100% 0)}
+/* .in goes on .media, never on the clipped child — a clip-path on the
+   observed element itself stops IntersectionObserver firing. */
+.media.in::before{clip-path:inset(0 0 0 0);transform:scale(1)}
+.media:hover::before{transform:scale(1.06)}
+:root[data-theme="crt"] .media::before{filter:invert(1) saturate(0) brightness(.62)}
+
+/* crop marks — corners of media frames only */
+.media::after{
+  content:"";position:absolute;inset:10px;pointer-events:none;z-index:1;
+  background-image:
+    linear-gradient(var(--ink),var(--ink)),linear-gradient(var(--ink),var(--ink)),
+    linear-gradient(var(--ink),var(--ink)),linear-gradient(var(--ink),var(--ink)),
+    linear-gradient(var(--ink),var(--ink)),linear-gradient(var(--ink),var(--ink)),
+    linear-gradient(var(--ink),var(--ink)),linear-gradient(var(--ink),var(--ink));
+  background-repeat:no-repeat;
+  background-size:14px 1px,1px 14px,14px 1px,1px 14px,14px 1px,1px 14px,14px 1px,1px 14px;
+  background-position:
+    left top,left top,right top,right top,
+    left bottom,left bottom,right bottom,right bottom;
+  opacity:.55;
+}
+/* halo keeps 11px mono legible over the mid-tone plate */
 .fig-caption{position:absolute;left:var(--sp-5);top:var(--sp-4);max-width:44%;font:400 11px/1.6 var(--font-mono);
-  letter-spacing:.12em;text-transform:uppercase}
+  letter-spacing:.12em;text-transform:uppercase;
+  text-shadow:0 0 6px var(--caption-halo),0 0 3px var(--caption-halo)}
+.media .fig-caption .muted{color:var(--ink)}
 .fig-caption.right{left:auto;right:var(--sp-5);text-align:right}
 .fig-caption.bottom{top:auto;bottom:var(--sp-4)}
 @media (max-width:500px){
@@ -209,9 +298,11 @@ img{max-width:100%;display:block}
 /* ============================================================
    REVEAL
    ============================================================ */
-.reveal{opacity:0;transform:translateY(14px);transition:transform 420ms var(--ease-snap),opacity 320ms linear}
-.reveal.in{opacity:1;transform:translateY(0)}
-@media (prefers-reduced-motion:reduce){ .reveal{opacity:1;transform:none;transition:none} }
+/* hidden-until-revealed only when JS is running, so a failed script
+   never leaves the page blank */
+.js .reveal{opacity:0;transform:translateY(14px);transition:transform 420ms var(--ease-snap),opacity 320ms linear}
+.js .reveal.in{opacity:1;transform:translateY(0)}
+@media (prefers-reduced-motion:reduce){ .js .reveal{opacity:1;transform:none;transition:none} }
 
 /* counters */
 [data-count]{font-variant-numeric:tabular-nums}
@@ -319,8 +410,109 @@ footer{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px 24px;pa
 /* ============================================================
    NOISE / GRAIN OVERLAY
    ============================================================ */
-.noise{position:fixed;inset:0;z-index:999;pointer-events:none;mix-blend-mode:overlay;opacity:.06}
-@media (prefers-reduced-motion:reduce){ .noise{display:none} }
+/* Grain is a tiled alpha mask painted in --grain-color, so one texture
+   works on both the bone ground and the CRT ground. It must tile 1:1 —
+   stretching the tile turns grain into smeared blobs. */
+.noise{
+  position:fixed;inset:0;z-index:9998;pointer-events:none;
+  background:var(--grain-color);
+  opacity:var(--grain-opacity);
+  -webkit-mask-image:var(--grain-url);mask-image:var(--grain-url);
+  -webkit-mask-size:140px 140px;mask-size:140px 140px;
+  -webkit-mask-repeat:repeat;mask-repeat:repeat;
+  animation:grain-shift 620ms steps(1) infinite;
+}
+@keyframes grain-shift{
+  0%{ -webkit-mask-position:0 0; mask-position:0 0 }
+  25%{ -webkit-mask-position:-37px 19px; mask-position:-37px 19px }
+  50%{ -webkit-mask-position:23px -43px; mask-position:23px -43px }
+  75%{ -webkit-mask-position:-51px -11px; mask-position:-51px -11px }
+}
+
+/* Scanlines + vignette in one layer. multiply darkens on either ground. */
+.crt{
+  position:fixed;inset:0;z-index:9997;pointer-events:none;mix-blend-mode:multiply;
+  background:
+    repeating-linear-gradient(to bottom,
+      rgb(var(--scanline-color) / var(--scanline-opacity)) 0 1px,
+      transparent 1px 3px),
+    radial-gradient(ellipse 125% 105% at 50% 50%,
+      transparent 55%, rgb(var(--scanline-color) / var(--vignette-opacity)) 100%);
+}
+.crt::after{
+  content:"";position:absolute;inset:0;
+  background:rgb(var(--scanline-color) / .04);
+  animation:crt-flicker 4.2s steps(1) infinite;
+}
+
+@keyframes crt-flicker{
+  0%,92%,100%{opacity:0}
+  93%{opacity:.5}
+  94%{opacity:0}
+  96%{opacity:.75}
+  97%{opacity:.1}
+}
+
+/* CRT power-on: the picture snaps open from a scanline. */
+.power-on{animation:power-on 520ms cubic-bezier(.2,.9,.2,1) both}
+@keyframes power-on{
+  0%{transform:scaleY(.002) scaleX(.6);filter:brightness(3.2);opacity:.9}
+  45%{transform:scaleY(.02) scaleX(1);filter:brightness(2.4)}
+  75%{transform:scaleY(1) scaleX(1);filter:brightness(1.35)}
+  100%{transform:none;filter:none;opacity:1}
+}
+
+@media (prefers-reduced-motion:reduce){
+  .noise{animation:none}
+  .crt::after{animation:none}
+  .power-on{animation:none}
+}
+
+/* ============================================================
+   PHOSPHOR GLOW
+   Display type, accent and rules bloom. Body copy deliberately
+   does not — glow on running text costs more legibility than it
+   buys atmosphere. Tune globally with --glow on :root.
+   ============================================================ */
+.t-display-xl,.t-display-m,.t-display-s,.pager-name,
+.work-row h2,.work-row .num,.decision-index,.outcome-tile .num{
+  text-shadow:0 0 var(--glow) var(--glow-ink);
+}
+.accent,.todo,.decision-index,.work-row .num,
+.kv-row span:first-child,.decision-detail .label.why{
+  text-shadow:0 0 var(--glow) var(--glow-accent);
+}
+.nav a,.arrow-link,.mono-s.accent{text-shadow:0 0 8px var(--glow-accent)}
+.nav{box-shadow:0 1px var(--glow) rgb(17 17 17 / .05)}
+.section,.decision,.work-row{box-shadow:0 -1px var(--glow) var(--glow-ink)}
+.work-row:hover h2{text-shadow:0 0 calc(var(--glow) * 1.8) var(--glow-accent)}
+.pager:hover .pager-name{text-shadow:0 0 calc(var(--glow) * 2) var(--glow-accent)}
+
+:root[data-theme="crt"] .media{box-shadow:0 0 30px rgb(125 146 255 / .18) inset}
+:root[data-theme="crt"] .todo-block{box-shadow:0 0 18px rgb(125 146 255 / .12)}
+
+/* ============================================================
+   THEME TOGGLE
+   ============================================================ */
+.theme-toggle{
+  font:500 11px/1 var(--font-mono);letter-spacing:.12em;text-transform:uppercase;
+  background:none;border:1px solid var(--rule-grid);color:var(--ink-muted);
+  padding:6px 9px;display:inline-flex;align-items:center;gap:7px;
+  transition:color var(--dur-fast) linear,border-color var(--dur-fast) linear;
+}
+.theme-toggle:hover{color:var(--accent);border-color:var(--accent)}
+.theme-toggle .led{
+  width:6px;height:6px;border-radius:50%;background:var(--ink-muted);
+  transition:background var(--dur-fast) linear,box-shadow var(--dur-fast) linear;
+}
+.theme-toggle:hover .led,:root[data-theme="crt"] .theme-toggle .led{
+  background:var(--accent);box-shadow:0 0 8px var(--accent);
+}
+/* icon-only below the nav's comfortable width; aria-label carries the name */
+@media (max-width:760px){
+  .theme-toggle{padding:6px;gap:0;font-size:0;flex:none}
+  .theme-toggle .led{width:8px;height:8px}
+}
 
 /* ============================================================
    CUSTOM CURSOR / TELEMETRY

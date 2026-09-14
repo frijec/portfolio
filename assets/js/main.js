@@ -19,8 +19,15 @@
   document.addEventListener("scroll", onScroll, { passive: true });
   onScroll();
 
-  /* ---------- reveal on scroll ---------- */
-  const revealables = document.querySelectorAll(".reveal");
+  /* ---------- reveal on scroll ----------
+     Classes are added here rather than in the markup so the page still
+     reads fully if this script never runs. */
+  document.querySelectorAll(".work-row").forEach((row, i) => {
+    row.classList.add("reveal");
+    row.style.transitionDelay = (i % 6) * 55 + "ms";
+  });
+
+  const revealables = document.querySelectorAll(".reveal, .media, .section");
   if (revealables.length) {
     const io = new IntersectionObserver(
       (entries) => {
@@ -64,36 +71,72 @@
     counters.forEach((el) => cio.observe(el));
   }
 
-  /* ---------- procedural film-grain noise ---------- */
-  (function noise() {
+  /* ---------- film grain + CRT overlays ----------
+     The grain tile is an alpha mask, tiled 1:1 and painted in
+     --grain-color, so the same texture works on both grounds. Stretching
+     the tile instead of repeating it is what turns grain into mush. */
+  (function screenLayers() {
+    const SIZE = 140;
     const canvas = document.createElement("canvas");
-    canvas.className = "noise";
-    const size = 128;
-    canvas.width = size;
-    canvas.height = size;
-    document.body.appendChild(canvas);
+    canvas.width = canvas.height = SIZE;
     const ctx = canvas.getContext("2d");
-    const frames = [];
-    for (let f = 0; f < 4; f++) {
-      const img = ctx.createImageData(size, size);
-      for (let i = 0; i < img.data.length; i += 4) {
-        const v = Math.random() * 255;
-        img.data[i] = v;
-        img.data[i + 1] = v;
-        img.data[i + 2] = v;
-        img.data[i + 3] = 90;
-      }
-      frames.push(img);
+    const img = ctx.createImageData(SIZE, SIZE);
+    for (let i = 0; i < img.data.length; i += 4) {
+      img.data[i] = img.data[i + 1] = img.data[i + 2] = 255;
+      img.data[i + 3] = Math.pow(Math.random(), 3.1) * 255;
     }
-    let fi = 0;
-    if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      setInterval(() => {
-        ctx.putImageData(frames[fi % frames.length], 0, 0);
-        fi++;
-      }, 90);
-    } else {
-      ctx.putImageData(frames[0], 0, 0);
+    ctx.putImageData(img, 0, 0);
+    document.documentElement.style.setProperty(
+      "--grain-url",
+      'url("' + canvas.toDataURL() + '")'
+    );
+
+    const crt = document.createElement("div");
+    crt.className = "crt";
+    const grain = document.createElement("div");
+    grain.className = "noise";
+    document.body.append(crt, grain);
+  })();
+
+  /* ---------- CRT display mode ---------- */
+  (function crtMode() {
+    const KEY = "kj-theme";
+    const root = document.documentElement;
+    const isOn = () => root.getAttribute("data-theme") === "crt";
+
+    function powerOn() {
+      const wrap = document.querySelector(".wrap");
+      if (!wrap || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+      wrap.classList.remove("power-on");
+      void wrap.offsetWidth;
+      wrap.classList.add("power-on");
     }
+
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "theme-toggle";
+    btn.setAttribute("aria-label", "Toggle CRT display mode");
+
+    function render() {
+      btn.innerHTML = '<span class="led"></span>' + (isOn() ? "CRT on" : "CRT off");
+      btn.setAttribute("aria-pressed", isOn() ? "true" : "false");
+    }
+
+    btn.addEventListener("click", () => {
+      const turningOn = !isOn();
+      if (turningOn) root.setAttribute("data-theme", "crt");
+      else root.removeAttribute("data-theme");
+      try {
+        localStorage.setItem(KEY, turningOn ? "crt" : "light");
+      } catch (e) {}
+      render();
+      if (turningOn) powerOn();
+    });
+
+    render();
+    const navRow = document.querySelector(".nav-row");
+    if (navRow) navRow.appendChild(btn);
+    if (isOn()) powerOn();
   })();
 
   /* ---------- custom cursor + live telemetry ---------- */
