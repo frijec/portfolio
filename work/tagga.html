@@ -66,9 +66,9 @@
     <div class="row" style="padding-block:14px 72px">
       <span class="mono-s c2">02 · Situation</span>
       <div class="c7 s4" style="padding-top:48px;display:grid;gap:20px">
-        <p class="t-l reveal">Group rides fall apart at junctions. Someone misses a turn, the crew stops, phones come out, and a location gets shared as a static pin that is wrong within a minute. The tools that exist — Find My, Life360, Google location sharing — assume a persistent social graph and an account. They were built for families who track each other for months, not for eight people who met at a petrol station and will disband by dinner.</p>
-        <p class="t-l reveal">I started Tagga in January 2026 as a rider with this problem. The same shape kept turning up elsewhere: festival crowds, hiking groups, roadtrips. All of them want the same thing — see where everyone is, right now, for a few hours, and then forget it. Tagga is that: one live map for up to thirty people, a five-letter code instead of an account, and a crew chat that ends when the ride does.</p>
-        <p class="t-l reveal">It is a one-man project. I own every layer — concept, brand, UX, visual design, frontend, backend and user testing — with no team and no external hires. The stack was chosen to make exactly that possible: Claude Code with Opus for the heavy lifting, Expo for a single React Native codebase across both platforms, Xcode for the native iOS work. TestFlight and Orbit closed the loop, so a new build reached real beta users within hours and their feedback came back the same day.</p>
+        <p class="t-l reveal">Group rides fall apart at junctions. Someone misses a turn, the crew stops, phones come out, and a location gets shared as a static pin that is wrong within a minute. The tools that exist (Find My, Life360, Google location sharing) assume a persistent social graph and an account. They were built for families who track each other for months, not for eight people who met at a petrol station and will disband by dinner.</p>
+        <p class="t-l reveal">I started Tagga in January 2026 as a rider with this problem. The same shape kept turning up elsewhere: festival crowds, hiking groups, roadtrips. All of them want the same thing: see where everyone is, right now, for a few hours, and then forget it. Tagga is that: one live map for up to thirty people, a five-letter code instead of an account, and a crew chat that ends when the ride does.</p>
+        <p class="t-l reveal">It is a one-man project. I own every layer: concept, brand, UX, visual design, frontend, backend and user testing. No team, no external hires. I chose the stack to make that possible: Claude Code with Opus for the heavy lifting, Expo for a single React Native codebase across both platforms, Xcode for the native iOS work. TestFlight and Orbit closed the loop, so a new build reached real beta users within hours and their feedback came back the same day.</p>
       </div>
       <div class="mono-s c2 muted" style="grid-column:11/13;padding-top:52px">
         <div>Built for</div><div style="color:var(--ink)">Motorcycle crews</div>
@@ -86,7 +86,7 @@
       <span class="mono-s c2 muted s3">Constraints — what made it hard</span>
       <div class="c8 s5" style="border-top:1px solid var(--ink)">
         <div style="display:grid;grid-template-columns:120px 1fr;gap:24px;padding-block:20px;border-bottom:1px solid rgb(17 17 17/.25)"><span class="t-display-s accent" style="font-size:clamp(32px,5vw,56px)">01</span><div style="max-width:60ch"><p class="t-xl" style="font-size:20px;margin-bottom:6px">No account, no identity layer.</p><p class="t-m muted">No email, phone number or SSO anywhere in the flow. Whatever identifies a rider has to be created at the roadside and thrown away afterwards.</p></div></div>
-        <div style="display:grid;grid-template-columns:120px 1fr;gap:24px;padding-block:20px;border-bottom:1px solid rgb(17 17 17/.25)"><span class="t-display-s accent" style="font-size:clamp(32px,5vw,56px)">02</span><div style="max-width:60ch"><p class="t-xl" style="font-size:20px;margin-bottom:6px">A live map cannot cost you the ride home.</p><p class="t-m muted">Continuous GPS is the most expensive thing a phone can do. If the battery goes, riders switch the app off at the first fuel stop and it never comes back — so the app runs second-by-second on the bike and sips once you have parked.</p></div></div>
+        <div style="display:grid;grid-template-columns:120px 1fr;gap:24px;padding-block:20px;border-bottom:1px solid rgb(17 17 17/.25)"><span class="t-display-s accent" style="font-size:clamp(32px,5vw,56px)">02</span><div style="max-width:60ch"><p class="t-xl" style="font-size:20px;margin-bottom:6px">A live map cannot cost you the ride home.</p><p class="t-m muted">Continuous GPS is the most expensive thing a phone can do. If the battery goes, riders switch the app off at the first fuel stop and it never comes back. So the app runs second-by-second on the bike and sips once you have parked.</p></div></div>
         <div style="display:grid;grid-template-columns:120px 1fr;gap:24px;padding-block:20px;border-bottom:1px solid rgb(17 17 17/.25)"><span class="t-display-s accent" style="font-size:clamp(32px,5vw,56px)">03</span><div style="max-width:60ch"><p class="t-xl" style="font-size:20px;margin-bottom:6px">Readable in one glance at 100 km/h.</p><p class="t-m muted">Handlebar mount, direct sun, polarised visor. Position, speed and trail have to answer "who is ahead, who is behind, is anyone stopped" without a second look.</p></div></div>
         <div style="display:grid;grid-template-columns:120px 1fr;gap:24px;padding-block:20px;border-bottom:1px solid rgb(17 17 17/.25)"><span class="t-display-s accent" style="font-size:clamp(32px,5vw,56px)">04</span><div style="max-width:60ch"><p class="t-xl" style="font-size:20px;margin-bottom:6px">Three surfaces, one person.</p><p class="t-m muted">iOS, Android and the share link, shipped from a single codebase by the same person who designed them. Anything that needed a per-platform design pass did not get built.</p></div></div>
         <div style="display:grid;grid-template-columns:120px 1fr;gap:24px;padding-block:20px 40px"><span class="t-display-s accent" style="font-size:clamp(32px,5vw,56px)">05</span><div style="max-width:60ch"><p class="t-xl" style="font-size:20px;margin-bottom:6px">Good roads have no signal.</p><p class="t-m muted">The routes worth riding are the ones that drop to nothing. Losing signal cannot mean losing the ride, so the app keeps recording through a dead zone and fills the map back in when it returns.</p></div></div>
@@ -97,7 +97,7 @@
   <section class="section">
     <div class="row" style="padding-block:14px 24px">
       <span class="mono-s c2">04 · Working</span>
-      <p class="t-m muted c5" style="grid-column:4/9;max-width:56ch">The middle of the process, at the size it deserves. Twelve artefacts from eighteen months: interviews, discarded architectures, marker tests in direct sun, battery logs. Captions say what each one is and what it changed.</p>
+      <p class="t-m muted c5" style="grid-column:4/9;max-width:56ch">The middle of the process, at the size it deserves. Artefacts from the build: sketches, discarded architectures, marker tests in direct sun, battery logs. Captions say what each one is and what it changed.</p>
       <div class="mono-s c2 muted ta-r" style="grid-column:11/13">12 artefacts<br>2022.09 — 2024.05</div>
     </div>
     <div class="artefacts" style="padding-bottom:56px">
@@ -126,7 +126,7 @@
       <div class="c2 decision-index">D.01</div>
       <h3 class="t-display-s c5 s3">The session is the object. Not the user.</h3>
       <div class="decision-detail c5 s8">
-        <div><div class="label">On the table</div><p>A user model with friends, groups and history — the shape every competitor has. A hybrid where sessions are optional inside a profile.</p></div>
+        <div><div class="label">On the table</div><p>A user model with friends, groups and history, which is the shape every competitor has. A hybrid where sessions are optional inside a profile.</p></div>
         <div><div class="label why">Why this one</div><p>Every real use I observed was bounded: a ride, a hike, a festival day. Modelling the bounded thing directly removed sign-up, contacts, permissions dialogues and the privacy question in one move. A session has a start, a code, participants and an end. That's the whole data model.</p></div>
         <div><div class="label">What it cost</div><p>Nothing survives the ride. Location, messages and notification tokens are dropped with the session, so there is no history to return to, no profile to monetise and no way to re-engage anyone afterwards. A crew that rides every Sunday starts from a new code every Sunday.</p></div>
       </div>
@@ -137,7 +137,7 @@
       <h3 class="t-display-s c5 s3">Join by a five-letter code. No accounts.</h3>
       <div class="decision-detail c5 s8">
         <div><div class="label">On the table</div><p>Phone-number sign-up with contact sync. Magic-link email. Apple / Google SSO. A QR code on the organiser's screen.</p></div>
-        <div><div class="label why">Why this one</div><p>A crew forms at a petrol station with gloves on. Anything slower than reading five letters aloud loses the group. Five letters from a 30-character set give 24 million codes — enough that collisions within a live window never happened. QR lost because it needs two phones face-to-face; a code works over an intercom.</p></div>
+        <div><div class="label why">Why this one</div><p>A crew forms at a petrol station with gloves on. Anything slower than reading five letters aloud loses the group. Five letters from a 30-character set give 24.3 million codes, enough that two live sessions sharing one is not a practical concern. QR lost because it needs two phones face-to-face; a code works over an intercom.</p></div>
         <div><div class="label">What it cost</div><p>No persistent identity: no ride history, no friends list, no push re-engagement. Retention has to be earned by the next ride, not by a notification.</p></div>
       </div>
       <div class="c12 mt-6">
@@ -153,7 +153,7 @@
       <h3 class="t-display-s c5 s3">The app notices the split before the crew does.</h3>
       <div class="decision-detail c5 s8">
         <div class="todo-block"><span class="mono-xs tag">On the table</span><p>[What else was considered here — leaving it to riders to notice, a manual "wait up" only, a distance threshold? Worth naming the option you rejected.]</p></div>
-        <div><div class="label why">Why this one</div><p>Losing the crew is not a moment, it is a slow drift you only register three turns later. So the app holds a model of the shape of the crew and pings everyone the moment someone drops off the back — early enough that the group can still close up, rather than after the rear rider is already lost.</p></div>
+        <div><div class="label why">Why this one</div><p>Losing the crew is a slow drift you only register three turns later. So the app holds a model of the shape of the crew and pings everyone the moment someone drops off the back, while the group can still close up.</p></div>
         <div class="todo-block"><span class="mono-xs tag">What it cost</span><p>[Every alert is a decision to interrupt someone at 100 km/h. What did tuning that threshold cost — false pings, missed ones?]</p></div>
       </div>
       <div class="c12 mt-6">
@@ -173,7 +173,7 @@
       <h3 class="t-display-s c5 s3">Six answers, one tap, with gloves on.</h3>
       <div class="decision-detail c5 s8">
         <div><div class="label">On the table</div><p>A keyboard. Voice. The phone-in-your-pocket approach of not communicating mid-ride at all.</p></div>
-        <div><div class="label why">Why this one</div><p>Everything a rider needs to say at speed is one of six things: wait up, stopping, wrong turn, keep going, I'm OK, in trouble. Fixing that to six taps means the message costs a glove and a second, not a stop. The thread itself is already populated — everyone who tapped the link is in it — so there are no numbers to swap and no group to set up.</p></div>
+        <div><div class="label why">Why this one</div><p>Everything a rider needs to say at speed is one of six things: wait up, stopping, wrong turn, keep going, I'm OK, in trouble. Fixing that to six taps means the message costs a glove and a second, not a stop. The thread is already populated, because everyone who tapped the link is in it. No numbers to swap, no group to set up.</p></div>
         <div><div class="label">What it cost</div><p>Six options is a closed vocabulary. Anything outside it has to wait for the next stop, and the chat disappears with the session, so nothing said on the ride is there afterwards.</p></div>
       </div>
     </article>
@@ -182,7 +182,7 @@
   <section class="section">
     <div class="row" style="padding-block:14px 24px">
       <span class="mono-s c2">06 · System</span>
-      <p class="t-m c5" style="grid-column:4/9;max-width:56ch">One token set feeding SwiftUI, Compose and the web share page. Rider colours were picked for separation under deuteranopia against the map ground, not for brand.</p>
+      <p class="t-m c5" style="grid-column:4/9;max-width:56ch">One token set feeding the iOS build, the Android build and the share link. I picked rider colours for separation under deuteranopia against the map ground, not for brand.</p>
       <div class="mono-s ta-r c2" style="grid-column:11/13">38 tokens<br>6 components</div>
     </div>
     <div class="row" style="padding-bottom:56px">
@@ -260,12 +260,12 @@
       </div>
       <div class="c4" style="border-top:1px solid var(--ink);padding-top:14px">
         <div class="mono-s muted">What I know</div>
-        <p class="t-m mt-3">It works, and real beta users have validated it. Each feedback loop sharpened the product against actual behaviour rather than my assumptions — new builds out within hours, responses back the same day.</p>
+        <p class="t-m mt-3">Real beta users have validated it. New builds went out within hours and responses came back the same day, so each loop sharpened the product against behaviour I could watch rather than behaviour I assumed.</p>
       </div>
       <div class="c4" style="border-top:1px solid var(--ink);padding-top:14px">
         <div class="mono-s muted">What I don't know</div>
         <p class="t-m mt-3">Anything at scale. There is no public release yet, so there are no retention, battery or session numbers worth printing. When there are, they go here with their denominators.</p>
-        <p class="mono-s muted mt-3">Not an emergency service — a boundary the product states plainly rather than implies.</p>
+        <p class="mono-s muted mt-3">The product states plainly that it is not an emergency service.</p>
       </div>
     </div>
   </section>
