@@ -568,6 +568,30 @@ body a, body button, body [role="button"], body label{cursor:none}
   border-bottom:24px solid #1E3A8A}
 
 /* ============================================================
+   TERMINAL WRITE-IN
+   Display type reveals character by character; it never shows a
+   character that isn't the real one. Mono metadata gets the cipher
+   (see main.js). Body copy is deliberately excluded — you cannot
+   read a paragraph that is still resolving.
+   ============================================================ */
+.js .tw > .ch{opacity:0}
+.js .tw.in > .ch{animation:tw-in 200ms linear forwards}
+@keyframes tw-in{to{opacity:1}}
+
+/* The write-head only goes on mono, where .45em is a few pixels.
+   On 208px display type an em-sized block is a giant rectangle. */
+.mono-s.typing::after,.mono-m.typing::after,.mono-xs.typing::after{
+  content:"";display:inline-block;width:.5em;height:.9em;
+  background:currentColor;margin-left:.12em;vertical-align:-.1em;
+  animation:cursor-blink 620ms steps(1) infinite;
+}
+@keyframes cursor-blink{0%,50%{opacity:1}51%,100%{opacity:0}}
+@media (prefers-reduced-motion:reduce){
+  .js .tw > .ch{opacity:1;animation:none}
+  .typing::after{display:none}
+}
+
+/* ============================================================
    TODO / STRUCTURAL PLACEHOLDER
    ============================================================ */
 .todo{color:var(--accent-text);font-style:italic}

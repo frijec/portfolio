@@ -77,6 +77,30 @@ measures 7.8:1 on that ground). The choice persists in
 so there's no flash on load. Delete that script, the `.theme-toggle`
 block in `main.js`, and the `[data-theme="crt"]` token block to remove.
 
+### Terminal write-in
+
+Text resolves as each element enters the viewport, once. Two different
+treatments, for a reason:
+
+- **Mono metadata** gets a cipher decode. Monospace means the string
+  width never changes while it resolves, so nothing reflows.
+- **Display type** (`.t-display-xl`, `.t-display-m`, `.pager-name`)
+  reveals character by character instead. Scrambling proportional type
+  at 200px makes the masthead visibly wobble, and a reveal never shows
+  a character that isn't the real one.
+- **Body copy is excluded.** A paragraph that is still resolving can't
+  be read, and that prose is the substance of the case studies.
+
+Headlines get an `aria-label` with the clean string, since the
+per-character spans would otherwise be read letter by letter. Nothing
+runs under `prefers-reduced-motion`. To remove, delete the `terminal()`
+block in `main.js`.
+
+Note: Foundations F.10 lists label scramble as **Cut** ("shows
+characters that aren't true"). This implementation keeps the display
+type honest and limits the scramble to mono metadata, but it is a
+deliberate override of that line — worth knowing if you revisit it.
+
 ## Micro-interactions (assets/js/main.js)
 
 - Procedural film-grain canvas overlay (`mix-blend-mode: overlay`, kept

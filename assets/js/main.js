@@ -43,6 +43,137 @@
     revealables.forEach((el) => io.observe(el));
   }
 
+  /* ---------- terminal write-in ----------
+     Fires as each element enters the viewport, once.
+     Mono metadata gets a cipher decode; monospace means the string
+     width never changes, so nothing reflows while it resolves.
+     Display type reveals character by character instead — scrambling
+     proportional type at 200px makes the masthead visibly wobble, and
+     a reveal never shows a character that isn't the real one.
+     Body copy is excluded on purpose: you can't read a resolving
+     paragraph, and that text is the whole point of the site. */
+  (function terminal() {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    const CIPHER_SEL =
+      ".mono-s, .mono-m, .mono-xs, .kv-row, .fig-caption, .artefact .cap, .decision-detail .label";
+    const TYPE_SEL = ".t-display-xl, .t-display-m, .pager-name";
+    const SKIP = "[data-clock], .theme-toggle, .marquee-track, .cursor-read";
+    const GLYPHS = "ABCDEFGHJKLMNPQRSTUVWXYZ0123456789#%&*/\\<>[]{}=+-";
+
+    const skip = (el) =>
+      el.closest(SKIP) || (el.parentElement && el.parentElement.closest(CIPHER_SEL + ", " + TYPE_SEL));
+
+    function textNodes(root) {
+      const out = [];
+      const w = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+        acceptNode: (n) => (n.nodeValue.trim() ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_REJECT),
+      });
+      let n;
+      while ((n = w.nextNode())) out.push(n);
+      return out;
+    }
+
+    /* ---- cipher ---- */
+    const active = new Set();
+    let raf = null;
+
+    const scrambleChar = (ch) =>
+      /[A-Za-z0-9]/.test(ch) ? GLYPHS[(Math.random() * GLYPHS.length) | 0] : ch;
+
+    function paint(item, resolved) {
+      let i = 0;
+      for (const part of item.parts) {
+        let s = "";
+        for (let c = 0; c < part.text.length; c++, i++) {
+          s += i < resolved ? part.text[c] : scrambleChar(part.text[c]);
+        }
+        part.node.nodeValue = s;
+      }
+    }
+
+    function tick(now) {
+      for (const item of [...active]) {
+        const p = Math.min(1, (now - item.t0) / item.dur);
+        paint(item, Math.floor(p * item.total));
+        if (p >= 1) {
+          item.parts.forEach((pt) => (pt.node.nodeValue = pt.text));
+          item.el.classList.remove("typing");
+          active.delete(item);
+        }
+      }
+      raf = active.size ? requestAnimationFrame(tick) : null;
+    }
+
+    const ciphers = [];
+    document.querySelectorAll(CIPHER_SEL).forEach((el) => {
+      if (skip(el)) return;
+      const parts = textNodes(el).map((n) => ({ node: n, text: n.nodeValue }));
+      const total = parts.reduce((a, p) => a + p.text.length, 0);
+      if (!total || total > 240) return;
+      const item = { el, parts, total, dur: Math.min(900, 240 + total * 14) };
+      paint(item, 0); // hide the answer before it scrolls into view
+      ciphers.push(item);
+    });
+
+    /* ---- character reveal ---- */
+    const typers = [];
+    document.querySelectorAll(TYPE_SEL).forEach((el) => {
+      if (skip(el)) return;
+      const nodes = textNodes(el);
+      if (!nodes.length) return;
+      // per-character spans can make AT read the heading letter by letter
+      if (!el.hasAttribute("aria-label")) {
+        el.setAttribute("aria-label", el.textContent.replace(/\s+/g, " ").trim());
+      }
+      let count = 0;
+      nodes.forEach((node) => {
+        const frag = document.createDocumentFragment();
+        for (const ch of node.nodeValue) {
+          const s = document.createElement("span");
+          s.className = "ch";
+          s.textContent = ch;
+          frag.appendChild(s);
+          count++;
+        }
+        node.parentNode.replaceChild(frag, node);
+      });
+      const step = Math.min(20, 620 / Math.max(count, 1));
+      el.querySelectorAll(".ch").forEach((s, i) => {
+        s.style.animationDelay = (i * step).toFixed(1) + "ms";
+      });
+      el.classList.add("tw");
+      el.classList.remove("reveal", "in");
+      typers.push({ el, dur: count * step + 220 });
+    });
+
+    /* ---- trigger on viewport entry ---- */
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (!e.isIntersecting) return;
+          io.unobserve(e.target);
+          const c = ciphers.find((x) => x.el === e.target);
+          if (c) {
+            c.t0 = performance.now();
+            c.el.classList.add("typing");
+            active.add(c);
+            if (!raf) raf = requestAnimationFrame(tick);
+            return;
+          }
+          const t = typers.find((x) => x.el === e.target);
+          if (t) {
+            t.el.classList.add("in", "typing");
+            setTimeout(() => t.el.classList.remove("typing"), t.dur);
+          }
+        });
+      },
+      { threshold: 0.25, rootMargin: "0px 0px -30px 0px" }
+    );
+    ciphers.forEach((c) => io.observe(c.el));
+    typers.forEach((t) => io.observe(t.el));
+  })();
+
   /* ---------- mono counters, tick to true value ---------- */
   const counters = document.querySelectorAll("[data-count]");
   if (counters.length) {
