@@ -251,7 +251,7 @@ img{max-width:100%;display:block}
    WORK INDEX ROWS
    ============================================================ */
 .work-row{display:grid;grid-template-columns:repeat(12,1fr);column-gap:var(--gutter);
-  padding:28px 0 32px;border-top:1px solid var(--rule-hard);align-items:start;position:relative}
+  padding:28px var(--margin) 32px;border-top:1px solid var(--rule-hard);align-items:start;position:relative}
 .work-row .num{font:600 clamp(40px,4.5vw,56px)/.9 var(--font-display);letter-spacing:-.04em;color:var(--accent)}
 .work-row h2{font:600 clamp(30px,3.5vw,44px)/1 var(--font-display);letter-spacing:-.04em}
 .work-row .prop{font:400 clamp(16px,1.6vw,20px)/1.35 var(--font-display);letter-spacing:-.01em;max-width:34ch;text-wrap:pretty}
