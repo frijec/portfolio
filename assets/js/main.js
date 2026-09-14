@@ -211,12 +211,16 @@
           const decimals = (el.getAttribute("data-count").split(".")[1] || "").length;
           const dur = 640;
           const t0 = performance.now();
+          const fmt = (n) =>
+            n.toLocaleString("en-US", {
+              minimumFractionDigits: decimals,
+              maximumFractionDigits: decimals,
+            });
           function tick(t) {
             const p = Math.min(1, (t - t0) / dur);
-            const val = target * p;
-            el.textContent = val.toFixed(decimals);
+            el.textContent = fmt(target * p);
             if (p < 1) requestAnimationFrame(tick);
-            else el.textContent = target.toFixed(decimals);
+            else el.textContent = fmt(target);
           }
           requestAnimationFrame(tick);
         });
