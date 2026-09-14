@@ -93,9 +93,11 @@ body{
   -webkit-font-smoothing:antialiased;
   text-rendering:optimizeLegibility;
   overflow-x:hidden;
-  cursor:none;
 }
-@media (hover:none), (pointer:coarse){ body{ cursor:auto } }
+/* the native cursor is hidden only after the custom one exists, so a
+   script failure can never leave the page with no pointer at all */
+:root.has-cursor body{cursor:none}
+@media (hover:none), (pointer:coarse){ :root.has-cursor body{ cursor:auto } }
 p,h1,h2,h3,h4{margin:0}
 a{color:var(--ink);text-decoration:none}
 img{max-width:100%;display:block}
@@ -223,6 +225,7 @@ img{max-width:100%;display:block}
 /* status dot */
 .dot{display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--accent);
   margin-right:6px;vertical-align:middle;animation:pulse 1.8s ease-in-out infinite}
+@media (prefers-reduced-motion:reduce){ .dot{animation:none} }
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.25}}
 
 /* ============================================================
@@ -367,10 +370,20 @@ img{max-width:100%;display:block}
 /* client marquee */
 .marquee{overflow:hidden;border-top:1px solid var(--rule-hard);padding-block:var(--sp-5);padding-inline:var(--margin)}
 .marquee-track{display:flex;gap:var(--sp-10);width:max-content;animation:marquee 32s linear infinite}
-.marquee:hover .marquee-track{animation-play-state:paused}
+.marquee:hover .marquee-track,
+.marquee:focus-within .marquee-track,
+.marquee[data-paused] .marquee-track{animation-play-state:paused}
 .marquee-track span{font:600 clamp(24px,3vw,32px)/1 var(--font-display);letter-spacing:-.03em;white-space:nowrap}
 .marquee-track span.dim{color:var(--ink-muted)}
 @keyframes marquee{to{transform:translateX(-50%)}}
+@media (prefers-reduced-motion:reduce){ .marquee-track{animation:none} }
+
+.marquee-pause{
+  font:500 10px/1 var(--font-mono);letter-spacing:.12em;text-transform:uppercase;
+  background:none;border:1px solid var(--rule-grid);color:var(--ink-muted);
+  padding:5px 8px;transition:color var(--dur-fast) linear,border-color var(--dur-fast) linear;
+}
+.marquee-pause:hover{color:var(--accent-text);border-color:var(--accent)}
 
 /* ============================================================
    BUTTONS / LINKS
@@ -520,7 +533,8 @@ footer{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px 24px;pa
 /* ============================================================
    CUSTOM CURSOR / TELEMETRY
    ============================================================ */
-body a, body button, body [role="button"], body label{cursor:none}
+:root.has-cursor body a, :root.has-cursor body button,
+:root.has-cursor body [role="button"], :root.has-cursor body label{cursor:none}
 
 .cursor{
   position:fixed;top:0;left:0;width:18px;height:18px;pointer-events:none;z-index:1000;

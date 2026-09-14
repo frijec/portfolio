@@ -8,15 +8,18 @@
     });
   });
 
-  /* ---------- scroll progress ---------- */
+  /* ---------- scroll progress ----------
+     scrollPct is cached here so the cursor readout can display it
+     without reading layout on every mousemove. */
   const bar = document.querySelector(".scrollbar");
+  let scrollPct = 0;
   function onScroll() {
-    if (!bar) return;
     const h = document.documentElement;
-    const scrolled = h.scrollTop / (h.scrollHeight - h.clientHeight || 1);
-    bar.style.width = Math.min(100, Math.max(0, scrolled * 100)) + "%";
+    scrollPct = Math.min(1, Math.max(0, h.scrollTop / (h.scrollHeight - h.clientHeight || 1)));
+    if (bar) bar.style.width = scrollPct * 100 + "%";
   }
   document.addEventListener("scroll", onScroll, { passive: true });
+  window.addEventListener("resize", onScroll, { passive: true });
   onScroll();
 
   /* ---------- reveal on scroll ----------
@@ -146,9 +149,13 @@
       if (skip(el)) return;
       const nodes = textNodes(el);
       if (!nodes.length) return;
-      // per-character spans can make AT read the heading letter by letter
+      // per-character spans can make AT read the heading letter by letter.
+      // <br> contributes nothing to textContent, so swap it for a space on a
+      // clone first — otherwise "Kenneth<br>Jensen" announces as "KennethJensen".
       if (!el.hasAttribute("aria-label")) {
-        el.setAttribute("aria-label", el.textContent.replace(/\s+/g, " ").trim());
+        const clone = el.cloneNode(true);
+        clone.querySelectorAll("br").forEach((br) => br.replaceWith(" "));
+        el.setAttribute("aria-label", clone.textContent.replace(/\s+/g, " ").trim());
       }
       let count = 0;
       nodes.forEach((node) => {
@@ -308,19 +315,15 @@
     const readout = document.createElement("div");
     readout.className = "cursor-read";
     document.body.append(cursor, readout);
+    // only now is it safe for CSS to hide the native cursor
+    document.documentElement.classList.add("has-cursor");
 
-    let mx = 0, my = 0;
     document.addEventListener("mousemove", (e) => {
-      mx = e.clientX;
-      my = e.clientY;
+      const mx = e.clientX, my = e.clientY;
       cursor.style.transform = `translate(${mx}px, ${my}px) translate(-50%,-50%)`;
       readout.style.transform = `translate(${mx}px, ${my}px)`;
-      const pct = Math.round(
-        (document.documentElement.scrollTop /
-          (document.documentElement.scrollHeight - document.documentElement.clientHeight || 1)) *
-          100
-      );
-      readout.textContent = `X ${mx} / Y ${my} · SCROLL ${pct}%`;
+      readout.textContent =
+        `X ${mx} / Y ${my} · SCROLL ${Math.round(scrollPct * 100)}%`;
     });
 
     document.querySelectorAll("a,button,.magnet").forEach((el) => {
@@ -329,44 +332,87 @@
     });
   }
 
-  /* ---------- magnetic hover on nav / arrow links ---------- */
+  /* ---------- magnetic hover ----------
+     Offset is normalised to the element's own size and then capped in
+     pixels, so a full-width pager is nudged by the same few pixels as a
+     nav link rather than sliding across the page. The rect is measured
+     once on enter, untransformed — measuring it mid-transform feeds the
+     previous offset back in and the element drifts. */
+  const MAGNET_X = 7; // px
+  const MAGNET_Y = 5; // px
   document.querySelectorAll(".magnet").forEach((el) => {
+    let rect = null;
+    el.addEventListener("mouseenter", () => {
+      el.style.transform = "";
+      rect = el.getBoundingClientRect();
+    });
     el.addEventListener("mousemove", (e) => {
-      const r = el.getBoundingClientRect();
-      const x = e.clientX - r.left - r.width / 2;
-      const y = e.clientY - r.top - r.height / 2;
-      el.style.transform = `translate(${x * 0.18}px, ${y * 0.28}px)`;
+      if (!rect) rect = el.getBoundingClientRect();
+      if (!rect.width || !rect.height) return;
+      const dx = (e.clientX - rect.left) / rect.width - 0.5;
+      const dy = (e.clientY - rect.top) / rect.height - 0.5;
+      el.style.transform =
+        `translate(${(dx * 2 * MAGNET_X).toFixed(2)}px, ${(dy * 2 * MAGNET_Y).toFixed(2)}px)`;
     });
     el.addEventListener("mouseleave", () => {
+      rect = null;
       el.style.transform = "translate(0,0)";
     });
   });
 
   /* ---------- live clock, Copenhagen ---------- */
+  /* Copenhagen is CEST from late March to late October, so the zone name
+     is formatted rather than hardcoded. */
+  const clockFmt = new Intl.DateTimeFormat("en-GB", {
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+    hour12: false,
+    timeZone: "Europe/Copenhagen",
+    timeZoneName: "short",
+  });
   document.querySelectorAll("[data-clock]").forEach((el) => {
     function update() {
-      const now = new Date();
-      const fmt = new Intl.DateTimeFormat("en-GB", {
-        hour: "2-digit",
-        minute: "2-digit",
-        second: "2-digit",
-        hour12: false,
-        timeZone: "Europe/Copenhagen",
-      });
-      el.textContent = fmt.format(now) + " CET";
+      el.textContent = clockFmt.format(new Date());
     }
     update();
     setInterval(update, 1000);
+  });
+
+  /* ---------- marquee pause ----------
+     WCAG 2.2.2 wants a mechanism to stop auto-moving content, and the
+     CSS :hover pause is unreachable by keyboard or touch. */
+  document.querySelectorAll("[data-marquee-pause]").forEach((btn) => {
+    const marquee = document.querySelector(".marquee");
+    if (!marquee) return;
+    btn.addEventListener("click", () => {
+      const paused = marquee.hasAttribute("data-paused");
+      if (paused) marquee.removeAttribute("data-paused");
+      else marquee.setAttribute("data-paused", "");
+      btn.setAttribute("aria-pressed", paused ? "false" : "true");
+      btn.textContent = paused ? "Pause" : "Play";
+    });
   });
 
   /* ---------- work-row hover peek follows cursor ---------- */
   document.querySelectorAll(".work-row").forEach((row) => {
     const peek = row.querySelector(".peek-track");
     if (!peek) return;
+    let rect = null;
+    row.addEventListener("mouseenter", () => {
+      rect = row.getBoundingClientRect();
+    });
     row.addEventListener("mousemove", (e) => {
-      const r = row.getBoundingClientRect();
-      const p = (e.clientY - r.top) / r.height;
-      peek.style.transform = `translateY(${(p - 0.5) * 10}%)`;
+      if (!rect) rect = row.getBoundingClientRect();
+      if (!rect.height) return;
+      const p = (e.clientY - rect.top) / rect.height;
+      peek.style.transform = `translateY(${((p - 0.5) * 10).toFixed(2)}%)`;
+    });
+    // without this the peek keeps its last offset forever, and the
+    // resting and hover rules in CSS can never apply again
+    row.addEventListener("mouseleave", () => {
+      rect = null;
+      peek.style.transform = "";
     });
   });
 
