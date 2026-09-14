@@ -12,8 +12,9 @@
   --ground-bone-3:#DDDBD3;
   --ink:#111111;
   --ink-muted:#55534E;
-  --accent:#2340D9;
-  --accent-deep:#172C9E;
+  --accent:#E16B2C;
+  --accent-text:#A8481B;
+  --accent-deep:#8F3A12;
   --rule-hard:var(--ink);
   --rule-grid:rgb(17 17 17 / .10);
   --rule-leader:#999999;
@@ -36,12 +37,12 @@
 
   /* CRT / texture — every knob for the screen treatment lives here */
   --grain-color:#111111;
-  --grain-opacity:.22;
+  --grain-opacity:.045;
   --scanline-color:17 17 17;
   --scanline-opacity:.04;
   --vignette-opacity:.11;
   --glow:10px;
-  --glow-accent:rgb(35 64 217 / .30);
+  --glow-accent:rgb(225 107 44 / .30);
   --glow-ink:rgb(17 17 17 / .10);
   --caption-halo:rgb(242 240 234 / .92);
 
@@ -49,26 +50,28 @@
 }
 
 /* CRT mode — ground and ink swap per the Foundations token spec.
-   Accent is lifted from #2340D9, which measures 2.5:1 on ink and fails. */
+   Accent is lifted on the dark ground; --accent-text can match it there
+   because #F08A45 measures 7.8:1 on this ground. */
 :root[data-theme="crt"]{
   --ground-bone:#0C0D10;
   --ground-bone-2:#14161B;
   --ground-bone-3:#1C1F26;
   --ink:#E8E6DE;
   --ink-muted:#8A897F;
-  --accent:#7D92FF;
-  --accent-deep:#A8B6FF;
+  --accent:#F08A45;
+  --accent-text:#F08A45;
+  --accent-deep:#FFB07A;
   --rule-grid:rgb(232 230 222 / .12);
   --rule-leader:#4A4C55;
   --signal-fail:#FF6B6B;
 
-  --grain-color:#D7E2FF;
-  --grain-opacity:.15;
+  --grain-color:#E8E6DE;
+  --grain-opacity:.03;
   --scanline-color:0 0 0;
   --scanline-opacity:.30;
   --vignette-opacity:.55;
   --glow:14px;
-  --glow-accent:rgb(125 146 255 / .55);
+  --glow-accent:rgb(240 138 69 / .55);
   --glow-ink:rgb(232 230 222 / .22);
   --caption-halo:rgb(12 13 16 / .92);
 }
@@ -96,7 +99,7 @@ body{
 p,h1,h2,h3,h4{margin:0}
 a{color:var(--ink);text-decoration:none}
 img{max-width:100%;display:block}
-::selection{background:var(--accent);color:var(--ground-bone)}
+::selection{background:var(--accent-deep);color:var(--ground-bone)}
 
 .mono{font-family:var(--font-mono)}
 
@@ -120,7 +123,7 @@ img{max-width:100%;display:block}
   .mono-xs{ font-size:11px }
 }
 
-.accent{color:var(--accent)}
+.accent{color:var(--accent-text)}
 .muted{color:var(--ink-muted)}
 .fail{color:var(--signal-fail)}
 
@@ -197,7 +200,7 @@ img{max-width:100%;display:block}
 .nav-links{display:flex;align-items:center;gap:var(--sp-6)}
 .nav-context{color:var(--ink-muted)}
 .nav a{position:relative;padding-bottom:2px}
-.nav a.active{color:var(--accent)}
+.nav a.active{color:var(--accent-text)}
 .nav a::after{
   content:"";position:absolute;left:0;right:100%;bottom:-2px;height:1px;background:var(--accent);
   transition:right var(--dur-fast) var(--ease-snap);
@@ -227,7 +230,7 @@ img{max-width:100%;display:block}
    ============================================================ */
 .kv{display:grid;gap:6px;font:400 12px/1.5 var(--font-mono);letter-spacing:.08em;text-transform:uppercase}
 .kv-row{display:flex;align-items:baseline;gap:8px}
-.kv-row span:first-child{color:var(--accent);flex-shrink:0}
+.kv-row span:first-child{color:var(--accent-text);flex-shrink:0}
 .kv-leader{flex:1;border-bottom:1px dotted var(--rule-leader);transform:translateY(-4px);
   position:relative;overflow:hidden}
 .kv-leader::after{content:"";position:absolute;inset:0;border-bottom:1px solid var(--accent);
@@ -317,7 +320,7 @@ img{max-width:100%;display:block}
 .decision-detail{display:grid;gap:20px;font:400 15px/1.5 var(--font-display)}
 .decision-detail .label{font:400 11px/1 var(--font-mono);letter-spacing:.12em;text-transform:uppercase;
   margin-bottom:8px;color:var(--ink-muted)}
-.decision-detail .label.why{color:var(--accent)}
+.decision-detail .label.why{color:var(--accent-text)}
 @media (max-width:760px){
   .decision{grid-template-columns:repeat(4,1fr)}
   .decision-index{grid-column:1/-1}
@@ -373,7 +376,7 @@ img{max-width:100%;display:block}
    BUTTONS / LINKS
    ============================================================ */
 .arrow-link{display:inline-flex;align-items:center;gap:10px;font:500 12px/1 var(--font-mono);
-  letter-spacing:.12em;text-transform:uppercase;color:var(--accent);border-bottom:1px solid var(--accent);
+  letter-spacing:.12em;text-transform:uppercase;color:var(--accent-text);border-bottom:1px solid var(--accent);
   padding-bottom:6px;transition:gap var(--dur-fast) var(--ease-snap)}
 .arrow-link:hover{gap:16px;color:var(--accent-deep);border-color:var(--accent-deep)}
 .arrow-link svg{transition:transform var(--dur-fast) var(--ease-snap)}
@@ -488,8 +491,8 @@ footer{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px 24px;pa
 .work-row:hover h2{text-shadow:0 0 calc(var(--glow) * 1.8) var(--glow-accent)}
 .pager:hover .pager-name{text-shadow:0 0 calc(var(--glow) * 2) var(--glow-accent)}
 
-:root[data-theme="crt"] .media{box-shadow:0 0 30px rgb(125 146 255 / .18) inset}
-:root[data-theme="crt"] .todo-block{box-shadow:0 0 18px rgb(125 146 255 / .12)}
+:root[data-theme="crt"] .media{box-shadow:0 0 30px rgb(240 138 69 / .18) inset}
+:root[data-theme="crt"] .todo-block{box-shadow:0 0 18px rgb(240 138 69 / .12)}
 
 /* ============================================================
    THEME TOGGLE
@@ -500,7 +503,7 @@ footer{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px 24px;pa
   padding:6px 9px;display:inline-flex;align-items:center;gap:7px;
   transition:color var(--dur-fast) linear,border-color var(--dur-fast) linear;
 }
-.theme-toggle:hover{color:var(--accent);border-color:var(--accent)}
+.theme-toggle:hover{color:var(--accent-text);border-color:var(--accent)}
 .theme-toggle .led{
   width:6px;height:6px;border-radius:50%;background:var(--ink-muted);
   transition:background var(--dur-fast) linear,box-shadow var(--dur-fast) linear;
@@ -567,9 +570,9 @@ body a, body button, body [role="button"], body label{cursor:none}
 /* ============================================================
    TODO / STRUCTURAL PLACEHOLDER
    ============================================================ */
-.todo{color:var(--accent);font-style:italic}
-.todo-block{border:1px dashed rgb(35 64 217/.35);background:rgb(35 64 217/.05);padding:18px 20px}
-.todo-block .tag{display:block;color:var(--accent);margin-bottom:8px}
+.todo{color:var(--accent-text);font-style:italic}
+.todo-block{border:1px dashed rgb(225 107 44/.40);background:rgb(225 107 44/.06);padding:18px 20px}
+.todo-block .tag{display:block;color:var(--accent-text);margin-bottom:8px}
 .todo-block p{font-style:italic;color:var(--ink-muted)}
 
 /* ============================================================

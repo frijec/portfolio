@@ -19,7 +19,7 @@ assets/js/main.js    Micro-interactions (see below)
 
 Tokens (colour, type scale, spacing, grid) live as CSS custom properties at the
 top of `assets/css/style.css`, matching the source design's `tokens.json`
-schema: bone ground `#F2F0EA`, ink `#111`, cobalt accent `#2340D9`, Archivo +
+schema: bone ground `#F2F0EA`, ink `#111`, orange accent `#E16B2C`, Archivo +
 IBM Plex Mono.
 
 Layout uses a hand-rolled grid utility system instead of a framework:
@@ -44,6 +44,21 @@ knob lives in one place — the CRT block at the top of `style.css`:
 | `--glow-accent` / `--glow-ink` | bloom colour |
 | `--plate-url` | the duotone placeholder image |
 
+### Accent: two tiers, on purpose
+
+`#E16B2C` measures **2.9:1 on bone**, which fails AA for the 11–12px mono
+labels the accent is used on. So the accent is split, the same way the
+Foundations doc splits cobalt:
+
+- `--accent` `#E16B2C` — the brand orange: rules, LED, borders, tints,
+  glow, scrollbar, and display-scale numerals.
+- `--accent-text` `#A8481B` — **5.1:1 on bone**, used wherever the accent
+  carries mono-sized text.
+
+Known exception: the 40–88px case numerals use `--accent` at 2.9:1, just
+under the 3:1 large-text threshold. `#DC6527` clears it (3.1:1) and is
+visually near-identical if you want strict compliance there too.
+
 Two implementation notes worth keeping:
 
 - The grain tile **must repeat at 1:1**. Stretching a small canvas across
@@ -56,8 +71,8 @@ Set `--glow: 0` to remove the bloom entirely; the layout is unaffected.
 ### CRT mode
 
 A toggle in the nav swaps to a dark phosphor theme (ground and ink swap
-per the Foundations token spec; the cobalt accent is lifted because
-`#2340D9` measures 2.5:1 on ink and fails). The choice persists in
+per the Foundations token spec; the accent lifts to `#F08A45`, which
+measures 7.8:1 on that ground). The choice persists in
 `localStorage` and is applied by a small inline script in each `<head>`
 so there's no flash on load. Delete that script, the `.theme-toggle`
 block in `main.js`, and the `[data-theme="crt"]` token block to remove.
