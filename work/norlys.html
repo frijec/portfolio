@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <title>Norlys Skærm Tiden — Kenneth Jensen</title>
-<meta name="description" content="Screen time that locks by place and by hour — set once by a parent, understood by a child. Product design, 2021.">
+<meta name="description" content="Screen time you can actually see and shape — per-app limits, weekly reports, rules that follow time and place. Product design, 2021.">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -29,21 +29,21 @@
 
   <section style="padding:40px 0 0" class="masthead-enter">
     <div class="row" style="margin-bottom:36px">
-      <span class="mono-s c8" style="display:flex;gap:32px"><span>04 / 06</span><span class="muted">Status: Shipped</span><span>2021</span></span>
+      <span class="mono-s c8" style="display:flex;gap:32px"><span>04 / 06</span><span class="muted">Status: Shipped</span><span>2024 — 2025</span></span>
     </div>
     <div class="row" style="align-items:end">
       <h1 class="t-display-m c8 reveal in" style="font-size:clamp(40px,9vw,140px)">Norlys<br>Skærm Tiden</h1>
-      <p class="t-xl c4" style="padding-bottom:12px">Screen time that locks by place and by hour — set once by a parent, understood by a child.</p>
+      <p class="t-xl c4" style="padding-bottom:12px">Screen time you can actually see and shape — per-app limits, weekly reports, rules that follow time and place.</p>
     </div>
     <div class="row" style="margin-top:40px;border-top:1px solid var(--ink);padding-top:16px">
       <span class="mono-s c2 muted">Spec</span>
       <div class="kv c5">
-        <div class="kv-row"><span>Role</span><span class="kv-leader"></span><span>Product design</span></div>
+        <div class="kv-row"><span>Role</span><span class="kv-leader"></span><span>UX / Design Lead</span></div>
         <div class="kv-row"><span>Client</span><span class="kv-leader"></span><span>Norlys</span></div>
       </div>
       <div class="kv c5" style="grid-column:8/13">
         <div class="kv-row"><span>Platforms</span><span class="kv-leader"></span><span>iOS / Android</span></div>
-        <div class="kv-row"><span>Shipped</span><span class="kv-leader"></span><span>2021</span></div>
+        <div class="kv-row"><span>Shipped</span><span class="kv-leader"></span><span>App Store · 2025</span></div>
       </div>
     </div>
     <div class="media" style="margin-top:32px;height:min(480px,50vw)"></div>
@@ -52,9 +52,9 @@
   <section class="section">
     <div class="row" style="padding-block:14px 56px">
       <span class="mono-s c2">02 · Situation</span>
-      <div class="c7 s4 todo-block" style="margin-top:48px">
-        <span class="mono-xs tag">Template slot — this is a shallow case by design (see Foundations §6): keep this short, one paragraph is enough</span>
-        <p>[Why did Norlys need a screen-time product, and who was it for — parents, children, or both at once?]</p>
+      <div class="c7 s4" style="padding-top:48px;display:grid;gap:20px">
+        <p class="t-l reveal">Norlys is Denmark's largest integrated energy and telecoms cooperative, serving over 1.7 million customers across electricity, broadband, mobile, TV and EV charging. Skærm Tiden is its screen-time app: limits on specific apps, weekly usage reports that hold this week up against the last, and restrictions that follow both time and location — so work apps can be throttled at home, or the reverse.</p>
+        <p class="t-l reveal">It was built by a dedicated team of Consid consultants working alongside Norlys' internal marketing department and an external marketing and communications partner.</p>
       </div>
     </div>
   </section>
@@ -67,7 +67,7 @@
     <div class="row" style="padding-block:56px 0">
       <span class="mono-s c2 muted s3">Constraints — template slots</span>
       <div class="c8 s5" style="border-top:1px solid var(--ink)">
-        <div style="display:grid;grid-template-columns:120px 1fr;gap:24px;padding-block:20px;border-bottom:1px solid rgb(17 17 17/.25)"><span class="t-display-s accent" style="font-size:clamp(32px,5vw,56px)">01</span><div class="todo-block"><span class="mono-xs tag">Constraint</span><p>[What made place-and-time locking hard — e.g. a child sharing a device, a parent needing to override remotely.]</p></div></div>
+        <div style="display:grid;grid-template-columns:120px 1fr;gap:24px;padding-block:20px;border-bottom:1px solid rgb(17 17 17/.25)"><span class="t-display-s accent" style="font-size:clamp(32px,5vw,56px)">01</span><div style="max-width:60ch"><p class="t-xl" style="font-size:20px;margin-bottom:6px">A fixed political deadline, not a product one.</p><p class="t-m muted">The app had to be in the App Store before Folkemødet, where Norlys was taking part in a public debate on screen time. The date could not move, so scope had to.</p></div></div>
         <div style="display:grid;grid-template-columns:120px 1fr;gap:24px;padding-block:20px 40px"><span class="t-display-s accent" style="font-size:clamp(32px,5vw,56px)">02</span><div class="todo-block"><span class="mono-xs tag">Constraint</span><p>[A second constraint, if there is one worth naming — this case can hold as few as two.]</p></div></div>
       </div>
     </div>
@@ -113,10 +113,17 @@
   <section class="section">
     <div class="row" style="padding-block:14px 0">
       <span class="mono-s c2">08 · Outcome</span>
-      <span class="mono-s ta-r muted c2" style="grid-column:11/13">Optional for this case</span>
+      <span class="mono-s ta-r muted c2" style="grid-column:11/13">Honest variant · no numbers tile</span>
     </div>
     <div class="row" style="padding-block:48px 56px">
-      <div class="c10 todo-block"><span class="mono-xs tag">Numbers, or skip this section entirely</span><p>[Per Foundations §6, Outcome is optional — a shallow case that skips it honestly beats one padded to fill it. Only keep this section if there's a real, sourced number to show.]</p></div>
+      <div class="c5" style="border-top:1px solid var(--ink);padding-top:14px">
+        <div class="mono-s muted">What shipped</div>
+        <p class="t-m mt-3">Skærm Tiden launched in the App Store ahead of Folkemødet, hitting a date that could not move. For this project that launch was the decisive milestone.</p>
+      </div>
+      <div class="c5" style="grid-column:6/11;border-top:1px solid var(--ink);padding-top:14px">
+        <div class="mono-s muted">What I don't know</div>
+        <p class="t-m mt-3">What it did to anyone's screen time. Shipping on the date was the measure of success here, which is a delivery outcome, not a user one.</p>
+      </div>
     </div>
   </section>
 
