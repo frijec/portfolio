@@ -33,7 +33,7 @@
   <section style="padding:40px 0 0" class="masthead-enter">
     <div class="row" style="align-items:end">
       <div class="c8">
-        <div class="mono-s" style="display:flex;gap:32px;margin-bottom:36px"><span>02 / 06</span><span class="accent"><span class="dot"></span>Status: Beta</span><span>2026 — ongoing</span></div>
+        <div class="mono-s" style="display:flex;gap:32px;margin-bottom:36px"><span>02 / 06</span><span class="accent"><span class="dot"></span>Status: Beta · pre-launch</span><span>2026 — ongoing</span></div>
         <h1 class="t-display-xl reveal in">Tagga<span style="font-size:.23em;vertical-align:top;margin-left:.05em">®</span></h1>
       </div>
       <p class="t-xl c4" style="padding-bottom:12px">A live map for people who ride together — and don't want an account to do it.</p>
@@ -47,17 +47,18 @@
         <div class="kv-row"><span>Duration</span><span class="kv-leader"></span><span>Concept to beta</span></div>
       </div>
       <div class="kv c5" style="grid-column:8/13">
-        <div class="kv-row"><span>Platforms</span><span class="kv-leader"></span><span>iOS / Android</span></div>
+        <div class="kv-row"><span>Platforms</span><span class="kv-leader"></span><span>iOS / Android / share link</span></div>
         <div class="kv-row"><span>Team</span><span class="kv-leader"></span><span>None — no team, no external hires</span></div>
         <div class="kv-row"><span>My boundary</span><span class="kv-leader"></span><span>Every layer, including the backend</span></div>
         <div class="kv-row"><span>Stack</span><span class="kv-leader"></span><span>Expo / React Native · Xcode</span></div>
+        <div class="kv-row"><span>Crew size</span><span class="kv-leader"></span><span>Up to 30, free</span></div>
       </div>
     </div>
     <div class="media" style="margin-top:32px;height:max(240px,min(640px,60vw));position:relative">
       <div class="fig-caption"><div>Fig. 01</div><div class="muted">Live map — ride of six, 2026</div></div>
-      <div class="fig-caption right"><div>Ride code</div><div class="t-display-s mt-2" style="letter-spacing:.06em">KV7QP</div></div>
+      <div class="fig-caption right"><div>Ride code</div><div class="t-display-s mt-2" style="letter-spacing:.06em">FVRG5</div></div>
       <div class="fig-caption bottom muted hide-mobile">Duotone photograph / product frame · drop real hero here</div>
-      <div class="fig-caption bottom right"><div>Riders on map</div><div class="t-display-s mt-2">06</div></div>
+      <div class="fig-caption bottom right"><div>Crew cap</div><div class="t-display-s mt-2">30</div></div>
     </div>
   </section>
 
@@ -66,7 +67,7 @@
       <span class="mono-s c2">02 · Situation</span>
       <div class="c7 s4" style="padding-top:48px;display:grid;gap:20px">
         <p class="t-l reveal">Group rides fall apart at junctions. Someone misses a turn, the crew stops, phones come out, and a location gets shared as a static pin that is wrong within a minute. The tools that exist — Find My, Life360, Google location sharing — assume a persistent social graph and an account. They were built for families who track each other for months, not for eight people who met at a petrol station and will disband by dinner.</p>
-        <p class="t-l reveal">I started Tagga in January 2026 as a rider with this problem. The same shape kept turning up elsewhere: festival crowds, hiking groups, roadtrips. All of them want the same thing — see where everyone is, right now, for a few hours, and then forget it.</p>
+        <p class="t-l reveal">I started Tagga in January 2026 as a rider with this problem. The same shape kept turning up elsewhere: festival crowds, hiking groups, roadtrips. All of them want the same thing — see where everyone is, right now, for a few hours, and then forget it. Tagga is that: one live map for up to thirty people, a five-letter code instead of an account, and a crew chat that ends when the ride does.</p>
         <p class="t-l reveal">It is a one-man project. I own every layer — concept, brand, UX, visual design, frontend, backend and user testing — with no team and no external hires. The stack was chosen to make exactly that possible: Claude Code with Opus for the heavy lifting, Expo for a single React Native codebase across both platforms, Xcode for the native iOS work. TestFlight and Orbit closed the loop, so a new build reached real beta users within hours and their feedback came back the same day.</p>
       </div>
       <div class="mono-s c2 muted" style="grid-column:11/13;padding-top:52px">
@@ -85,10 +86,10 @@
       <span class="mono-s c2 muted s3">Constraints — what made it hard</span>
       <div class="c8 s5" style="border-top:1px solid var(--ink)">
         <div style="display:grid;grid-template-columns:120px 1fr;gap:24px;padding-block:20px;border-bottom:1px solid rgb(17 17 17/.25)"><span class="t-display-s accent" style="font-size:clamp(32px,5vw,56px)">01</span><div style="max-width:60ch"><p class="t-xl" style="font-size:20px;margin-bottom:6px">No account, no identity layer.</p><p class="t-m muted">No email, phone number or SSO anywhere in the flow. Whatever identifies a rider has to be created at the roadside and thrown away afterwards.</p></div></div>
-        <div style="display:grid;grid-template-columns:120px 1fr;gap:24px;padding-block:20px;border-bottom:1px solid rgb(17 17 17/.25)"><span class="t-display-s accent" style="font-size:clamp(32px,5vw,56px)">02</span><div style="max-width:60ch"><p class="t-xl" style="font-size:20px;margin-bottom:6px">Six hours of GPS for under 15% battery.</p><p class="t-m muted">Measured on a mid-range Android, screen mostly off. Above that, riders switch the app off at the first fuel stop and it never comes back.</p></div></div>
-        <div style="display:grid;grid-template-columns:120px 1fr;gap:24px;padding-block:20px;border-bottom:1px solid rgb(17 17 17/.25)"><span class="t-display-s accent" style="font-size:clamp(32px,5vw,56px)">03</span><div style="max-width:60ch"><p class="t-xl" style="font-size:20px;margin-bottom:6px">Readable in one second at 90 km/h.</p><p class="t-m muted">Handlebar mount, direct sun, polarised visor. Every element on the map has to answer "who is ahead, who is behind, is anyone stopped" without a second glance.</p></div></div>
-        <div style="display:grid;grid-template-columns:120px 1fr;gap:24px;padding-block:20px;border-bottom:1px solid rgb(17 17 17/.25)"><span class="t-display-s accent" style="font-size:clamp(32px,5vw,56px)">04</span><div style="max-width:60ch"><p class="t-xl" style="font-size:20px;margin-bottom:6px">Three platforms, one designer.</p><p class="t-m muted">iOS, Android and a web share page shipped from a single system. Anything that needed a per-platform design pass didn't get built.</p></div></div>
-        <div style="display:grid;grid-template-columns:120px 1fr;gap:24px;padding-block:20px 40px"><span class="t-display-s accent" style="font-size:clamp(32px,5vw,56px)">05</span><div style="max-width:60ch"><p class="t-xl" style="font-size:20px;margin-bottom:6px">Rural routes drop to EDGE, or nothing.</p><p class="t-m muted">The map must never present a stale position as a current one. Uncertainty had to be visible in the same language as position itself.</p></div></div>
+        <div style="display:grid;grid-template-columns:120px 1fr;gap:24px;padding-block:20px;border-bottom:1px solid rgb(17 17 17/.25)"><span class="t-display-s accent" style="font-size:clamp(32px,5vw,56px)">02</span><div style="max-width:60ch"><p class="t-xl" style="font-size:20px;margin-bottom:6px">A live map cannot cost you the ride home.</p><p class="t-m muted">Continuous GPS is the most expensive thing a phone can do. If the battery goes, riders switch the app off at the first fuel stop and it never comes back — so the app runs second-by-second on the bike and sips once you have parked.</p></div></div>
+        <div style="display:grid;grid-template-columns:120px 1fr;gap:24px;padding-block:20px;border-bottom:1px solid rgb(17 17 17/.25)"><span class="t-display-s accent" style="font-size:clamp(32px,5vw,56px)">03</span><div style="max-width:60ch"><p class="t-xl" style="font-size:20px;margin-bottom:6px">Readable in one glance at 100 km/h.</p><p class="t-m muted">Handlebar mount, direct sun, polarised visor. Position, speed and trail have to answer "who is ahead, who is behind, is anyone stopped" without a second look.</p></div></div>
+        <div style="display:grid;grid-template-columns:120px 1fr;gap:24px;padding-block:20px;border-bottom:1px solid rgb(17 17 17/.25)"><span class="t-display-s accent" style="font-size:clamp(32px,5vw,56px)">04</span><div style="max-width:60ch"><p class="t-xl" style="font-size:20px;margin-bottom:6px">Three surfaces, one person.</p><p class="t-m muted">iOS, Android and the share link, shipped from a single codebase by the same person who designed them. Anything that needed a per-platform design pass did not get built.</p></div></div>
+        <div style="display:grid;grid-template-columns:120px 1fr;gap:24px;padding-block:20px 40px"><span class="t-display-s accent" style="font-size:clamp(32px,5vw,56px)">05</span><div style="max-width:60ch"><p class="t-xl" style="font-size:20px;margin-bottom:6px">Good roads have no signal.</p><p class="t-m muted">The routes worth riding are the ones that drop to nothing. Losing signal cannot mean losing the ride, so the app keeps recording through a dead zone and fills the map back in when it returns.</p></div></div>
       </div>
     </div>
   </section>
@@ -127,7 +128,7 @@
       <div class="decision-detail c5 s8">
         <div><div class="label">On the table</div><p>A user model with friends, groups and history — the shape every competitor has. A hybrid where sessions are optional inside a profile.</p></div>
         <div><div class="label why">Why this one</div><p>Every real use I observed was bounded: a ride, a hike, a festival day. Modelling the bounded thing directly removed sign-up, contacts, permissions dialogues and the privacy question in one move. A session has a start, a code, participants and an end. That's the whole data model.</p></div>
-        <div><div class="label">What it cost</div><p>No retention loop that doesn't depend on someone starting a new session. No monetisable profile. Recurring crews re-enter a code every Sunday — a friction I chose over an account and still hear about.</p></div>
+        <div><div class="label">What it cost</div><p>Nothing survives the ride. Location, messages and notification tokens are dropped with the session, so there is no history to return to, no profile to monetise and no way to re-engage anyone afterwards. A crew that rides every Sunday starts from a new code every Sunday.</p></div>
       </div>
     </article>
 
@@ -149,14 +150,14 @@
 
     <article class="decision">
       <div class="c2 decision-index">D.03</div>
-      <h3 class="t-display-s c5 s3">Heading and speed on the marker. Not the name.</h3>
+      <h3 class="t-display-s c5 s3">The app notices the split before the crew does.</h3>
       <div class="decision-detail c5 s8">
-        <div><div class="label">On the table</div><p>Name labels. Avatars. Initials in a coloured disc — the default in every location app.</p></div>
-        <div><div class="label why">Why this one</div><p>At 90 km/h the question is never "who is that" — crews know each other. It's "is the group moving, and which way." A chevron that rotates with heading and stretches with speed answers both in one glyph, and stays legible at 24px in direct sun where an initial does not.</p></div>
-        <div><div class="label">What it cost</div><p>At a festival with twelve people, markers are indistinguishable. I added a long-press to reveal the name — a second interaction I'd rather not have — and a colour per rider, which capped comfortable group size at eight.</p></div>
+        <div class="todo-block"><span class="mono-xs tag">On the table</span><p>[What else was considered here — leaving it to riders to notice, a manual "wait up" only, a distance threshold? Worth naming the option you rejected.]</p></div>
+        <div><div class="label why">Why this one</div><p>Losing the crew is not a moment, it is a slow drift you only register three turns later. So the app holds a model of the shape of the crew and pings everyone the moment someone drops off the back — early enough that the group can still close up, rather than after the rear rider is already lost.</p></div>
+        <div class="todo-block"><span class="mono-xs tag">What it cost</span><p>[Every alert is a decision to interrupt someone at 100 km/h. What did tuning that threshold cost — false pings, missed ones?]</p></div>
       </div>
       <div class="c12 mt-6">
-        <div class="mono-s muted mb-2">Component — marker states, fading on signal loss</div>
+        <div class="mono-s muted mb-2">Component — crew markers at a glance</div>
         <div class="marker-demo">
           <div class="cell"><div class="swatch"><div class="tri" style="opacity:1"></div></div><div class="mono-xs mt-2">live</div></div>
           <div class="cell"><div class="swatch"><div class="tri" style="opacity:.7"></div></div><div class="mono-xs mt-2">30 s</div></div>
@@ -169,11 +170,11 @@
 
     <article class="decision" style="padding-bottom:56px">
       <div class="c2 decision-index">D.04</div>
-      <h3 class="t-display-s c5 s3">Stale positions fade. They don't freeze.</h3>
+      <h3 class="t-display-s c5 s3">Six answers, one tap, with gloves on.</h3>
       <div class="decision-detail c5 s8">
-        <div><div class="label">On the table</div><p>Hide the marker on signal loss. Keep the last known position as-is. Show a "last seen 2 min" label next to it.</p></div>
-        <div><div class="label why">Why this one</div><p>A hidden marker reads as "they left". A frozen one reads as "they crashed". A label needs reading. Fading the marker in three steps — 30 s, 2 min, 5 min — puts uncertainty in the same visual channel as position, so it's understood at the same glance.</p></div>
-        <div><div class="label">What it cost</div><p>Three extra states on every marker, across three platforms. And a rider fading out in a tunnel still triggers a worried phone call — the design communicates uncertainty; it can't remove it.</p></div>
+        <div><div class="label">On the table</div><p>A keyboard. Voice. The phone-in-your-pocket approach of not communicating mid-ride at all.</p></div>
+        <div><div class="label why">Why this one</div><p>Everything a rider needs to say at speed is one of six things: wait up, stopping, wrong turn, keep going, I'm OK, in trouble. Fixing that to six taps means the message costs a glove and a second, not a stop. The thread itself is already populated — everyone who tapped the link is in it — so there are no numbers to swap and no group to set up.</p></div>
+        <div><div class="label">What it cost</div><p>Six options is a closed vocabulary. Anything outside it has to wait for the next stop, and the chat disappears with the session, so nothing said on the ride is there afterwards.</p></div>
       </div>
     </article>
   </section>
@@ -201,7 +202,7 @@
       <div class="c4">
         <div class="mono-s" style="border-top:1px solid var(--ink);padding-block:10px 14px">Type — native stacks, one scale</div>
         <div style="display:grid;gap:10px">
-          <div style="display:flex;align-items:baseline;justify-content:space-between;border-bottom:1px dotted rgb(17 17 17/.4);padding-bottom:6px"><span class="t-display-s" style="font-size:40px;letter-spacing:.06em">KV7QP</span><span class="mono-xs">code · 40/1 · +6%</span></div>
+          <div style="display:flex;align-items:baseline;justify-content:space-between;border-bottom:1px dotted rgb(17 17 17/.4);padding-bottom:6px"><span class="t-display-s" style="font-size:40px;letter-spacing:.06em">FVRG5</span><span class="mono-xs">code · 40/1 · +6%</span></div>
           <div style="display:flex;align-items:baseline;justify-content:space-between;border-bottom:1px dotted rgb(17 17 17/.4);padding-bottom:6px"><span class="t-display-s" style="font-size:24px">Ride of 6</span><span class="mono-xs">title · 24/26</span></div>
           <div style="display:flex;align-items:baseline;justify-content:space-between;border-bottom:1px dotted rgb(17 17 17/.4);padding-bottom:6px"><span class="t-m">Share this code with your crew</span><span class="mono-xs">body · 16/22</span></div>
           <div style="display:flex;align-items:baseline;justify-content:space-between;border-bottom:1px dotted rgb(17 17 17/.4);padding-bottom:6px"><span class="mono-m" style="text-transform:none">2.4 KM · 41 KM/H</span><span class="mono-xs">telemetry · 12/16 mono</span></div>
@@ -211,12 +212,12 @@
         <div class="mono-s" style="border-top:1px solid var(--ink);padding-block:10px 14px">Component — marker + code entry</div>
         <div class="marker-demo">
           <div class="cell"><div class="swatch"><div class="tri"></div></div><div class="mono-xs mt-1">live</div></div>
-          <div class="cell"><div class="swatch"><div class="tri" style="opacity:.4"></div></div><div class="mono-xs mt-1">fading</div></div>
+          <div class="cell"><div class="swatch"><div class="tri" style="opacity:.4"></div></div><div class="mono-xs mt-1">no signal</div></div>
           <div class="cell"><div class="swatch"><div style="width:16px;height:16px;border:2px dashed var(--ink-muted);border-radius:50%"></div></div><div class="mono-xs mt-1">stopped</div></div>
         </div>
         <div class="code-entry mt-5">
-          <div class="code-row valid"><span class="digits">K V 7 Q P</span><span class="mono-xs">valid · joining</span></div>
-          <div class="code-row invalid"><span class="digits">K V 7 Q X</span><span class="mono-xs">no such ride</span></div>
+          <div class="code-row valid"><span class="digits">F V R G 5</span><span class="mono-xs">valid · joining</span></div>
+          <div class="code-row invalid"><span class="digits">F V R G X</span><span class="mono-xs">no such session</span></div>
         </div>
       </div>
     </div>
@@ -229,21 +230,21 @@
     </div>
     <div class="row" style="align-items:end;padding-bottom:40px">
       <div class="c4">
-        <div style="border:2px solid var(--ink);border-radius:36px;padding:10px;background:var(--ink)"><div class="media" style="aspect-ratio:9/19.5;border-radius:26px;display:grid;place-items:center;border:none" ><span class="mono-s ta-c muted">iOS — Join screen</span></div></div>
-        <div class="mono-s mt-3">S.01 — Join. The whole first screen is the keypad.</div>
+        <div style="border:2px solid var(--ink);border-radius:36px;padding:10px;background:var(--ink)"><div class="media" style="aspect-ratio:9/19.5;border-radius:26px;display:grid;place-items:center;border:none" ><span class="mono-s ta-c muted">iOS — Start a session</span></div></div>
+        <div class="mono-s mt-3">S.01 — Start. A name, an emoji, and a five-letter code.</div>
       </div>
       <div class="c4">
         <div style="border:2px solid var(--ink);border-radius:36px;padding:10px;background:var(--ink)"><div class="media" style="aspect-ratio:9/19.5;border-radius:26px;display:grid;place-items:center;border:none"><span class="mono-s ta-c muted">iOS — Live map</span></div></div>
-        <div class="mono-s mt-3">S.02 — Map. Six riders, two fading, one stopped.</div>
+        <div class="mono-s mt-3">S.02 — Map. Position, speed and trail for the whole crew.</div>
       </div>
       <div class="c4">
-        <div style="border:2px solid var(--ink);border-radius:24px;padding:10px;background:var(--ink)"><div class="media" style="aspect-ratio:9/20;border-radius:16px;display:grid;place-items:center;border:none"><span class="mono-s ta-c muted">Android — Ride ended</span></div></div>
-        <div class="mono-s mt-3">S.03 — End. Route summary, then nothing is kept.</div>
+        <div style="border:2px solid var(--ink);border-radius:24px;padding:10px;background:var(--ink)"><div class="media" style="aspect-ratio:9/20;border-radius:16px;display:grid;place-items:center;border:none"><span class="mono-s ta-c muted">Android — Ride recap</span></div></div>
+        <div class="mono-s mt-3">S.03 — Recap. Distance, top speed, GPX export — then the session is dropped.</div>
       </div>
     </div>
     <div class="media" style="margin:0 var(--margin);height:max(160px,min(480px,50vw));position:relative">
-      <div class="fig-caption bottom">S.04 — Live map, full bleed</div>
-      <div class="fig-caption bottom right muted">tagga.io</div>
+      <div class="fig-caption bottom">S.04 — share.tagga.io/FVRG5 — one tap and they are on the map</div>
+      <div class="fig-caption bottom right muted">share.tagga.io</div>
     </div>
   </section>
 
@@ -255,7 +256,7 @@
     <div class="row" style="padding-block:48px 56px">
       <div class="c4" style="border-top:1px solid var(--ink);padding-top:14px">
         <div class="mono-s muted">What shipped</div>
-        <p class="t-m mt-3">A fully functional iOS and Android beta, distributed through TestFlight and Orbit, built solo from concept in January 2026.</p>
+        <p class="t-m mt-3">A fully functional iOS and Android beta, distributed through TestFlight and Orbit, built solo from concept in January 2026. Crews of up to 30, free, with a waitlist open ahead of the App Store and Google Play release.</p>
       </div>
       <div class="c4" style="border-top:1px solid var(--ink);padding-top:14px">
         <div class="mono-s muted">What I know</div>
@@ -264,6 +265,7 @@
       <div class="c4" style="border-top:1px solid var(--ink);padding-top:14px">
         <div class="mono-s muted">What I don't know</div>
         <p class="t-m mt-3">Anything at scale. There is no public release yet, so there are no retention, battery or session numbers worth printing. When there are, they go here with their denominators.</p>
+        <p class="mono-s muted mt-3">Not an emergency service — a boundary the product states plainly rather than implies.</p>
       </div>
     </div>
   </section>
@@ -300,9 +302,9 @@
   (function(){
     var states = [
       {c:"empty", d:"_ _ _ _ _", l:"empty"},
-      {c:"empty", d:"K _ _ _ _", l:"typing"},
-      {c:"empty", d:"K V 7 _ _", l:"typing"},
-      {c:"valid", d:"K V 7 Q P", l:"valid · joining"},
+      {c:"empty", d:"F _ _ _ _", l:"typing"},
+      {c:"empty", d:"F V R _ _", l:"typing"},
+      {c:"valid", d:"F V R G 5", l:"valid · joining"},
     ];
     var el = document.getElementById("code-entry");
     if(!el) return;
