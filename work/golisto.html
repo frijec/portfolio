@@ -24,6 +24,8 @@
   </div>
 </nav>
 <div class="wrap">
+  <div class="gutter-label left">Case 01 / 06 — Golisto — Own product</div>
+
   <section style="padding:40px 0 0" class="masthead-enter">
     <div class="row" style="margin-bottom:36px">
       <span class="mono-s c8" style="display:flex;gap:32px"><span>01 / 06</span><span class="accent"><span class="dot"></span>Status: In production</span><span>2021 — ongoing</span></span>
@@ -47,13 +49,93 @@
   </section>
 
   <section class="section">
-    <div class="row" style="padding-block:14px 64px">
-      <span class="mono-s c2">Status</span>
-      <div class="c7 s4" style="padding-top:48px;display:grid;gap:20px">
-        <p class="t-l reveal">Full case study in progress. Golisto is live and growing, which means the decisions worth documenting are still being made — this page will carry the same structure as Tagga once the record is settled: situation, problem, decisions, cost.</p>
-        <a href="tagga.html" class="arrow-link magnet mt-4">Read the Tagga case in the meantime
-          <svg width="14" height="10" viewBox="0 0 14 10" fill="none"><path d="M0 5H13M13 5L9 1M13 5L9 9" stroke="currentColor"/></svg>
-        </a>
+    <div class="row" style="padding-block:14px 56px">
+      <span class="mono-s c2">02 · Situation</span>
+      <div class="c7 s4 todo-block" style="margin-top:48px">
+        <span class="mono-xs tag">Template slot — prose, 1–3 short paragraphs</span>
+        <p>[What was the market/user situation before Golisto existed — why does condition-grading matter enough to build a marketplace around it? Who was buying and selling before this, and what were they using instead?]</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="row" style="padding-top:14px">
+      <span class="mono-s c2">03 · Problem</span>
+      <h2 class="todo c9 s3" style="padding-top:48px;font:600 clamp(30px,3.8vw,56px)/1 var(--font-display);letter-spacing:-.04em;max-width:22ch">[The problem, stated as one sentence a stranger could repeat back.]</h2>
+    </div>
+    <div class="row" style="padding:56px 0 0">
+      <span class="mono-s c2 muted s3">Constraints — template slots</span>
+      <div class="c8 s5" style="border-top:1px solid var(--ink)">
+        <div style="display:grid;grid-template-columns:120px 1fr;gap:24px;padding-block:20px;border-bottom:1px solid rgb(17 17 17/.25)"><span class="t-display-s accent" style="font-size:clamp(32px,5vw,56px)">01</span><div class="todo-block"><span class="mono-xs tag">Constraint</span><p>[Name one constraint that made this hard — e.g. trust between strangers, grading disputes, payment holds.]</p></div></div>
+        <div style="display:grid;grid-template-columns:120px 1fr;gap:24px;padding-block:20px;border-bottom:1px solid rgb(17 17 17/.25)"><span class="t-display-s accent" style="font-size:clamp(32px,5vw,56px)">02</span><div class="todo-block"><span class="mono-xs tag">Constraint</span><p>[A second constraint — technical, operational, or regulatory.]</p></div></div>
+        <div style="display:grid;grid-template-columns:120px 1fr;gap:24px;padding-block:20px 40px"><span class="t-display-s accent" style="font-size:clamp(32px,5vw,56px)">03</span><div class="todo-block"><span class="mono-xs tag">Constraint</span><p>[A third, if there is one worth naming.]</p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="row" style="padding:14px 0 8px">
+      <span class="mono-s c2">05 · Decisions</span>
+      <span class="mono-s ta-r muted c2" style="grid-column:11/13">Template · 3 slots</span>
+    </div>
+
+    <article class="decision">
+      <div class="c2 decision-index">D.01</div>
+      <h3 class="todo c5 s3" style="font:600 clamp(28px,3.8vw,44px)/1 var(--font-display);letter-spacing:-.04em">[Decision headline — a short declarative sentence.]</h3>
+      <div class="decision-detail c5 s8">
+        <div class="todo-block"><span class="mono-xs tag">On the table</span><p>[What alternatives were considered and rejected?]</p></div>
+        <div class="todo-block"><span class="mono-xs tag">Why this one</span><p>[Why was this the right call given the constraints above?]</p></div>
+        <div class="todo-block"><span class="mono-xs tag">What it cost</span><p>[What did choosing this give up? Be specific — no decision is free.]</p></div>
+      </div>
+    </article>
+
+    <article class="decision">
+      <div class="c2 decision-index">D.02</div>
+      <h3 class="todo c5 s3" style="font:600 clamp(28px,3.8vw,44px)/1 var(--font-display);letter-spacing:-.04em">[Second decision headline.]</h3>
+      <div class="decision-detail c5 s8">
+        <div class="todo-block"><span class="mono-xs tag">On the table</span><p>[Alternatives considered.]</p></div>
+        <div class="todo-block"><span class="mono-xs tag">Why this one</span><p>[Reasoning.]</p></div>
+        <div class="todo-block"><span class="mono-xs tag">What it cost</span><p>[Cost.]</p></div>
+      </div>
+    </article>
+
+    <article class="decision" style="padding-bottom:56px">
+      <div class="c2 decision-index">D.03</div>
+      <h3 class="todo c5 s3" style="font:600 clamp(28px,3.8vw,44px)/1 var(--font-display);letter-spacing:-.04em">[Third decision headline, if there is one worth its own block.]</h3>
+      <div class="decision-detail c5 s8">
+        <div class="todo-block"><span class="mono-xs tag">On the table</span><p>[Alternatives considered.]</p></div>
+        <div class="todo-block"><span class="mono-xs tag">Why this one</span><p>[Reasoning.]</p></div>
+        <div class="todo-block"><span class="mono-xs tag">What it cost</span><p>[Cost.]</p></div>
+      </div>
+    </article>
+  </section>
+
+  <section class="section">
+    <div class="row" style="padding:14px 0 40px">
+      <span class="mono-s c2">07 · Surfaces</span>
+      <span class="mono-s ta-r muted c2" style="grid-column:11/13">Template slot</span>
+    </div>
+    <div class="row" style="padding-bottom:40px">
+      <div class="c10 todo-block"><span class="mono-xs tag">Screens</span><p>[Drop finished screens here, full-bleed and generous — device frames for mobile, bare screen for web. Three to six is usually enough.]</p></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="row" style="padding:14px 0 0">
+      <span class="mono-s c2">08 · Outcome</span>
+      <span class="mono-s ta-r muted c2" style="grid-column:11/13">Template slot</span>
+    </div>
+    <div class="row" style="padding:48px 0 56px">
+      <div class="c10 todo-block"><span class="mono-xs tag">Numbers, or the honest alternative</span><p>[If there are real, sourced numbers, use the tile pattern from Tagga's Outcome section. If not, use the Vild Mad pattern instead — what shipped / what I know / what I don't know, all in prose, no invented metric.]</p></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="row" style="padding:14px 0 56px">
+      <span class="mono-s c2">09 · Reflection</span>
+      <div class="c6 s4 todo-block" style="margin-top:40px">
+        <span class="mono-xs tag">One short block, signed</span>
+        <p>[What would you do differently, knowing what you know now? One or two paragraphs, first person, past tense.]</p>
       </div>
     </div>
   </section>

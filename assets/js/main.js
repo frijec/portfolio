@@ -101,7 +101,8 @@
     const cursor = document.createElement("div");
     cursor.className = "cursor";
     cursor.innerHTML =
-      '<svg viewBox="0 0 18 18"><path d="M9 0 V18 M0 9 H18" stroke="currentColor" stroke-width="1"/></svg>';
+      '<svg class="cur-default" viewBox="0 0 18 18"><path d="M9 1V6M9 12V17M1 9H6M12 9H17" stroke="currentColor" stroke-width="1.5"/></svg>' +
+      '<svg class="cur-hover" viewBox="0 0 36 36"><path d="M2 11V2H11M25 2H34V11M34 25V34H25M11 34H2V25" stroke="currentColor" stroke-width="1.5" fill="none"/><circle cx="18" cy="18" r="1.6" fill="currentColor"/></svg>';
     const readout = document.createElement("div");
     readout.className = "cursor-read";
     document.body.append(cursor, readout);
