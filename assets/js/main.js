@@ -61,6 +61,12 @@
     const SKIP = "[data-clock], .theme-toggle, .marquee-track, .cursor-read";
     const GLYPHS = "ABCDEFGHJKLMNPQRSTUVWXYZ0123456789#%&*/\\<>[]{}=+-";
 
+    // decode timing — tune here
+    const BASE = 420;      // ms floor, before per-character time
+    const PER_CHAR = 24;   // ms added per character
+    const MAX = 1600;      // ms ceiling for long strings
+    const ROLL = 55;       // ms between glyph re-rolls; lower = buzzier
+
     const skip = (el) =>
       el.closest(SKIP) || (el.parentElement && el.parentElement.closest(CIPHER_SEL + ", " + TYPE_SEL));
 
@@ -81,12 +87,21 @@
     const scrambleChar = (ch) =>
       /[A-Za-z0-9]/.test(ch) ? GLYPHS[(Math.random() * GLYPHS.length) | 0] : ch;
 
-    function paint(item, resolved) {
+    /* Unresolved glyphs are held between re-rolls rather than
+       re-randomised every frame, so the scramble reads as cycling
+       characters instead of noise. */
+    function paint(item, resolved, reroll) {
       let i = 0;
       for (const part of item.parts) {
         let s = "";
         for (let c = 0; c < part.text.length; c++, i++) {
-          s += i < resolved ? part.text[c] : scrambleChar(part.text[c]);
+          const ch = part.text[c];
+          if (i < resolved || !/[A-Za-z0-9]/.test(ch)) {
+            s += ch;
+            continue;
+          }
+          if (reroll || item.glyphs[i] === undefined) item.glyphs[i] = scrambleChar(ch);
+          s += item.glyphs[i];
         }
         part.node.nodeValue = s;
       }
@@ -95,7 +110,9 @@
     function tick(now) {
       for (const item of [...active]) {
         const p = Math.min(1, (now - item.t0) / item.dur);
-        paint(item, Math.floor(p * item.total));
+        const reroll = now - item.lastRoll >= ROLL;
+        if (reroll) item.lastRoll = now;
+        paint(item, Math.floor(p * item.total), reroll);
         if (p >= 1) {
           item.parts.forEach((pt) => (pt.node.nodeValue = pt.text));
           item.el.classList.remove("typing");
@@ -111,8 +128,15 @@
       const parts = textNodes(el).map((n) => ({ node: n, text: n.nodeValue }));
       const total = parts.reduce((a, p) => a + p.text.length, 0);
       if (!total || total > 240) return;
-      const item = { el, parts, total, dur: Math.min(900, 240 + total * 14) };
-      paint(item, 0); // hide the answer before it scrolls into view
+      const item = {
+        el,
+        parts,
+        total,
+        dur: Math.min(MAX, BASE + total * PER_CHAR),
+        glyphs: [],
+        lastRoll: 0,
+      };
+      paint(item, 0, true); // hide the answer before it scrolls into view
       ciphers.push(item);
     });
 
