@@ -219,7 +219,7 @@ img{max-width:100%;display:block}
 /* ============================================================
    DECISIONS BLOCK
    ============================================================ */
-.decision{border-bottom:1px solid var(--rule-hard);padding:var(--sp-7) 0 var(--sp-8);
+.decision{border-bottom:1px solid var(--rule-hard);padding:var(--sp-7) var(--margin) var(--sp-8);
   display:grid;grid-template-columns:repeat(12,1fr);column-gap:var(--gutter)}
 .decision-index{font:600 clamp(48px,6vw,88px)/.85 var(--font-display);letter-spacing:-.05em;color:var(--accent)}
 .decision h3{max-width:16ch;text-wrap:pretty}
@@ -271,7 +271,7 @@ img{max-width:100%;display:block}
 }
 
 /* client marquee */
-.marquee{overflow:hidden;border-top:1px solid var(--rule-hard);padding-block:var(--sp-5)}
+.marquee{overflow:hidden;border-top:1px solid var(--rule-hard);padding-block:var(--sp-5);padding-inline:var(--margin)}
 .marquee-track{display:flex;gap:var(--sp-10);width:max-content;animation:marquee 32s linear infinite}
 .marquee:hover .marquee-track{animation-play-state:paused}
 .marquee-track span{font:600 clamp(24px,3vw,32px)/1 var(--font-display);letter-spacing:-.03em;white-space:nowrap}
