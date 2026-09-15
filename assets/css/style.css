@@ -13,12 +13,10 @@
   --ink:#111111;
   --ink-muted:#55534E;
   --accent:#E16B2C;
-  --accent-text:#A8481B;
-  --accent-deep:#8F3A12;
+  --on-accent:#111111;   /* 5.70:1 on --accent */
   --rule-hard:var(--ink);
   --rule-grid:rgb(17 17 17 / .10);
   --rule-leader:#999999;
-  --signal-fail:#8A1C1C;
 
   --font-display:'Archivo',Helvetica,Arial,sans-serif;
   --font-mono:'IBM Plex Mono',ui-monospace,monospace;
@@ -50,8 +48,7 @@
 }
 
 /* CRT mode — ground and ink swap per the Foundations token spec.
-   Accent is lifted on the dark ground; --accent-text can match it there
-   because #F08A45 measures 7.8:1 on this ground. */
+   The accent lifts to #F08A45, which measures 7.8:1 on this ground. */
 :root[data-theme="crt"]{
   --ground-bone:#0C0D10;
   --ground-bone-2:#14161B;
@@ -59,11 +56,9 @@
   --ink:#E8E6DE;
   --ink-muted:#8A897F;
   --accent:#F08A45;
-  --accent-text:#F08A45;
-  --accent-deep:#FFB07A;
+  --on-accent:#0C0D10;   /* 7.77:1 on --accent */
   --rule-grid:rgb(232 230 222 / .12);
   --rule-leader:#4A4C55;
-  --signal-fail:#FF6B6B;
 
   --grain-color:#E8E6DE;
   --grain-opacity:.03;
@@ -101,7 +96,7 @@ body{
 p,h1,h2,h3,h4{margin:0}
 a{color:var(--ink);text-decoration:none}
 img{max-width:100%;display:block}
-::selection{background:var(--accent-deep);color:var(--ground-bone)}
+::selection{background:var(--accent);color:var(--on-accent)}
 
 .mono{font-family:var(--font-mono)}
 
@@ -125,9 +120,8 @@ img{max-width:100%;display:block}
   .mono-xs{ font-size:11px }
 }
 
-.accent{color:var(--accent-text)}
+.accent{color:var(--accent)}
 .muted{color:var(--ink-muted)}
-.fail{color:var(--signal-fail)}
 
 /* ============================================================
    LAYOUT / GRID
@@ -202,7 +196,7 @@ img{max-width:100%;display:block}
 .nav-links{display:flex;align-items:center;gap:var(--sp-6)}
 .nav-context{color:var(--ink-muted)}
 .nav a{position:relative;padding-bottom:2px}
-.nav a.active{color:var(--accent-text)}
+.nav a.active{color:var(--accent)}
 .nav a::after{
   content:"";position:absolute;left:0;right:100%;bottom:-2px;height:1px;background:var(--accent);
   transition:right var(--dur-fast) var(--ease-snap);
@@ -233,7 +227,7 @@ img{max-width:100%;display:block}
    ============================================================ */
 .kv{display:grid;gap:6px;font:400 12px/1.5 var(--font-mono);letter-spacing:.08em;text-transform:uppercase}
 .kv-row{display:flex;align-items:baseline;gap:8px}
-.kv-row span:first-child{color:var(--accent-text);flex-shrink:0}
+.kv-row span:first-child{color:var(--accent);flex-shrink:0}
 .kv-leader{flex:1;border-bottom:1px dotted var(--rule-leader);transform:translateY(-4px);
   position:relative;overflow:hidden}
 .kv-leader::after{content:"";position:absolute;inset:0;border-bottom:1px solid var(--accent);
@@ -323,7 +317,7 @@ img{max-width:100%;display:block}
 .decision-detail{display:grid;gap:20px;font:400 15px/1.5 var(--font-display)}
 .decision-detail .label{font:400 11px/1 var(--font-mono);letter-spacing:.12em;text-transform:uppercase;
   margin-bottom:8px;color:var(--ink-muted)}
-.decision-detail .label.why{color:var(--accent-text)}
+.decision-detail .label.why{color:var(--accent)}
 @media (max-width:760px){
   .decision{grid-template-columns:repeat(4,1fr)}
   .decision-index{grid-column:1/-1}
@@ -383,15 +377,31 @@ img{max-width:100%;display:block}
   background:none;border:1px solid var(--rule-grid);color:var(--ink-muted);
   padding:5px 8px;transition:color var(--dur-fast) linear,border-color var(--dur-fast) linear;
 }
-.marquee-pause:hover{color:var(--accent-text);border-color:var(--accent)}
+.marquee-pause:hover{color:var(--accent);border-color:var(--accent)}
+
+/* ============================================================
+   FOCUS
+   The accent marks where you are. This is the one place it is
+   non-negotiable: the site hides the native cursor, so a keyboard
+   user has nothing else to go on.
+   ============================================================ */
+:focus-visible{
+  outline:2px solid var(--accent);
+  outline-offset:3px;
+  box-shadow:0 0 var(--glow) var(--glow-accent);
+}
+:focus:not(:focus-visible){outline:none}
 
 /* ============================================================
    BUTTONS / LINKS
    ============================================================ */
 .arrow-link{display:inline-flex;align-items:center;gap:10px;font:500 12px/1 var(--font-mono);
-  letter-spacing:.12em;text-transform:uppercase;color:var(--accent-text);border-bottom:1px solid var(--accent);
-  padding-bottom:6px;transition:gap var(--dur-fast) var(--ease-snap)}
-.arrow-link:hover{gap:16px;color:var(--accent-deep);border-color:var(--accent-deep)}
+  letter-spacing:.12em;text-transform:uppercase;
+  background:var(--accent);color:var(--on-accent);border:1px solid var(--accent);
+  padding:11px 14px;
+  transition:gap var(--dur-fast) var(--ease-snap),
+    background var(--dur-fast) linear,color var(--dur-fast) linear}
+.arrow-link:hover{gap:16px;background:var(--ink);color:var(--ground-bone);border-color:var(--ink)}
 .arrow-link svg{transition:transform var(--dur-fast) var(--ease-snap)}
 .arrow-link:hover svg{transform:translateX(3px)}
 
@@ -498,7 +508,17 @@ footer{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px 24px;pa
 .kv-row span:first-child,.decision-detail .label.why{
   text-shadow:0 0 var(--glow) var(--glow-accent);
 }
-.nav a,.arrow-link,.mono-s.accent{text-shadow:0 0 8px var(--glow-accent)}
+.nav a,.mono-s.accent{text-shadow:0 0 8px var(--glow-accent)}
+/* The CTA is a solid block, so it blooms outward rather than as text. */
+.arrow-link{box-shadow:0 0 var(--glow) var(--glow-accent)}
+.arrow-link:hover{box-shadow:0 0 calc(var(--glow) * 1.5) var(--glow-ink)}
+.marquee-pause:hover,.theme-toggle:hover{box-shadow:0 0 var(--glow) var(--glow-accent)}
+
+/* Headline outcome numbers carry the accent — they are the payload of a
+   case, and at 56-96px they read as a marker, not as body colour. */
+.outcome-tile .num{color:var(--accent)}
+.outcome-tile .num{text-shadow:0 0 var(--glow) var(--glow-accent)}
+a.row[href^="mailto:"]:hover{color:var(--accent)}
 .nav{box-shadow:0 1px var(--glow) rgb(17 17 17 / .05)}
 .section,.decision,.work-row{box-shadow:0 -1px var(--glow) var(--glow-ink)}
 .work-row:hover h2{text-shadow:0 0 calc(var(--glow) * 1.8) var(--glow-accent)}
@@ -516,7 +536,7 @@ footer{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px 24px;pa
   padding:6px 9px;display:inline-flex;align-items:center;gap:7px;
   transition:color var(--dur-fast) linear,border-color var(--dur-fast) linear;
 }
-.theme-toggle:hover{color:var(--accent-text);border-color:var(--accent)}
+.theme-toggle:hover{color:var(--accent);border-color:var(--accent)}
 .theme-toggle .led{
   width:6px;height:6px;border-radius:50%;background:var(--ink-muted);
   transition:background var(--dur-fast) linear,box-shadow var(--dur-fast) linear;
@@ -544,7 +564,7 @@ footer{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px 24px;pa
 .cursor svg{position:absolute;inset:0;width:100%;height:100%;display:block}
 .cursor .cur-hover{opacity:0;transform:scale(.5);transition:opacity var(--dur-fast) var(--ease-snap),transform var(--dur-fast) var(--ease-snap)}
 .cursor .cur-default{opacity:1;transform:scale(1);transition:opacity var(--dur-fast) var(--ease-snap),transform var(--dur-fast) var(--ease-snap)}
-.cursor.hover{width:36px;height:36px;color:var(--accent-deep)}
+.cursor.hover{width:36px;height:36px;color:var(--accent)}
 .cursor.hover .cur-default{opacity:0;transform:scale(1.5)}
 .cursor.hover .cur-hover{opacity:1;transform:scale(1)}
 .cursor-read{
@@ -567,19 +587,19 @@ footer{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px 24px;pa
 .code-row{display:flex;justify-content:space-between;align-items:center;padding:10px 12px;
   background:var(--ground-bone);border:1px solid rgb(17 17 17/.3);transition:all var(--dur-med) linear}
 .code-row .digits{font:600 20px/1 var(--font-display);letter-spacing:.2em}
-.code-row.empty .digits{color:#999}
+.code-row.empty .digits{color:var(--rule-leader)}
 .code-row.valid{background:var(--ink);color:var(--ground-bone);border-color:var(--ink)}
-.code-row.invalid{border-color:var(--signal-fail)}
-.code-row.invalid .digits{color:var(--signal-fail)}
+.code-row.invalid{border-style:dashed;border-color:var(--ink-muted)}
+.code-row.invalid .digits,.code-row.invalid .mono-xs{color:var(--ink-muted)}
 
 /* ============================================================
    MARKER STATES DEMO
    ============================================================ */
 .marker-demo{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
 .marker-demo .cell{text-align:center}
-.marker-demo .swatch{height:56px;display:grid;place-items:center;background:#E9E5DA}
+.marker-demo .swatch{height:56px;display:grid;place-items:center;background:var(--ground-bone-2)}
 .marker-demo .tri{width:0;height:0;border-left:11px solid transparent;border-right:11px solid transparent;
-  border-bottom:24px solid #1E3A8A}
+  border-bottom:24px solid var(--accent)}
 
 /* ============================================================
    TERMINAL WRITE-IN
@@ -608,9 +628,9 @@ footer{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px 24px;pa
 /* ============================================================
    TODO / STRUCTURAL PLACEHOLDER
    ============================================================ */
-.todo{color:var(--accent-text);font-style:italic}
+.todo{color:var(--accent);font-style:italic}
 .todo-block{border:1px dashed rgb(225 107 44/.40);background:rgb(225 107 44/.06);padding:18px 20px}
-.todo-block .tag{display:block;color:var(--accent-text);margin-bottom:8px}
+.todo-block .tag{display:block;color:var(--accent);margin-bottom:8px}
 .todo-block p{font-style:italic;color:var(--ink-muted)}
 
 /* ============================================================

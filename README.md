@@ -60,20 +60,34 @@ knob lives in one place — the CRT block at the top of `style.css`:
 | `--glow-accent` / `--glow-ink` | bloom colour |
 | `--plate-url` | the duotone placeholder image |
 
-### Accent: two tiers, on purpose
+### One accent, used deliberately
 
-`#E16B2C` measures **2.9:1 on bone**, which fails AA for the 11–12px mono
-labels the accent is used on. So the accent is split, the same way the
-Foundations doc splits cobalt:
+There is a single accent, `--accent` `#E16B2C`. No darker text tier, no
+hover tier, no second hue anywhere in the chrome — a neo-industrial
+system gets its range from weight, rule, and ground, not from a palette.
 
-- `--accent` `#E16B2C` — the brand orange: rules, LED, borders, tints,
-  glow, scrollbar, and display-scale numerals.
-- `--accent-text` `#A8481B` — **5.1:1 on bone**, used wherever the accent
-  carries mono-sized text.
+The accent marks four things, and nothing else:
 
-Known exception: the 40–88px case numerals use `--accent` at 2.9:1, just
-under the 3:1 large-text threshold. `#DC6527` clears it (3.1:1) and is
-visually near-identical if you want strict compliance there too.
+| Role | Where |
+| --- | --- |
+| **Where you are** | focus ring, active nav item, scroll progress |
+| **What to do** | the CTA — a filled accent block, one per page |
+| **What the case proved** | outcome numerals, case numbers, section labels |
+| **What responds** | work-row hover, marker demos, selection |
+
+One token has to exist alongside it: **`--on-accent`**, the colour of
+anything sitting *on* the accent block. It cannot be `--ink`, because
+`--ink` inverts with the theme and both accent shades are light oranges
+— light-on-orange measures 2.0:1. So `--on-accent` is dark in both
+themes: `#111111` (5.7:1) on bone, `#0C0D10` (7.8:1) in CRT.
+
+**The known cost.** `#E16B2C` measures **2.91:1 on bone**. Accent *text*
+therefore fails AA at the 11–12px mono sizes it is used on, and the
+40–96px numerals sit just under the 3:1 large-text line. This is a
+deliberate trade for a single-colour system. If you want strict AA, the
+options are a darker orange (`#A8481B` clears 5.1:1 but is visibly a
+different colour) or reserving the accent for blocks, rules and fills
+and setting accent *text* in ink.
 
 Two implementation notes worth keeping:
 
