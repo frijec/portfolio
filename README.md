@@ -143,6 +143,10 @@ and DPR, so the numbers change with the device:
 | transfer | `PerformanceResourceTiming.encodedBodySize` |
 | treatment | live, flips to "untreated" with the toggle |
 
+The bottom-left tag also carries provenance, which is authored, not derived.
+The hero is a real in-action photograph rather than a mockup, and that is a
+credential worth stating — file stats alone throw it away.
+
 Two traps, both hit while building this:
 
 - **`naturalWidth` is not the file's resolution.** It reports the *decode*,
