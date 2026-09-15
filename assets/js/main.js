@@ -387,10 +387,17 @@
     media.insertAdjacentElement("afterend", tools);
 
     /* A .media inside a .row is a grid item, so a plain sibling lands in
-       whatever cell comes next — bottom-left of the page, not under the
-       image. Inherit the media's own column placement. */
+       whatever cell comes next — beside the image, or across the page.
+       Copying grid-column only works when the media declares a start line;
+       a bare .c6 auto-places and the row lands next to it instead. So wrap
+       the pair in one cell and move the layout classes onto the wrapper. */
     if (getComputedStyle(media.parentElement).display.includes("grid")) {
-      tools.style.gridColumn = getComputedStyle(media).gridColumn;
+      const layout = [...media.classList].filter((c) => /^[cs]\d+$/.test(c));
+      const cell = document.createElement("div");
+      cell.className = layout.join(" ");
+      media.parentElement.insertBefore(cell, media);
+      media.classList.remove(...layout);
+      cell.append(media, tools);
     }
 
     const slot = (k) =>

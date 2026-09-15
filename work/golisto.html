@@ -9,7 +9,7 @@
 <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..125,400..800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../assets/css/style.css?v=22">
+<link rel="stylesheet" href="../assets/css/style.css?v=23">
 <script>document.documentElement.classList.add("js");try{if(localStorage.getItem("kj-theme")==="crt")document.documentElement.setAttribute("data-theme","crt")}catch(e){}</script>
 </head>
 <body>
@@ -48,7 +48,20 @@
         <div class="kv-row"><span>Market</span><span class="kv-leader"></span><span>Pan-European</span></div>
       </div>
     </div>
-    <div class="media" style="margin-top:32px;height:min(480px,50vw)"></div>
+    <div class="media media--photo" data-credit="Screenshot — golisto.com, September 2026" style="margin-top:32px;height:min(480px,50vw);position:relative">
+      <div class="media-photo" data-aspect="2880x2000">
+        <picture>
+          <source type="image/webp" sizes="100vw"
+                  srcset="../assets/img/golisto-home-1200.webp 1200w,
+                          ../assets/img/golisto-home-2000.webp 2000w">
+          <img src="../assets/img/golisto-home-2000.jpg" width="2000" height="1389" fetchpriority="high"
+               alt="The Golisto homepage: a search bar over 89,707 items, category navigation across eight collectible categories, and rows of listings.">
+        </picture>
+      </div>
+      <div class="fig-caption"><div>Fig. 01</div><div class="muted" data-img="file">golisto-home-2000.webp</div></div>
+      <div class="fig-caption right"><div>Resolution</div><div class="t-display-s mt-2" style="letter-spacing:-.02em" data-img="res">2000 × 1389</div></div>
+      <div class="fig-caption bottom right"><div>Transfer</div><div class="t-display-s mt-2"><span data-img="size">146</span><span class="unit">KB</span></div></div>
+    </div>
   </section>
 
   <section class="section">
@@ -64,10 +77,10 @@
   <section class="section">
     <div class="row" style="padding-top:14px">
       <span class="mono-s c2">03 · Problem</span>
-      <h2 class="todo c9 s3" style="padding-top:48px;font:600 clamp(30px,3.8vw,56px)/1 var(--font-display);letter-spacing:-.04em;max-width:22ch">[The problem, stated as one sentence a stranger could repeat back.]</h2>
+      <h2 class="c9 s3" style="padding-top:48px;font:600 clamp(30px,3.8vw,56px)/1 var(--font-display);letter-spacing:-.04em;max-width:22ch">Buying a collectible online means taking a stranger’s word that the thing is real, and there is nothing standing behind that word.</h2>
     </div>
     <div class="row" style="padding-block:56px 0">
-      <span class="mono-s c2 muted s3">Constraints — template slots</span>
+      <span class="mono-s c2 muted s3">Constraints</span>
       <div class="c8 s5" style="border-top:1px solid var(--ink)">
         <div style="display:grid;grid-template-columns:120px 1fr;gap:24px;padding-block:20px;border-bottom:1px solid rgb(17 17 17/.25)"><span class="t-display-s accent" style="font-size:clamp(32px,5vw,56px)">01</span><div style="max-width:60ch"><p class="t-xl" style="font-size:20px;margin-bottom:6px">Every category grades differently.</p><p class="t-m muted">A card is PSA 3. A console is complete in box. A game is sealed, or it is missing the battery cover. One listing model has to carry all of those without flattening them into a single star rating.</p></div></div>
         <div style="display:grid;grid-template-columns:120px 1fr;gap:24px;padding-block:20px;border-bottom:1px solid rgb(17 17 17/.25)"><span class="t-display-s accent" style="font-size:clamp(32px,5vw,56px)">02</span><div style="max-width:60ch"><p class="t-xl" style="font-size:20px;margin-bottom:6px">Strangers, borders, and no way to inspect.</p><p class="t-m muted">Buyers and sellers are spread across the EU, in different postal systems, trading items they cannot hold first. Buyer protection, verified sellers and integrated payments are the reason a transaction happens at all.</p></div></div>
@@ -84,21 +97,23 @@
 
     <article class="decision">
       <div class="c2 decision-index">D.01</div>
-      <h3 class="t-display-s c5 s3">Condition is structured, so it can be filtered and disputed.</h3>
+      <h3 class="t-display-s c5 s3">Condition became a field instead of a sentence — in the app first.</h3>
       <div class="decision-detail c5 s8">
         <div class="todo-block"><span class="mono-xs tag">On the table</span><p>[What was rejected here — a free-text condition note, a single star rating, photos alone? Worth naming it.]</p></div>
         <div><div class="label why">Why this one</div><p>Condition is what sets the price, so it has to be searchable and comparable. Structured on the listing, it can be filtered, priced against, and held up when a buyer disputes a sale. Written into the description it is only a claim, and the dispute comes down to one person's word against a photograph.</p></div>
         <div class="todo-block"><span class="mono-xs tag">What it cost</span><p>[Structured fields mean a longer listing flow, against a product that promises listing in under a minute. Where did that tension land?]</p></div>
+        <div><div class="label">Where it stands</div><p>The structured field ships in the iOS and Android apps. On the web listing it is still the coarse New / Used pair, with the real grade typed into the description — <em>“Good/great, complete in box”</em> on a PS2 listing, <em>“PSA 3”</em> on a graded card. The vocabulary itself is published in the Knowledge Hub: six grades on two axes, completeness crossed with wear.</p></div>
       </div>
     </article>
 
     <article class="decision">
       <div class="c2 decision-index">D.02</div>
-      <h3 class="todo c5 s3" style="font:600 clamp(28px,3.8vw,44px)/1 var(--font-display);letter-spacing:-.04em">[Second decision — one model across seven categories, or a vocabulary per category?]</h3>
+      <h3 class="t-display-s c5 s3">Land one niche properly before opening the next.</h3>
       <div class="decision-detail c5 s8">
-        <div class="todo-block"><span class="mono-xs tag">On the table</span><p>[Alternatives considered.]</p></div>
-        <div class="todo-block"><span class="mono-xs tag">Why this one</span><p>[Reasoning.]</p></div>
-        <div class="todo-block"><span class="mono-xs tag">What it cost</span><p>[Cost.]</p></div>
+        <div><div class="label">On the table</div><p>A general collectibles marketplace from day one, against a sequence: toys first, then video games and consoles, then trading cards. The pre-seed deck committed to the sequence.</p></div>
+        <div><div class="label why">Why this one</div><p>Each niche grades its own way and has its own communities to recruit from. Opening all of them at once means a listing model that fits none of them properly and a cold start in every category simultaneously.</p></div>
+        <div class="todo-block"><span class="mono-xs tag">What it cost</span><p>[What did sequencing cost — sellers turned away, categories that waited, pressure to open early? Worth naming.]</p></div>
+        <div><div class="label">Where it stands</div><p>Eight categories are live today: video games and consoles, collectible card games, figures and statues, collectible sports cards, LEGO, comics, movies, and entertainment memorabilia.</p></div>
       </div>
     </article>
 
@@ -116,10 +131,53 @@
   <section class="section">
     <div class="row" style="padding-block:14px 40px">
       <span class="mono-s c2">07 · Surfaces</span>
-      <span class="mono-s ta-r muted c2" style="grid-column:11/13">Template slot</span>
+      <span class="mono-s ta-r muted c2" style="grid-column:11/13">Live product, Sept 2026</span>
     </div>
     <div class="row" style="padding-bottom:40px">
-      <div class="c10 todo-block"><span class="mono-xs tag">Screens</span><p>[The surfaces worth showing: a listing with its condition fields, category browse, a live auction mid-countdown, the seller listing flow, and the mobile app. Device frames for the app, bare screen for web.]</p></div>
+      <div class="c6 media media--photo" data-credit="Screenshot — golisto.com, September 2026" style="aspect-ratio:2880/2000;position:relative">
+        <div class="media-photo" data-aspect="2880x2000">
+          <picture>
+            <source type="image/webp" sizes="(max-width:760px) 100vw, 50vw"
+                    srcset="../assets/img/golisto-listing-1200.webp 1200w,
+                            ../assets/img/golisto-listing-2000.webp 2000w">
+            <img src="../assets/img/golisto-listing-2000.jpg" width="2000" height="1389" loading="lazy" alt="A Golisto listing for Metal Gear Solid 3 on PS2, showing price, shipping, buy-it-now, item details, and a Condition row reading Used.">
+          </picture>
+        </div>
+        <div class="fig-caption"><div>S.01 — Listing, web</div></div>
+      </div>
+      <div class="c6 media media--photo" data-credit="Screenshot — golisto.com, September 2026" style="aspect-ratio:2880/2000;position:relative">
+        <div class="media-photo" data-aspect="2880x2000">
+          <picture>
+            <source type="image/webp" sizes="(max-width:760px) 100vw, 50vw"
+                    srcset="../assets/img/golisto-graded-1200.webp 1200w,
+                            ../assets/img/golisto-graded-2000.webp 2000w">
+            <img src="../assets/img/golisto-graded-2000.jpg" width="2000" height="1389" loading="lazy" alt="A Golisto listing for a PSA-graded Charizard box topper card, priced at 6,500 kroner, with make-an-offer alongside buy-it-now.">
+          </picture>
+        </div>
+        <div class="fig-caption"><div>S.02 — Graded card, PSA in free text</div></div>
+      </div>
+      <div class="c6 media media--photo" data-credit="Screenshot — golisto.com, September 2026" style="aspect-ratio:2880/2000;position:relative">
+        <div class="media-photo" data-aspect="2880x2000">
+          <picture>
+            <source type="image/webp" sizes="(max-width:760px) 100vw, 50vw"
+                    srcset="../assets/img/golisto-category-1200.webp 1200w,
+                            ../assets/img/golisto-category-2000.webp 2000w">
+            <img src="../assets/img/golisto-category-2000.jpg" width="2000" height="1389" loading="lazy" alt="The video games and consoles category on Golisto, a grid of listings with filters down the side.">
+          </picture>
+        </div>
+        <div class="fig-caption"><div>S.03 — Category browse</div></div>
+      </div>
+      <div class="c6 media media--photo" data-credit="Screenshot — golisto.com, September 2026" style="aspect-ratio:2880/2000;position:relative">
+        <div class="media-photo" data-aspect="2880x2000">
+          <picture>
+            <source type="image/webp" sizes="(max-width:760px) 100vw, 50vw"
+                    srcset="../assets/img/golisto-condition-1200.webp 1200w,
+                            ../assets/img/golisto-condition-2000.webp 2000w">
+            <img src="../assets/img/golisto-condition-2000.jpg" width="2000" height="1389" loading="lazy" alt="The Golisto condition and grading guide, listing six grades from sealed through for-parts, with authentication checks below.">
+          </picture>
+        </div>
+        <div class="fig-caption"><div>S.04 — The published grading vocabulary</div></div>
+      </div>
     </div>
   </section>
 
@@ -129,9 +187,9 @@
       <span class="mono-s ta-r muted c2" style="grid-column:11/13">Live figures · golisto.com</span>
     </div>
     <div class="row" style="padding-block:48px 56px">
-      <div class="c3 outcome-tile"><div class="num"><span data-count="85501">0</span></div><p class="t-m" style="margin-top:12px">Items listed for sale.</p><p class="mono-s muted mt-2">golisto.com · 2026.09</p></div>
-      <div class="c3 outcome-tile"><div class="num"><span data-count="20825">0</span></div><p class="t-m" style="margin-top:12px">Buyers and sellers on the marketplace.</p><p class="mono-s muted mt-2">golisto.com · 2026.09</p></div>
-      <div class="c3 outcome-tile"><div class="num"><span data-count="94.5">0</span><span class="unit">%</span></div><p class="t-m" style="margin-top:12px">Positive ratings across completed trades.</p><p class="mono-s muted mt-2">golisto.com · 2026.09</p></div>
+      <div class="c3 outcome-tile"><div class="num"><span data-count="89707">0</span></div><p class="t-m" style="margin-top:12px">Items listed for sale.</p><p class="mono-s muted mt-2">golisto.com · 2026.09</p></div>
+      <div class="c3 outcome-tile"><div class="num"><span data-count="21852">0</span></div><p class="t-m" style="margin-top:12px">Buyers and sellers on the marketplace.</p><p class="mono-s muted mt-2">golisto.com · 2026.09</p></div>
+      <div class="c3 outcome-tile"><div class="num"><span data-count="12278">0</span></div><p class="t-m" style="margin-top:12px">Items added in the last month.</p><p class="mono-s muted mt-2">golisto.com · 2026.09</p></div>
       <div class="c3" style="border-top:1px solid var(--ink);padding-top:14px"><div class="mono-s muted">What these are not</div><p class="t-m mt-3" style="max-width:30ch">Marketplace scale, not a measured design result. They describe the business I am CPO of; they do not isolate what any single decision on this page contributed.</p></div>
     </div>
   </section>
@@ -169,6 +227,6 @@
     <span>Kenneth Jensen ® 2026</span><span>Copenhagen</span><span>Consid Danmark / Golisto</span><span>hello@frijec.com</span>
   </footer>
 </div>
-<script src="../assets/js/main.js?v=22"></script>
+<script src="../assets/js/main.js?v=23"></script>
 </body>
 </html>
