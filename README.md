@@ -114,13 +114,15 @@ instead of inverting — an inverted photograph is just a negative.
 Captions and crop marks invert over a photo (`--on-photo`). The default
 bone halo was tuned for the light plate and disappears on a dark image.
 
-Derivatives are generated from the source in `assets/img/`; the source PNG
-is kept there but never served. To regenerate after dropping a new source:
+Full-resolution sources live in `assets/img/_source/`, which is gitignored —
+a public repo would otherwise serve the originals at full weight to anyone
+who guessed the path. Keep the source there locally; only the derivatives
+are committed. To regenerate after dropping a new source:
 
 ```bash
 python3 -c "
 from PIL import Image
-s=Image.open('assets/img/tagga-hero.png').convert('RGB'); W,H=s.size
+s=Image.open('assets/img/_source/tagga-hero.png').convert('RGB'); W,H=s.size
 for w in (1400,2000,2800):
     im=s.resize((w,round(H*w/W)), Image.LANCZOS)
     im.save(f'assets/img/tagga-hero-{w}.webp','WEBP',quality=82,method=6)

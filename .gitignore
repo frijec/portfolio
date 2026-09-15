@@ -2,3 +2,7 @@
 *.log
 node_modules/
 .claude/scheduled_tasks.lock
+# Full-resolution image sources. Kept locally for regenerating the served
+# derivatives (see README) but never committed or deployed — a public repo
+# would otherwise serve the originals at full weight.
+assets/img/_source/
