@@ -1,5 +1,21 @@
 # Kenneth Jensen — Portfolio
 
+> **PRE-LAUNCH — this site is deliberately hidden from search.**
+>
+> Every page carries `<meta name="robots" content="noindex, nofollow">`
+> and `robots.txt` blocks AI training crawlers. The site is publicly
+> reachable on GitHub Pages, so treat "hidden" as "not in search
+> results", not as private.
+>
+> **Launch checklist**
+> 1. Remove the `noindex` meta line from all 10 pages (search for
+>    `PRE-LAUNCH`). Until this is done the site can never rank.
+> 2. Decide whether to keep the AI-crawler blocks in `robots.txt`.
+> 3. Finish or unpublish the unfinished cases — five of six still
+>    carry bracketed placeholder prompts (`grep -rn '\[' work/`).
+> 4. Bump `?v=` on the CSS and JS links so returning visitors get the
+>    new assets.
+
 A static, no-build, no-backend portfolio site. Plain HTML/CSS/JS, deployable straight to GitHub Pages.
 
 ## Structure
@@ -136,7 +152,14 @@ Then open `http://localhost:4173/`.
 
 ## Content status
 
-Five of the six work-index cases (`golisto`, `dribe`, `norlys`, `fordanmark`)
-are masthead-only stubs pending full write-ups; only Tagga is fully built out
-end-to-end as the template reference. Vild Mad carries its real "outcome
-without numbers" copy from the design brief.
+Only **Tagga** is written end-to-end; it is the template the other cases
+follow. The remaining five — Golisto, Vild Mad, Dribe, Norlys, For Danmark —
+have the full structure in place but most prose is still a bracketed prompt
+describing what belongs there. Nothing in those brackets is invented: they are
+questions to answer, not draft copy.
+
+Find what is left:
+
+```bash
+grep -rn '\[' work/ --include='*.html'
+```

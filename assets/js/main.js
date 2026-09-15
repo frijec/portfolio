@@ -58,16 +58,26 @@
   (function terminal() {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
-    const CIPHER_SEL =
-      ".mono-s, .mono-m, .mono-xs, .kv-row, .fig-caption, .artefact .cap, .decision-detail .label";
+    /* The cipher runs on page chrome only — section labels, status strips,
+       column headers. Anything that carries the actual evidence (spec
+       blocks, figure and artefact captions, decision labels, outcome
+       citations, the case index rows) stays readable the instant it
+       enters the viewport. Legibility beats texture. */
+    const CIPHER_SEL = ".mono-s, .mono-m, .mono-xs";
     const TYPE_SEL = ".t-display-xl, .t-display-m, .pager-name";
-    const SKIP = "[data-clock], .theme-toggle, .marquee-track, .cursor-read";
+    const SKIP = [
+      "[data-clock]", ".theme-toggle", ".marquee-track", ".cursor-read",
+      ".kv", ".kv-row",              // spec blocks
+      ".fig-caption", ".artefact .cap",   // figure and artefact captions
+      ".decision-detail", ".outcome-tile", // decision labels, outcome citations
+      ".record-row", ".work-row", ".todo-block",
+    ].join(", ");
     const GLYPHS = "ABCDEFGHJKLMNPQRSTUVWXYZ0123456789#%&*/\\<>[]{}=+-";
 
     // decode timing — tune here
-    const BASE = 420;      // ms floor, before per-character time
-    const PER_CHAR = 24;   // ms added per character
-    const MAX = 1600;      // ms ceiling for long strings
+    const BASE = 380;      // ms floor, before per-character time
+    const PER_CHAR = 18;   // ms added per character
+    const MAX = 900;       // ms ceiling for long strings
     const ROLL = 55;       // ms between glyph re-rolls; lower = buzzier
 
     const skip = (el) =>
