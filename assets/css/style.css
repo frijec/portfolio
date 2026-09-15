@@ -44,7 +44,7 @@
   --glow-ink:rgb(17 17 17 / .10);
   --caption-halo:rgb(242 240 234 / .92);
   --on-photo:#F2F0EA;      /* captions over photography — dark in both themes */
-  --lens-r:94px;           /* fidelity lens radius */
+  --lens-r:188px;          /* fidelity lens radius */
 
   --plate-url:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='640' height='420' preserveAspectRatio='none'%3E%3Cfilter id='p'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.006 0.011' numOctaves='3' seed='11'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeComponentTransfer%3E%3CfeFuncR type='linear' slope='2.0' intercept='-0.5'/%3E%3CfeFuncG type='linear' slope='2.0' intercept='-0.5'/%3E%3CfeFuncB type='linear' slope='2.0' intercept='-0.5'/%3E%3C/feComponentTransfer%3E%3CfeColorMatrix type='matrix' values='0.50 0 0 0 0.28 0.50 0 0 0 0.275 0.49 0 0 0 0.265 0 0 0 0 1'/%3E%3C/filter%3E%3Crect width='640' height='420' filter='url(%23p)'/%3E%3C/svg%3E");
 }
@@ -312,6 +312,14 @@ img{max-width:100%;display:block}
 .media--photo .fig-caption{
   text-shadow:0 0 6px rgb(17 17 17 / .92),0 0 3px rgb(17 17 17 / .95),0 1px 2px rgb(17 17 17 / .8);
 }
+/* Same treatment without needing the modifier class, so a photo dropped in
+   anywhere is handled. Kept as separate rules: an unsupported selector
+   inside a comma list invalidates the entire rule, not just that branch. */
+.media:has(.media-photo) .fig-caption,
+.media:has(.media-photo) .fig-caption .muted{color:var(--on-photo)}
+.media:has(.media-photo) .fig-caption{
+  text-shadow:0 0 6px rgb(17 17 17 / .92),0 0 3px rgb(17 17 17 / .95),0 1px 2px rgb(17 17 17 / .8);
+}
 
 /* ============================================================
    FIDELITY LENS
@@ -345,6 +353,7 @@ img{max-width:100%;display:block}
 }
 .lens.on,.lens-ring.on{opacity:1}
 @media (hover:none),(pointer:coarse){ .lens,.lens-ring{display:none} }
+@media (max-width:900px){ :root{--lens-r:120px} }
 @media (prefers-reduced-motion:reduce){ .lens,.lens-ring{transition:none} }
 
 /* Keyboard and touch get a real control instead — and it strips the page
@@ -364,9 +373,9 @@ img{max-width:100%;display:block}
    control on the page a touch user is expected to hit inside an image. */
 @media (hover:none),(pointer:coarse){ .inspect-btn{padding:12px 14px} }
 /* untreated state */
-.media--photo.raw .media-photo img{filter:none}
-.media--photo.raw .media-photo::before,
-.media--photo.raw .media-photo::after{opacity:0}
+.raw .media-photo img{filter:none}
+.raw .media-photo::before,
+.raw .media-photo::after{opacity:0}
 :root.inspect{--grain-opacity:0;--scanline-opacity:0;--vignette-opacity:0}
 
 /* crop marks — corners of media frames only */
@@ -385,6 +394,7 @@ img{max-width:100%;display:block}
   opacity:.55;
 }
 .media--photo::after{filter:invert(1);opacity:.7}
+.media:has(.media-photo)::after{filter:invert(1);opacity:.7}
 /* halo keeps 11px mono legible over the mid-tone plate */
 .fig-caption{position:absolute;left:var(--sp-5);top:var(--sp-4);max-width:44%;font:400 11px/1.6 var(--font-mono);
   letter-spacing:.12em;text-transform:uppercase;

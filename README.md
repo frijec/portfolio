@@ -108,7 +108,14 @@ the work. Two ways through it, both on `.media--photo`:
   scanline layers are fixed at 9997/9998 and `.media` sets
   `isolation:isolate`, so nothing inside it can paint above them. JS keeps
   the lens box matched to the media's rect, which makes `cover` resolve to
-  the same crop as `object-fit:cover` on the img. Mouse only.
+  the same crop as `object-fit:cover` on the img. Mouse only; radius is
+  `--lens-r`.
+
+  It is keyed off `.media-photo`, not off any one page's container, so
+  **every picture added through that pattern gets a lens with no extra
+  wiring** — one lens, ring and button per image, each tracking its own
+  frame. The `.inspect` state is shared: overlays stay stripped while any
+  image is showing untreated.
 - **Show untreated** — a real button, which is what keyboard and touch get.
   It drops the image treatment *and* sets `.inspect` on `:root`, zeroing
   grain, scanlines and vignette, so it reaches the same fidelity the lens

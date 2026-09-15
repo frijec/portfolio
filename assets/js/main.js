@@ -328,9 +328,15 @@
      Reveals the untreated image under the cursor, through the page-level
      grain and scanlines as well as the image's own treatment. The button
      is the non-pointer equivalent and is what keyboard and touch get. */
-  document.querySelectorAll(".media--photo").forEach((media) => {
-    const img = media.querySelector(".media-photo img");
-    if (!img) return;
+  /* Keyed off .media-photo rather than any one page's container, so every
+     image added through that pattern gets a lens without further wiring.
+     The hover host is the framed parent: captions are siblings of
+     .media-photo, and listening on the wrapper itself would fire mouseleave
+     every time the pointer crossed one. */
+  document.querySelectorAll(".media-photo").forEach((photo) => {
+    const img = photo.querySelector("img");
+    const media = photo.parentElement;
+    if (!img || !media) return;
 
     /* --- button: works everywhere, including with JS-driven lens absent --- */
     const btn = media.querySelector(".inspect-btn");
@@ -341,7 +347,7 @@
         btn.textContent = on ? "Show treated" : "Show untreated";
         document.documentElement.classList.toggle(
           "inspect",
-          !!document.querySelector(".media--photo.raw")
+          !!document.querySelector(".raw")
         );
       });
     }
