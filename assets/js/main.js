@@ -315,6 +315,15 @@
     if (isOn()) powerOn();
   })();
 
+  /* ---------- hero photography ----------
+     If the image is missing, drop the wrapper so the turbulence plate
+     underneath shows through instead of an empty rectangle. */
+  document.querySelectorAll(".media-photo img").forEach((img) => {
+    const fail = () => img.closest(".media-photo")?.remove();
+    img.addEventListener("error", fail);
+    if (img.complete && img.naturalWidth === 0) fail();
+  });
+
   /* ---------- custom cursor + live telemetry ---------- */
   if (window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
     const cursor = document.createElement("div");
