@@ -22,7 +22,7 @@
 <link rel="preload" href="../assets/fonts/archivo-latin-var.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="../assets/fonts/plexmono-latin-400.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="../assets/fonts/fonts.css">
-<link rel="stylesheet" href="../assets/css/style.css?v=24">
+<link rel="stylesheet" href="../assets/css/style.css?v=25">
 <script>document.documentElement.classList.add("js");try{if(localStorage.getItem("kj-theme")==="crt")document.documentElement.setAttribute("data-theme","crt")}catch(e){}</script>
 </head>
 <body>
@@ -48,15 +48,15 @@
   <div class="gutter-label right">Kenneth Jensen — Product design — Copenhagen</div>
 
   <main id="main">
-  <section style="padding:40px 0 0" class="masthead-enter">
-    <div class="row" style="align-items:end">
+  <section class="masthead-enter pt-7">
+    <div class="row row--end">
       <div class="c8">
-        <div class="mono-s" style="display:flex;gap:32px;margin-bottom:36px" data-no-cipher><span>02 / 02</span><span class="accent"><span class="dot"></span>Status: Beta · pre-launch</span><span>2026 — ongoing</span></div>
-        <h1 class="t-display-xl reveal in">Tagga<span style="font-size:.23em;vertical-align:top;margin-left:.05em">®</span></h1>
+        <div class="mono-s meta-row mb-7" data-no-cipher><span>02 / 02</span><span class="accent"><span class="dot"></span>Status: Beta · pre-launch</span><span>2026 — ongoing</span></div>
+        <h1 class="t-display-xl c8 reveal in">Tagga<span class="reg">®</span></h1>
       </div>
-      <p class="t-xl c4" style="padding-bottom:12px">A live map for people who ride together — and don't want an account to do it.</p>
+      <p class="t-xl c4 pb-3">A live map for people who ride together — and don't want an account to do it.</p>
     </div>
-    <div class="row" style="margin-top:40px;border-top:1px solid var(--ink);padding-top:16px">
+    <div class="row mt-7 rule-top pt-4">
       <span class="mono-s c2 muted">Spec</span>
       <div class="kv c5">
         <div class="kv-row"><span>Role</span><span class="kv-leader"></span><span>Founder · sole designer and builder</span></div>
@@ -64,7 +64,7 @@
         <div class="kv-row"><span>Year</span><span class="kv-leader"></span><span>2026 — ongoing</span></div>
         <div class="kv-row"><span>Duration</span><span class="kv-leader"></span><span>Concept to beta</span></div>
       </div>
-      <div class="kv c5" style="grid-column:8/13">
+      <div class="kv c5 s8">
         <div class="kv-row"><span>Platforms</span><span class="kv-leader"></span><span>iOS / Android / share link</span></div>
         <div class="kv-row"><span>Team</span><span class="kv-leader"></span><span>None — no team, no external hires</span></div>
         <div class="kv-row"><span>My boundary</span><span class="kv-leader"></span><span>Every layer, including the backend</span></div>
@@ -78,7 +78,7 @@
       <div class="c3"><div class="k">What I did</div><p class="t-m">Designed and built a live map a crew joins with a five-letter code. No accounts. Every layer, alone.</p></div>
       <div class="c3"><div class="k">Where it is</div><p class="t-m">Beta, pre-launch. No usage numbers are claimed here yet.</p></div>
     </div>
-    <div class="media media--photo" data-credit="Own photograph — Tagga running on a ride" style="margin-top:32px;height:max(240px,min(640px,60vw));position:relative">
+    <div class="media media--photo mt-6" style="height:max(240px,min(640px,60vw));position:relative" data-credit="Own photograph — Tagga running on a ride">
       <div class="media-photo" data-aspect="4300x2400">
         <picture>
           <source type="image/webp" sizes="100vw"
@@ -90,69 +90,69 @@
         </picture>
       </div>
       <div class="fig-caption"><div>Fig. 01</div><div class="muted" data-img="file">tagga-hero-2000.webp</div></div>
-      <div class="fig-caption right"><div>Resolution</div><div class="t-display-s mt-2" style="letter-spacing:-.02em" data-img="res">2000 × 1116</div></div>
+      <div class="fig-caption right"><div>Resolution</div><div class="t-display-s mt-2" data-img="res">2000 × 1116</div></div>
       <div class="fig-caption bottom right"><div>Transfer</div><div class="t-display-s mt-2"><span data-img="size">127</span><span class="unit">KB</span></div></div>
     </div>
   </section>
 
   <section class="section">
-    <div class="row" style="padding-block:14px 72px">
+    <div class="row">
       <span class="mono-s c2">02 · Situation</span>
-      <div class="c7 s4" style="padding-top:48px;display:grid;gap:20px">
+      <div class="c7 s4 pt-8 stack">
         <p class="t-l reveal">Group rides fall apart at junctions. Someone misses a turn, the crew stops, phones come out, and a location gets shared as a static pin that is wrong within a minute. The tools that exist (Find My, Life360, Google location sharing) assume a persistent social graph and an account. They were built for families who track each other for months, not for eight people who met at a petrol station and will disband by dinner.</p>
         <p class="t-l reveal">I started Tagga in January 2026 as a rider with this problem. The same shape kept turning up elsewhere: festival crowds, hiking groups, roadtrips. All of them want the same thing: see where everyone is, right now, for a few hours, and then forget it. Tagga is that: one live map for up to thirty people, a five-letter code instead of an account, and a crew chat that ends when the ride does.</p>
         <p class="t-l reveal">It is a one-man project. I own every layer: concept, brand, UX, visual design, frontend, backend and user testing. No team, no external hires. I chose the stack to make that possible: Claude Code with Opus for the heavy lifting, Expo for a single React Native codebase across both platforms, Xcode for the native iOS work. TestFlight and Orbit closed the loop, so a new build reached real beta users within hours and their feedback came back the same day.</p>
       </div>
-      <div class="mono-s c2 muted" style="grid-column:11/13;padding-top:52px">
-        <div>Built for</div><div style="color:var(--ink)">Motorcycle crews</div>
-        <div class="mt-3">Also</div><div style="color:var(--ink)">Festivals · Hiking · Roadtrips</div>
+      <div class="mono-s c2 muted s11 pt-8">
+        <div>Built for</div><div class="ink">Motorcycle crews</div>
+        <div class="mt-3">Also</div><div class="ink">Festivals · Hiking · Roadtrips</div>
       </div>
     </div>
   </section>
 
   <section class="section">
-    <div class="row" style="padding-top:14px">
+    <div class="row">
       <span class="mono-s c2">03 · Problem</span>
-      <h2 class="t-display-m c9 s3 reveal" style="padding-top:48px;max-width:22ch;text-wrap:pretty">Make a live map a stranger can join in under ten seconds, with gloves on, that stops knowing anything about them when the ride ends.</h2>
+      <h2 class="t-display-m c9 s3 reveal pt-8 m-short pretty">Make a live map a stranger can join in under ten seconds, with gloves on, that stops knowing anything about them when the ride ends.</h2>
     </div>
-    <div class="row" style="padding-top:56px">
+    <div class="row pt-9">
       <span class="mono-s c2 muted s3">Constraints — what made it hard</span>
-      <div class="c8 s5" style="border-top:1px solid var(--ink)">
-        <div style="display:grid;grid-template-columns:120px 1fr;gap:24px;padding-block:20px;border-bottom:1px solid rgb(17 17 17/.25)"><span class="t-display-s accent" style="font-size:clamp(32px,5vw,56px)">01</span><div style="max-width:60ch"><p class="t-xl" style="font-size:20px;margin-bottom:6px">No account, no identity layer.</p><p class="t-m muted">No email, phone number or SSO anywhere in the flow. Whatever identifies a rider has to be created at the roadside and thrown away afterwards.</p></div></div>
-        <div style="display:grid;grid-template-columns:120px 1fr;gap:24px;padding-block:20px;border-bottom:1px solid rgb(17 17 17/.25)"><span class="t-display-s accent" style="font-size:clamp(32px,5vw,56px)">02</span><div style="max-width:60ch"><p class="t-xl" style="font-size:20px;margin-bottom:6px">A live map cannot cost you the ride home.</p><p class="t-m muted">Continuous GPS is the most expensive thing a phone can do. If the battery goes, riders switch the app off at the first fuel stop and it never comes back. So the app runs second-by-second on the bike and sips once you have parked.</p></div></div>
-        <div style="display:grid;grid-template-columns:120px 1fr;gap:24px;padding-block:20px;border-bottom:1px solid rgb(17 17 17/.25)"><span class="t-display-s accent" style="font-size:clamp(32px,5vw,56px)">03</span><div style="max-width:60ch"><p class="t-xl" style="font-size:20px;margin-bottom:6px">Readable in one glance at 100 km/h.</p><p class="t-m muted">Handlebar mount, direct sun, polarised visor. Position, speed and trail have to answer "who is ahead, who is behind, is anyone stopped" without a second look.</p></div></div>
-        <div style="display:grid;grid-template-columns:120px 1fr;gap:24px;padding-block:20px;border-bottom:1px solid rgb(17 17 17/.25)"><span class="t-display-s accent" style="font-size:clamp(32px,5vw,56px)">04</span><div style="max-width:60ch"><p class="t-xl" style="font-size:20px;margin-bottom:6px">Three surfaces, one person.</p><p class="t-m muted">iOS, Android and the share link, shipped from a single codebase by the same person who designed them. Anything that needed a per-platform design pass did not get built.</p></div></div>
-        <div style="display:grid;grid-template-columns:120px 1fr;gap:24px;padding-block:20px 40px"><span class="t-display-s accent" style="font-size:clamp(32px,5vw,56px)">05</span><div style="max-width:60ch"><p class="t-xl" style="font-size:20px;margin-bottom:6px">Good roads have no signal.</p><p class="t-m muted">The routes worth riding are the ones that drop to nothing. Losing signal cannot mean losing the ride, so the app keeps recording through a dead zone and fills the map back in when it returns.</p></div></div>
+      <div class="c8 s5 rule-top">
+        <div class="numbered"><span class="accent t-num-m">01</span><div class="m-prose"><p class="t-item">No account, no identity layer.</p><p class="t-m muted">No email, phone number or SSO anywhere in the flow. Whatever identifies a rider has to be created at the roadside and thrown away afterwards.</p></div></div>
+        <div class="numbered"><span class="accent t-num-m">02</span><div class="m-prose"><p class="t-item">A live map cannot cost you the ride home.</p><p class="t-m muted">Continuous GPS is the most expensive thing a phone can do. If the battery goes, riders switch the app off at the first fuel stop and it never comes back. So the app runs second-by-second on the bike and sips once you have parked.</p></div></div>
+        <div class="numbered"><span class="accent t-num-m">03</span><div class="m-prose"><p class="t-item">Readable in one glance at 100 km/h.</p><p class="t-m muted">Handlebar mount, direct sun, polarised visor. Position, speed and trail have to answer "who is ahead, who is behind, is anyone stopped" without a second look.</p></div></div>
+        <div class="numbered"><span class="accent t-num-m">04</span><div class="m-prose"><p class="t-item">Three surfaces, one person.</p><p class="t-m muted">iOS, Android and the share link, shipped from a single codebase by the same person who designed them. Anything that needed a per-platform design pass did not get built.</p></div></div>
+        <div class="numbered last"><span class="accent t-num-m">05</span><div class="m-prose"><p class="t-item">Good roads have no signal.</p><p class="t-m muted">The routes worth riding are the ones that drop to nothing. Losing signal cannot mean losing the ride, so the app keeps recording through a dead zone and fills the map back in when it returns.</p></div></div>
       </div>
     </div>
   </section>
 
   <section class="section">
-    <div class="row" style="padding-block:14px 24px">
+    <div class="row pb-5">
       <span class="mono-s c2">04 · Working</span>
-      <p class="t-m muted c5" style="grid-column:4/9;max-width:56ch">The middle of the process, at the size it deserves. Artefacts from the build: sketches, discarded architectures, marker tests in direct sun, battery logs. Captions say what each one is and what it changed.</p>
-      <div class="mono-s c2 muted ta-r" style="grid-column:11/13">12 artefacts<br>2022.09 — 2024.05</div>
+      <p class="t-m muted c5 s4 m-prose">The middle of the process, at the size it deserves. Artefacts from the build: sketches, discarded architectures, marker tests in direct sun, battery logs. Captions say what each one is and what it changed.</p>
+      <div class="mono-s c2 muted ta-r s11">12 artefacts<br>2022.09 — 2024.05</div>
     </div>
-    <div class="artefacts" style="padding-bottom:56px">
-      <div class="artefact" style="grid-column:span 2"><div class="frame"></div><div class="cap"><span>A.01 — Interview notes, 11 riders / 3 crews</span><span class="muted">2022.09</span></div></div>
+    <div class="artefacts pb-9">
+      <div class="artefact c2"><div class="frame"></div><div class="cap"><span>A.01 — Interview notes, 11 riders / 3 crews</span><span class="muted">2022.09</span></div></div>
       <div class="artefact"><div class="frame" style="aspect-ratio:3/4"></div><div class="cap">A.02 — Junction sketch</div></div>
       <div class="artefact"><div class="frame" style="aspect-ratio:3/4"></div><div class="cap">A.03 — IA v1, accounts <span class="accent">discarded</span></div></div>
-      <div class="artefact" style="grid-column:span 2"><div class="frame"></div><div class="cap"><span>A.04 — IA v3, session-first</span><span class="muted">2023.01</span></div></div>
-      <div class="artefact" style="grid-column:span 3"><div class="frame" style="aspect-ratio:16/9"></div><div class="cap"><span>A.05 — Join flow, 14 variants on one board</span><span class="muted">2023.02</span></div></div>
+      <div class="artefact c2"><div class="frame"></div><div class="cap"><span>A.04 — IA v3, session-first</span><span class="muted">2023.01</span></div></div>
+      <div class="artefact c3"><div class="frame" style="aspect-ratio:16/9"></div><div class="cap"><span>A.05 — Join flow, 14 variants on one board</span><span class="muted">2023.02</span></div></div>
       <div class="artefact"><div class="frame" style="aspect-ratio:3/4"></div><div class="cap">A.06 — Marker test, direct sun</div></div>
-      <div class="artefact" style="grid-column:span 2"><div class="frame"></div><div class="cap"><span>A.07 — Battery log, Pixel 6a, 6h ride</span><span class="muted">2023.06</span></div></div>
+      <div class="artefact c2"><div class="frame"></div><div class="cap"><span>A.07 — Battery log, Pixel 6a, 6h ride</span><span class="muted">2023.06</span></div></div>
       <div class="artefact"><div class="frame" style="aspect-ratio:3/4"></div><div class="cap">A.08 — Stale-state studies</div></div>
       <div class="artefact"><div class="frame" style="aspect-ratio:3/4"></div><div class="cap">A.09 — Keypad iterations</div></div>
-      <div class="artefact" style="grid-column:span 2"><div class="frame"></div><div class="cap"><span>A.10 — Web share page wireframe</span><span class="muted">2023.11</span></div></div>
+      <div class="artefact c2"><div class="frame"></div><div class="cap"><span>A.10 — Web share page wireframe</span><span class="muted">2023.11</span></div></div>
       <div class="artefact"><div class="frame" style="aspect-ratio:3/4"></div><div class="cap">A.11 — Android widget</div></div>
       <div class="artefact"><div class="frame" style="aspect-ratio:3/4"></div><div class="cap">A.12 — Onboarding copy drafts</div></div>
     </div>
   </section>
 
   <section class="section">
-    <div class="row" style="padding-block:14px 8px">
+    <div class="row pb-2">
       <span class="mono-s c2">05 · Decisions</span>
-      <span class="mono-s ta-r muted c2" style="grid-column:11/13">04 decisions</span>
+      <span class="mono-s ta-r muted c2 s11">04 decisions</span>
     </div>
 
     <article class="decision">
@@ -201,7 +201,7 @@
       </div>
     </article>
 
-    <article class="decision" style="padding-bottom:56px">
+    <article class="decision pb-9">
       <div class="c2 decision-index">D.04</div>
       <h3 class="t-display-s c5 s3">Six answers, one tap, with gloves on.</h3>
       <div class="decision-detail c5 s8">
@@ -213,36 +213,36 @@
   </section>
 
   <section class="section">
-    <div class="row" style="padding-block:14px 24px">
+    <div class="row pb-5">
       <span class="mono-s c2">06 · System</span>
-      <p class="t-m c5" style="grid-column:4/9;max-width:56ch">One token set feeding the iOS build, the Android build and the share link. I picked rider colours for separation under deuteranopia against the map ground, not for brand.</p>
-      <div class="mono-s ta-r c2" style="grid-column:11/13">38 tokens<br>6 components</div>
+      <p class="t-m c5 s4 m-prose">One token set feeding the iOS build, the Android build and the share link. I picked rider colours for separation under deuteranopia against the map ground, not for brand.</p>
+      <div class="mono-s ta-r c2 s11">38 tokens<br>6 components</div>
     </div>
-    <div class="row" style="padding-bottom:56px">
+    <div class="row pb-9">
       <div class="c4">
-        <div class="mono-s" style="border-top:1px solid var(--ink);padding-block:10px 14px">Colour — rider set + map ground</div>
-        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px">
+        <div class="mono-s rule-top pt-3 pb-4">Colour — rider set + map ground</div>
+        <div class="grid gap-2" style="grid-template-columns:repeat(4,1fr)">
           <div><div style="height:56px;background:#1E3A8A"></div><div class="mono-xs mt-1">rider.01<br>#1E3A8A</div></div>
           <div><div style="height:56px;background:#D97706"></div><div class="mono-xs mt-1">rider.02<br>#D97706</div></div>
           <div><div style="height:56px;background:#0F766E"></div><div class="mono-xs mt-1">rider.03<br>#0F766E</div></div>
           <div><div style="height:56px;background:#7C2D92"></div><div class="mono-xs mt-1">rider.04<br>#7C2D92</div></div>
           <div><div style="height:56px;background:#B91C1C"></div><div class="mono-xs mt-1">rider.05<br>#B91C1C</div></div>
           <div><div style="height:56px;background:#111"></div><div class="mono-xs mt-1">rider.06<br>#111111</div></div>
-          <div><div style="height:56px;background:#E9E5DA;border:1px solid rgb(17 17 17/.2)"></div><div class="mono-xs mt-1">map.ground<br>#E9E5DA</div></div>
-          <div><div style="height:56px;background:#fff;border:1px solid rgb(17 17 17/.2)"></div><div class="mono-xs mt-1">map.road<br>#FFFFFF</div></div>
+          <div><div style="height:56px;background:#E9E5DA;border:1px solid var(--rule-soft)"></div><div class="mono-xs mt-1">map.ground<br>#E9E5DA</div></div>
+          <div><div style="height:56px;background:#fff;border:1px solid var(--rule-soft)"></div><div class="mono-xs mt-1">map.road<br>#FFFFFF</div></div>
         </div>
       </div>
       <div class="c4">
-        <div class="mono-s" style="border-top:1px solid var(--ink);padding-block:10px 14px">Type — native stacks, one scale</div>
-        <div style="display:grid;gap:10px">
-          <div style="display:flex;align-items:baseline;justify-content:space-between;border-bottom:1px dotted rgb(17 17 17/.4);padding-bottom:6px"><span class="t-display-s" style="font-size:40px;letter-spacing:.06em">FVRG5</span><span class="mono-xs">code · 40/1 · +6%</span></div>
-          <div style="display:flex;align-items:baseline;justify-content:space-between;border-bottom:1px dotted rgb(17 17 17/.4);padding-bottom:6px"><span class="t-display-s" style="font-size:24px">Ride of 6</span><span class="mono-xs">title · 24/26</span></div>
-          <div style="display:flex;align-items:baseline;justify-content:space-between;border-bottom:1px dotted rgb(17 17 17/.4);padding-bottom:6px"><span class="t-m">Share this code with your crew</span><span class="mono-xs">body · 16/22</span></div>
-          <div style="display:flex;align-items:baseline;justify-content:space-between;border-bottom:1px dotted rgb(17 17 17/.4);padding-bottom:6px"><span class="mono-m" style="text-transform:none">2.4 KM · 41 KM/H</span><span class="mono-xs">telemetry · 12/16 mono</span></div>
+        <div class="mono-s rule-top pt-3 pb-4">Type — native stacks, one scale</div>
+        <div class="grid gap-3">
+          <div class="flex row--baseline between rule-dot-bottom pb-2"><span class="t-display-s" style="font-size:40px;letter-spacing:.06em">FVRG5</span><span class="mono-xs">code · 40/1 · +6%</span></div>
+          <div class="flex row--baseline between rule-dot-bottom pb-2"><span class="t-display-s" style="font-size:24px">Ride of 6</span><span class="mono-xs">title · 24/26</span></div>
+          <div class="flex row--baseline between rule-dot-bottom pb-2"><span class="t-m">Share this code with your crew</span><span class="mono-xs">body · 16/22</span></div>
+          <div class="flex row--baseline between rule-dot-bottom pb-2"><span class="mono-m" style="text-transform:none">2.4 KM · 41 KM/H</span><span class="mono-xs">telemetry · 12/16 mono</span></div>
         </div>
       </div>
       <div class="c4">
-        <div class="mono-s" style="border-top:1px solid var(--ink);padding-block:10px 14px">Component — marker + code entry</div>
+        <div class="mono-s rule-top pt-3 pb-4">Component — marker + code entry</div>
         <div class="marker-demo">
           <div class="cell"><div class="swatch"><div class="tri"></div></div><div class="mono-xs mt-1">live</div></div>
           <div class="cell"><div class="swatch"><div class="tri" style="opacity:.4"></div></div><div class="mono-xs mt-1">no signal</div></div>
@@ -257,21 +257,21 @@
   </section>
 
   <section class="section">
-    <div class="row" style="padding-block:14px 40px">
+    <div class="row">
       <span class="mono-s c2">07 · Surfaces</span>
-      <span class="mono-s ta-r muted c2" style="grid-column:11/13">v2 · 2025.03</span>
+      <span class="mono-s ta-r muted c2 s11">v2 · 2025.03</span>
     </div>
-    <div class="row" style="align-items:end;padding-bottom:40px">
+    <div class="row row--end pb-7">
       <div class="c4">
-        <div style="border:2px solid var(--ink);border-radius:36px;padding:10px;background:var(--ink)"><div class="media" style="aspect-ratio:9/19.5;border-radius:26px;display:grid;place-items:center;border:none" ><span class="mono-s ta-c muted">iOS — Start a session</span></div></div>
+        <div style="border:2px solid var(--ink);border-radius:36px;padding:10px;background:var(--ink)"><div class="media grid" style="aspect-ratio:9/19.5;border-radius:26px;place-items:center;border:none"><span class="mono-s ta-c muted">iOS — Start a session</span></div></div>
         <div class="mono-s mt-3">S.01 — Start. A name, an emoji, and a five-letter code.</div>
       </div>
       <div class="c4">
-        <div style="border:2px solid var(--ink);border-radius:36px;padding:10px;background:var(--ink)"><div class="media" style="aspect-ratio:9/19.5;border-radius:26px;display:grid;place-items:center;border:none"><span class="mono-s ta-c muted">iOS — Live map</span></div></div>
+        <div style="border:2px solid var(--ink);border-radius:36px;padding:10px;background:var(--ink)"><div class="media grid" style="aspect-ratio:9/19.5;border-radius:26px;place-items:center;border:none"><span class="mono-s ta-c muted">iOS — Live map</span></div></div>
         <div class="mono-s mt-3">S.02 — Map. Position, speed and trail for the whole crew.</div>
       </div>
       <div class="c4">
-        <div style="border:2px solid var(--ink);border-radius:24px;padding:10px;background:var(--ink)"><div class="media" style="aspect-ratio:9/20;border-radius:16px;display:grid;place-items:center;border:none"><span class="mono-s ta-c muted">Android — Ride recap</span></div></div>
+        <div style="border:2px solid var(--ink);border-radius:24px;padding:10px;background:var(--ink)"><div class="media grid" style="aspect-ratio:9/20;border-radius:16px;place-items:center;border:none"><span class="mono-s ta-c muted">Android — Ride recap</span></div></div>
         <div class="mono-s mt-3">S.03 — Recap. Distance, top speed, GPX export — then the session is dropped.</div>
       </div>
     </div>
@@ -282,20 +282,20 @@
   </section>
 
   <section class="section">
-    <div class="row" style="padding-top:14px">
+    <div class="row">
       <span class="mono-s c2">08 · Outcome</span>
-      <span class="mono-s ta-r muted c2" style="grid-column:11/13">Honest variant · still in beta</span>
+      <span class="mono-s ta-r muted c2 s11">Honest variant · still in beta</span>
     </div>
-    <div class="row" style="padding-block:48px 56px">
-      <div class="c4" style="border-top:1px solid var(--ink);padding-top:14px">
+    <div class="row pt-8 pb-9">
+      <div class="c4 rule-top pt-4">
         <div class="mono-s muted">What shipped</div>
         <p class="t-m mt-3">A fully functional iOS and Android beta, distributed through TestFlight and Orbit, built solo from concept in January 2026. Crews of up to 30, free, with a waitlist open ahead of the App Store and Google Play release.</p>
       </div>
-      <div class="c4" style="border-top:1px solid var(--ink);padding-top:14px">
+      <div class="c4 rule-top pt-4">
         <div class="mono-s muted">What I know</div>
         <p class="t-m mt-3">Real beta users have validated it. New builds went out within hours and responses came back the same day, so each loop sharpened the product against behaviour I could watch rather than behaviour I assumed.</p>
       </div>
-      <div class="c4" style="border-top:1px solid var(--ink);padding-top:14px">
+      <div class="c4 rule-top pt-4">
         <div class="mono-s muted">What I don't know</div>
         <p class="t-m mt-3">Anything at scale. There is no public release yet, so there are no retention, battery or session numbers worth printing. When there are, they go here with their denominators.</p>
         <p class="mono-s muted mt-3">The product states plainly that it is not an emergency service.</p>
@@ -304,9 +304,9 @@
   </section>
 
   <section class="section">
-    <div class="row" style="padding-block:14px 56px">
+    <div class="row">
       <span class="mono-s c2">09 · Reflection</span>
-      <div class="c6 s4 todo-block" style="margin-top:40px">
+      <div class="c6 s4 todo-block mt-7">
         <span class="mono-xs tag">One short block, signed</span>
         <p>[The previous text here was written against a 2022–2025 timeline that doesn't match the project. Worth rewriting from where it actually stands: solo build, beta since 2026. What would you do differently, and what did building every layer alone actually cost?]</p>
       </div>
@@ -315,21 +315,21 @@
 
 
   <section class="section">
-    <div class="row" style="padding-block:14px 40px;align-items:baseline">
+    <div class="row row--baseline">
       <span class="mono-s c2">10 · Contact</span>
       <a href="mailto:hello@frijec.com" class="arrow-link magnet c5 s4">hello@frijec.com
         <svg width="14" height="10" viewBox="0 0 14 10" fill="none"><path d="M0 5H13M13 5L9 1M13 5L9 9" stroke="currentColor"/></svg>
       </a>
-      <span class="mono-s ta-r muted c3" style="grid-column:10/13">Replies within 2 days</span>
+      <span class="mono-s ta-r muted c3 s10">Replies within 2 days</span>
     </div>
   </section>
 
   <a href="../about.html" class="pager magnet">
     <span class="mono-s c2">11 · Next</span>
-    <span class="mono-s ta-r muted c2" style="grid-column:11/13">About</span>
-    <div class="c12" style="padding-top:24px;display:flex;align-items:end;justify-content:space-between;gap:24px;flex-wrap:wrap">
+    <span class="mono-s ta-r muted c2 s11">About</span>
+    <div class="c12 pager-body">
       <span class="pager-name" data-magnet-target>About</span>
-      <span class="t-xl" style="max-width:22ch;padding-bottom:16px;text-wrap:pretty">Thirteen years, two hats, and how I work. →</span>
+      <span class="t-xl m-short pb-4 pretty">Thirteen years, two hats, and how I work. →</span>
     </div>
   </a>
 
@@ -342,7 +342,7 @@
   </footer>
 </div>
 
-<script src="../assets/js/main.js?v=24"></script>
+<script src="../assets/js/main.js?v=25"></script>
 <script>
   (function(){
     var states = [

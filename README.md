@@ -72,11 +72,43 @@ top of `assets/css/style.css`, matching the source design's `tokens.json`
 schema: bone ground `#F2F0EA`, ink `#111`, orange accent `#E16B2C`, Archivo +
 IBM Plex Mono.
 
+### Spacing, rules, measure, numerals — use the classes, not inline styles
+
+An audit found 567 inline `style=""` declarations using 26 distinct pixel
+values against a ten-token spacing scale. They are now classes; **new markup
+should not add inline spacing.** The vocabulary:
+
+| Need | Classes |
+| --- | --- |
+| Spacing | `.mt-N .mb-N .pt-N .pb-N` for N = 0–10, mapped to `--sp-N` (4, 8, 12, 16, 24, 32, 40, 48, 56, 72px) |
+| Section rhythm | `.section > .row` defaults to `16px / 56px`. A row that continues into another opts out with `.pb-0` or `.pb-2`. |
+| Rules | `.rule-top / .rule-bottom` (ink), `.rule-soft-top / -bottom` (`--rule-soft`, flips in CRT), `.rule-dot-top / -bottom` (leader dotted) |
+| Measure | `.m-prose` 60ch · `.m-lede` 36ch · `.m-short` 22ch — three widths, not ten |
+| Numerals | `.t-num-s / -m / -l` — the three display-number sizes. Work-row, constraint, decision and outcome numerals all sit on these. |
+| Item title | `.t-item` — the fixed 20px step used inside numbered rows |
+| Numbered rows | `.numbered` (120px number column) and `.numbered-s` (48px); add `.last` on the final row. Collapse to one column under 760px. |
+| Layout helpers | `.grid .flex .gap-N .between .row--end .row--baseline .stack .pretty .ink` |
+| Repeated blocks | `.meta-row` (masthead meta), `.pager-body`, `.reg` (the ® mark, one size everywhere) |
+
+Buttons come in two sizes only: `.arrow-link` (primary, 12px, `12px 18px`
+padding) and the utility trio `.inspect-btn .theme-toggle .marquee-pause`
+(11px, `8px 12px`, `--rule-grid` border, accent on hover/pressed). All four
+have a pressed state. Uppercase mono tracks at `.08em` from 12px up and
+`.12em` below.
+
+Spec blocks (`.kv`) are container-queried: under 260px of their own width
+they stack label over value and drop the leader, so they survive a
+three-column cell without wrapping into ragged right-aligned lines.
+
+What is still inline, on purpose: the Tagga device mocks and swatch grid
+(they document Tagga's own colours), aspect ratios and media heights, and
+the two giant mailto links. Everything else that was inline is now a class.
+
 Layout uses a hand-rolled grid utility system instead of a framework:
 - `.row` — 12-column grid container (48px margin / 24px gutter desktop;
   collapses to a 4-column, full-width-stacked layout under 760px).
 - `.c1`–`.c12` — `grid-column-end: span N`.
-- `.s1`–`.s11` — `grid-column-start: N`.
+- `.s1`–`.s12` — `grid-column-start: N`.
 - Combine them, e.g. `class="c7 s4"` starts at column 4 and spans 7.
 
 ## Screen treatment (grain, scanlines, glow)
