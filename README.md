@@ -98,6 +98,24 @@ Two implementation notes worth keeping:
 
 Set `--glow: 0` to remove the bloom entirely; the layout is unaffected.
 
+### Seeing the design under the treatment
+
+The screen treatment is the point of the site, and it is also a scrim over
+the work. Two ways through it, both on `.media--photo`:
+
+- **Fidelity lens** — hover reveals a circle of the untreated image. It is a
+  fixed element at z-index 9999, not a child of `.media`: the grain and
+  scanline layers are fixed at 9997/9998 and `.media` sets
+  `isolation:isolate`, so nothing inside it can paint above them. JS keeps
+  the lens box matched to the media's rect, which makes `cover` resolve to
+  the same crop as `object-fit:cover` on the img. Mouse only.
+- **Show untreated** — a real button, which is what keyboard and touch get.
+  It drops the image treatment *and* sets `.inspect` on `:root`, zeroing
+  grain, scanlines and vignette, so it reaches the same fidelity the lens
+  does. Pressing it again restores everything.
+
+The cursor sits at z-index 10000 so the crosshair stays above the lens.
+
 ### Photography
 
 `.media` shows a generated turbulence plate by default. Add `.media--photo`

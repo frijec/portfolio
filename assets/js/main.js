@@ -324,6 +324,83 @@
     if (img.complete && img.naturalWidth === 0) fail();
   });
 
+  /* ---------- fidelity lens ----------
+     Reveals the untreated image under the cursor, through the page-level
+     grain and scanlines as well as the image's own treatment. The button
+     is the non-pointer equivalent and is what keyboard and touch get. */
+  document.querySelectorAll(".media--photo").forEach((media) => {
+    const img = media.querySelector(".media-photo img");
+    if (!img) return;
+
+    /* --- button: works everywhere, including with JS-driven lens absent --- */
+    const btn = media.querySelector(".inspect-btn");
+    if (btn) {
+      btn.addEventListener("click", () => {
+        const on = media.classList.toggle("raw");
+        btn.setAttribute("aria-pressed", String(on));
+        btn.textContent = on ? "Show treated" : "Show untreated";
+        document.documentElement.classList.toggle(
+          "inspect",
+          !!document.querySelector(".media--photo.raw")
+        );
+      });
+    }
+
+    if (!window.matchMedia("(hover: hover) and (pointer: fine)").matches) return;
+
+    const lens = document.createElement("div");
+    const ring = document.createElement("div");
+    lens.className = "lens";
+    ring.className = "lens-ring";
+    lens.setAttribute("aria-hidden", "true");
+    ring.setAttribute("aria-hidden", "true");
+    document.body.append(lens, ring);
+
+    // Match the lens box to the media box so `cover` crops identically to
+    // object-fit:cover on the img. Re-read on scroll and resize, never per
+    // mousemove — that would be a layout read on every pointer event.
+    let box = null;
+    const measure = () => {
+      const r = media.getBoundingClientRect();
+      box = r;
+      for (const el of [lens, ring]) {
+        el.style.left = r.left + "px";
+        el.style.top = r.top + "px";
+        el.style.width = r.width + "px";
+        el.style.height = r.height + "px";
+      }
+      const src = img.currentSrc || img.src;
+      if (src) lens.style.backgroundImage = `url("${src}")`;
+    };
+
+    const track = (e) => {
+      if (!box) measure();
+      const x = e.clientX - box.left, y = e.clientY - box.top;
+      for (const el of [lens, ring]) {
+        el.style.setProperty("--lens-x", x + "px");
+        el.style.setProperty("--lens-y", y + "px");
+      }
+    };
+
+    media.addEventListener("mouseenter", (e) => {
+      if (media.classList.contains("raw")) return;
+      measure();
+      track(e);
+      lens.classList.add("on");
+      ring.classList.add("on");
+    });
+    media.addEventListener("mousemove", track);
+    media.addEventListener("mouseleave", () => {
+      lens.classList.remove("on");
+      ring.classList.remove("on");
+      box = null;
+    });
+
+    addEventListener("scroll", () => { if (lens.classList.contains("on")) measure(); },
+      { passive: true });
+    addEventListener("resize", () => { box = null; }, { passive: true });
+  });
+
   /* ---------- custom cursor + live telemetry ---------- */
   if (window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
     const cursor = document.createElement("div");

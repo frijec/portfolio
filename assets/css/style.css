@@ -44,6 +44,7 @@
   --glow-ink:rgb(17 17 17 / .10);
   --caption-halo:rgb(242 240 234 / .92);
   --on-photo:#F2F0EA;      /* captions over photography — dark in both themes */
+  --lens-r:94px;           /* fidelity lens radius */
 
   --plate-url:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='640' height='420' preserveAspectRatio='none'%3E%3Cfilter id='p'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.006 0.011' numOctaves='3' seed='11'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeComponentTransfer%3E%3CfeFuncR type='linear' slope='2.0' intercept='-0.5'/%3E%3CfeFuncG type='linear' slope='2.0' intercept='-0.5'/%3E%3CfeFuncB type='linear' slope='2.0' intercept='-0.5'/%3E%3C/feComponentTransfer%3E%3CfeColorMatrix type='matrix' values='0.50 0 0 0 0.28 0.50 0 0 0 0.275 0.49 0 0 0 0.265 0 0 0 0 1'/%3E%3C/filter%3E%3Crect width='640' height='420' filter='url(%23p)'/%3E%3C/svg%3E");
 }
@@ -311,6 +312,62 @@ img{max-width:100%;display:block}
 .media--photo .fig-caption{
   text-shadow:0 0 6px rgb(17 17 17 / .92),0 0 3px rgb(17 17 17 / .95),0 1px 2px rgb(17 17 17 / .8);
 }
+
+/* ============================================================
+   FIDELITY LENS
+   The screen treatment is the point of this site, but it is also a scrim
+   over the actual design work — and a portfolio that hides the pixels is
+   working against itself. The lens cuts a clean hole through all of it.
+
+   It has to be a fixed element at z-index 9999 rather than a child of
+   .media: the grain and scanline layers are fixed at 9997/9998, and .media
+   sets `isolation:isolate`, so nothing inside it can paint above them.
+   JS keeps the lens matched to the media's rect, so `cover` here resolves
+   to exactly the same crop as `object-fit:cover` on the img.
+   ============================================================ */
+.lens,.lens-ring{
+  position:fixed;z-index:9999;pointer-events:none;opacity:0;
+  transition:opacity 140ms linear;
+}
+.lens{
+  background-size:cover;background-position:center;background-repeat:no-repeat;
+  -webkit-mask-image:radial-gradient(circle var(--lens-r) at var(--lens-x) var(--lens-y),
+    #000 99%,transparent 100%);
+  mask-image:radial-gradient(circle var(--lens-r) at var(--lens-x) var(--lens-y),
+    #000 99%,transparent 100%);
+}
+/* Ring shares the media's rect rather than being centred on the cursor, so
+   it is clipped at the frame edge exactly like the revealed image is. */
+.lens-ring{
+  background-image:radial-gradient(circle var(--lens-r) at var(--lens-x) var(--lens-y),
+    transparent 0 calc(100% - 1.5px),var(--accent) calc(100% - 1.5px) 100%,transparent 100%);
+  box-shadow:none;
+}
+.lens.on,.lens-ring.on{opacity:1}
+@media (hover:none),(pointer:coarse){ .lens,.lens-ring{display:none} }
+@media (prefers-reduced-motion:reduce){ .lens,.lens-ring{transition:none} }
+
+/* Keyboard and touch get a real control instead — and it strips the page
+   overlays too, so it reaches the same fidelity the lens does. */
+.inspect-btn{
+  display:block;width:fit-content;margin-top:10px;z-index:3;position:relative;
+  font:500 10px/1 var(--font-mono);letter-spacing:.14em;text-transform:uppercase;
+  color:var(--on-photo);background:rgb(17 17 17 / .55);
+  border:1px solid var(--accent);padding:6px 9px;cursor:pointer;
+  transition:background var(--dur-fast) linear,color var(--dur-fast) linear;
+}
+.inspect-btn:hover,.inspect-btn[aria-pressed="true"]{
+  background:var(--accent);color:var(--on-accent);
+}
+:root.has-cursor .inspect-btn{cursor:none}
+/* 24px clears WCAG 2.5.8 but is tight under a thumb; this is the only
+   control on the page a touch user is expected to hit inside an image. */
+@media (hover:none),(pointer:coarse){ .inspect-btn{padding:12px 14px} }
+/* untreated state */
+.media--photo.raw .media-photo img{filter:none}
+.media--photo.raw .media-photo::before,
+.media--photo.raw .media-photo::after{opacity:0}
+:root.inspect{--grain-opacity:0;--scanline-opacity:0;--vignette-opacity:0}
 
 /* crop marks — corners of media frames only */
 .media::after{
@@ -601,7 +658,7 @@ a.row[href^="mailto:"]:hover{color:var(--accent)}
 :root.has-cursor body [role="button"], :root.has-cursor body label{cursor:none}
 
 .cursor{
-  position:fixed;top:0;left:0;width:18px;height:18px;pointer-events:none;z-index:1000;
+  position:fixed;top:0;left:0;width:18px;height:18px;pointer-events:none;z-index:10000;
   will-change:transform;color:var(--accent);
   transition:width var(--dur-fast) var(--ease-snap),height var(--dur-fast) var(--ease-snap),color var(--dur-fast) linear;
 }
@@ -612,7 +669,7 @@ a.row[href^="mailto:"]:hover{color:var(--accent)}
 .cursor.hover .cur-default{opacity:0;transform:scale(1.5)}
 .cursor.hover .cur-hover{opacity:1;transform:scale(1)}
 .cursor-read{
-  position:fixed;top:0;left:0;pointer-events:none;z-index:1000;transform:translate(16px,16px);
+  position:fixed;top:0;left:0;pointer-events:none;z-index:10000;transform:translate(16px,16px);
   font:400 10px/1.4 var(--font-mono);letter-spacing:.1em;text-transform:uppercase;
   white-space:nowrap;will-change:transform;
   background:var(--ink);color:var(--ground-bone);
@@ -694,5 +751,5 @@ a.row[href^="mailto:"]:hover{color:var(--accent)}
 }
 .mb-2{margin-bottom:var(--sp-2)}
 .max-w-prose{max-width:64ch}
-.hide-mobile{display:initial}
+.hide-mobile{display:revert}
 @media (max-width:760px){ .hide-mobile{display:none} }
