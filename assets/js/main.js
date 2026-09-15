@@ -67,6 +67,7 @@
     const TYPE_SEL = ".t-display-xl, .t-display-m, .pager-name";
     const SKIP = [
       "[data-clock]", ".theme-toggle", ".marquee-track", ".cursor-read",
+      "[data-no-cipher]",            // scannable credentials: status line, row specs, one-line strips
       ".kv", ".kv-row",              // spec blocks
       ".fig-caption", ".artefact .cap",   // figure and artefact captions
       ".decision-detail", ".outcome-tile", // decision labels, outcome citations
@@ -217,6 +218,13 @@
 
   /* ---------- mono counters, tick to true value ---------- */
   const counters = document.querySelectorAll("[data-count]");
+  if (counters.length && window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    counters.forEach((el) => {
+      const raw = el.getAttribute("data-count");
+      const d = (raw.split(".")[1] || "").length;
+      el.textContent = parseFloat(raw).toLocaleString("en-US", { minimumFractionDigits: d, maximumFractionDigits: d });
+    });
+  } else
   if (counters.length) {
     const cio = new IntersectionObserver(
       (entries) => {
@@ -568,6 +576,7 @@
      previous offset back in and the element drifts. */
   const MAGNET_X = 7; // px
   const MAGNET_Y = 5; // px
+  if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches)
   document.querySelectorAll(".magnet").forEach((el) => {
     const target = el.querySelector("[data-magnet-target]") || el;
     let rect = null;
@@ -625,6 +634,7 @@
   });
 
   /* ---------- work-row hover peek follows cursor ---------- */
+  if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches)
   document.querySelectorAll(".work-row").forEach((row) => {
     const peek = row.querySelector(".peek-track");
     if (!peek) return;

@@ -8,15 +8,49 @@
 > results", not as private.
 >
 > **Launch checklist**
-> 1. Remove the `noindex` meta line from all 10 pages (search for
+> 1. Remove the `noindex` meta line from all 11 pages (search for
 >    `PRE-LAUNCH`). Until this is done the site can never rank.
 > 2. Decide whether to keep the AI-crawler blocks in `robots.txt`.
-> 3. Finish or unpublish the unfinished cases — five of six still
->    carry bracketed placeholder prompts (`grep -rn '\[' work/`).
-> 4. Bump `?v=` on the CSS and JS links so returning visitors get the
+> 3. **Four cases are hidden, not deleted.** Dribe, Norlys, ForDanmark
+>    and Vild Mad still carry bracketed prompts, so their rows were
+>    removed from `index.html` and `work.html` and the nav says
+>    `Work [02]`. The files are untouched and still reachable by URL. To
+>    restore one: finish it (`grep -n '\[' work/<case>.html`), add its
+>    row back to both index pages, bump the nav count everywhere, and
+>    re-point the Tagga pager from About to the next case.
+> 4. **Add the CV.** The contact page had a "CV · PDF · 2 pages ↓" row
+>    that linked to nothing; it was removed rather than left as a dead
+>    promise. Drop a PDF in `assets/` and restore the row as an `<a>`.
+> 5. Bump `?v=` on the CSS and JS links so returning visitors get the
 >    new assets.
 
 A static, no-build, no-backend portfolio site. Plain HTML/CSS/JS, deployable straight to GitHub Pages.
+
+## Audience decisions baked into the build
+
+The site is tuned for one reader: a **hiring manager or design lead arriving
+rushed from a link**, who decides in ten seconds and must leave knowing
+Kenneth *owns the whole thing* — design through build and business. That
+decision drives several things that would otherwise look arbitrary:
+
+- The intro paragraph and the About page lead with ownership (co-founder /
+  CPO of Golisto, sole builder of Tagga) in body-size type, not in 11px mono.
+- The cipher effect is **exempted** from anything a rushed reader scans:
+  the status line, work-row specs, case mastheads and the one-line strips.
+  Add `data-no-cipher` to keep new credentials readable from the first frame.
+- Every case opens with a `.oneline` strip — problem / what I did / where
+  it is — for the reader who will never reach the outcome section.
+- Social preview tags (`og:*`, `twitter:*`) on every page, with a 1200×630
+  image, because the first impression happens in the link unfurl.
+- Fonts are self-hosted (`assets/fonts/`, SIL OFL) so there is no
+  third-party request and the footer's "no tracking" is literally true.
+- `<header>`, `<main id="main">`, a skip link, and nav hit areas widened
+  to 44px via a pseudo-element without moving anything visible.
+- A branded `404.html` (absolute `/portfolio/` paths — it renders unstyled
+  on a local root server, correctly on Pages) and an `@media print`
+  block that strips every screen effect and prints images untreated.
+- `prefers-reduced-motion` now also covers the grid draw-in, masthead
+  entrance, counters, magnet and work-row peek.
 
 ## Structure
 
