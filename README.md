@@ -116,10 +116,17 @@ the work. Two ways through it, both on `.media--photo`:
   wiring** — one lens, ring and button per image, each tracking its own
   frame. The `.inspect` state is shared: overlays stay stripped while any
   image is showing untreated.
-- **Show untreated** — a real button, which is what keyboard and touch get.
-  It drops the image treatment *and* sets `.inspect` on `:root`, zeroing
-  grain, scanlines and vignette, so it reaches the same fidelity the lens
-  does. Pressing it again restores everything.
+- **Show untreated** — a real button in a `.media-tools` row, which is what
+  keyboard and touch get. It drops the image treatment *and* sets `.inspect`
+  on `:root`, zeroing grain, scanlines and vignette, so it reaches the same
+  fidelity the lens does. Pressing it again restores everything.
+
+  The row sits **below the frame, not on the image**, and this is not
+  cosmetic: the lens is centred on the pointer, so any control inside the
+  image is covered by the lens at the exact moment you reach for it. It
+  stayed hit-testable (the lens is `pointer-events:none`) but invisible,
+  which is worse than being disabled. It is built in JS rather than markup,
+  because it does nothing without JS and should not be offered then.
 
 The cursor sits at z-index 10000 so the crosshair stays above the lens.
 

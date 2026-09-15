@@ -338,19 +338,35 @@
     const media = photo.parentElement;
     if (!img || !media) return;
 
-    /* --- button: works everywhere, including with JS-driven lens absent --- */
-    const btn = media.querySelector(".inspect-btn");
-    if (btn) {
-      btn.addEventListener("click", () => {
-        const on = media.classList.toggle("raw");
-        btn.setAttribute("aria-pressed", String(on));
-        btn.textContent = on ? "Show treated" : "Show untreated";
-        document.documentElement.classList.toggle(
-          "inspect",
-          !!document.querySelector(".raw")
-        );
-      });
-    }
+    /* --- control row, built here rather than in markup ---
+       It only does anything with JS, so it should not exist without it. It
+       goes BELOW the frame: the lens is centred on the pointer, so a button
+       inside the image is hidden by the lens exactly when you reach for it. */
+    const tools = document.createElement("div");
+    tools.className = "media-tools";
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "inspect-btn";
+    btn.setAttribute("aria-pressed", "false");
+    btn.textContent = "Show untreated";
+    const hint = document.createElement("span");
+    hint.className = "hint";
+    hint.textContent = "Hover the image to inspect";
+    tools.append(btn, hint);
+    media.insertAdjacentElement("afterend", tools);
+
+    btn.addEventListener("click", () => {
+      const on = media.classList.toggle("raw");
+      btn.setAttribute("aria-pressed", String(on));
+      btn.textContent = on ? "Show treated" : "Show untreated";
+      hint.textContent = on
+        ? "Showing the file as delivered"
+        : "Hover the image to inspect";
+      document.documentElement.classList.toggle(
+        "inspect",
+        !!document.querySelector(".raw")
+      );
+    });
 
     if (!window.matchMedia("(hover: hover) and (pointer: fine)").matches) return;
 

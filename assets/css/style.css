@@ -356,21 +356,29 @@ img{max-width:100%;display:block}
 @media (max-width:900px){ :root{--lens-r:120px} }
 @media (prefers-reduced-motion:reduce){ .lens,.lens-ring{transition:none} }
 
-/* Keyboard and touch get a real control instead — and it strips the page
-   overlays too, so it reaches the same fidelity the lens does. */
+/* The control sits BELOW the frame, not on it. A 376px lens centred on the
+   pointer covers whatever you are reaching for, so a button inside the image
+   is invisible at the exact moment you go to press it. */
+.media-tools{
+  display:flex;align-items:center;gap:14px;flex-wrap:wrap;
+  padding:12px var(--margin) 0;
+}
+.media-tools .hint{
+  font:400 10px/1.4 var(--font-mono);letter-spacing:.12em;text-transform:uppercase;
+  color:var(--ink-muted);
+}
+@media (hover:none),(pointer:coarse){ .media-tools .hint{display:none} }
 .inspect-btn{
-  display:block;width:fit-content;margin-top:10px;z-index:3;position:relative;
   font:500 10px/1 var(--font-mono);letter-spacing:.14em;text-transform:uppercase;
-  color:var(--on-photo);background:rgb(17 17 17 / .55);
-  border:1px solid var(--accent);padding:6px 9px;cursor:pointer;
+  color:var(--ink);background:none;border:1px solid var(--accent);
+  padding:8px 11px;cursor:pointer;
   transition:background var(--dur-fast) linear,color var(--dur-fast) linear;
 }
 .inspect-btn:hover,.inspect-btn[aria-pressed="true"]{
   background:var(--accent);color:var(--on-accent);
 }
 :root.has-cursor .inspect-btn{cursor:none}
-/* 24px clears WCAG 2.5.8 but is tight under a thumb; this is the only
-   control on the page a touch user is expected to hit inside an image. */
+/* 24px clears WCAG 2.5.8 but is tight under a thumb. */
 @media (hover:none),(pointer:coarse){ .inspect-btn{padding:12px 14px} }
 /* untreated state */
 .raw .media-photo img{filter:none}
