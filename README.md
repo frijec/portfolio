@@ -18,10 +18,15 @@
 >    restore one: finish it (`grep -n '\[' work/<case>.html`), add its
 >    row back to both index pages, bump the nav count everywhere, and
 >    re-point the Tagga pager from About to the next case.
-> 4. **Add the CV.** The contact page had a "CV · PDF · 2 pages ↓" row
+> 4. **Golisto D.01–D.03 contain drafts.** Six paragraphs are Claude’s
+>    candidates for what was rejected and what it cost, marked in the
+>    page as “Draft — confirm or correct” and with `<!-- DRAFT` comments in
+>    the source. Nothing there is Kenneth’s word until the todo-block
+>    wrapper and the [Confirm…] notes are removed.
+> 5. **Add the CV.** The contact page had a "CV · PDF · 2 pages ↓" row
 >    that linked to nothing; it was removed rather than left as a dead
 >    promise. Drop a PDF in `assets/` and restore the row as an `<a>`.
-> 5. Bump `?v=` on the CSS and JS links so returning visitors get the
+> 6. Bump `?v=` on the CSS and JS links so returning visitors get the
 >    new assets.
 
 A static, no-build, no-backend portfolio site. Plain HTML/CSS/JS, deployable straight to GitHub Pages.
