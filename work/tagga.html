@@ -9,7 +9,7 @@
 <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..125,400..800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../assets/css/style.css?v=5">
+<link rel="stylesheet" href="../assets/css/style.css?v=7">
 <script>document.documentElement.classList.add("js");try{if(localStorage.getItem("kj-theme")==="crt")document.documentElement.setAttribute("data-theme","crt")}catch(e){}</script>
 </head>
 <body>
@@ -55,10 +55,16 @@
         <div class="kv-row"><span>Crew size</span><span class="kv-leader"></span><span>Up to 30, free</span></div>
       </div>
     </div>
-    <div class="media" style="margin-top:32px;height:max(240px,min(640px,60vw));position:relative">
+    <div class="media media--photo" style="margin-top:32px;height:max(240px,min(640px,60vw));position:relative">
       <div class="media-photo">
-        <img src="../assets/img/tagga-hero.jpg" width="2000" height="1118" fetchpriority="high"
-             alt="A phone clamped to motorcycle handlebars at speed, running Tagga. The screen shows a live map with the route ahead and two crew markers; the road behind the bars is blurred by motion.">
+        <picture>
+          <source type="image/webp" sizes="100vw"
+                  srcset="../assets/img/tagga-hero-1400.webp 1400w,
+                          ../assets/img/tagga-hero-2000.webp 2000w,
+                          ../assets/img/tagga-hero-2800.webp 2800w">
+          <img src="../assets/img/tagga-hero-2000.jpg" width="2000" height="1116" fetchpriority="high"
+               alt="A phone clamped to motorcycle handlebars at speed, running Tagga. The screen shows a live map with the route ahead and two crew markers; the road behind the bars is blurred by motion.">
+        </picture>
       </div>
       <div class="fig-caption"><div>Fig. 01</div><div class="muted">Live map — ride of six, 2026</div></div>
       <div class="fig-caption right"><div>Ride code</div><div class="t-display-s mt-2" style="letter-spacing:.06em">FVRG5</div></div>
@@ -313,7 +319,7 @@
   </footer>
 </div>
 
-<script src="../assets/js/main.js?v=5"></script>
+<script src="../assets/js/main.js?v=7"></script>
 <script>
   (function(){
     var states = [
