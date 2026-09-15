@@ -355,7 +355,46 @@
        from PerformanceResourceTiming; encodedBodySize survives a cache hit
        where transferSize drops to 0. Markup carries sensible fallbacks, so
        nothing ever renders blank if the timing entry is unavailable. */
-    const slot = (k) => media.querySelector(`[data-img="${k}"]`);
+    /* --- control row, built here rather than in markup ---
+       It only does anything with JS, so it should not exist without it. It
+       goes BELOW the frame: the lens is centred on the pointer, so a control
+       inside the image is hidden by the lens exactly when you reach for it,
+       and on a small frame in-image captions crowd the picture out. */
+    const tools = document.createElement("div");
+    tools.className = "media-tools";
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "inspect-btn";
+    btn.setAttribute("aria-pressed", "false");
+    btn.textContent = "Show untreated";
+    tools.append(btn);
+
+    if (media.dataset.credit) {
+      const credit = document.createElement("span");
+      credit.className = "credit";
+      credit.textContent = media.dataset.credit;
+      tools.append(credit);
+    }
+    const treat = document.createElement("span");
+    treat.className = "hint";
+    treat.setAttribute("data-img", "treatment");
+    tools.append(treat);
+
+    const hint = document.createElement("span");
+    hint.className = "hint lens-hint";
+    hint.textContent = "Hover the image to inspect";
+    tools.append(hint);
+    media.insertAdjacentElement("afterend", tools);
+
+    /* A .media inside a .row is a grid item, so a plain sibling lands in
+       whatever cell comes next — bottom-left of the page, not under the
+       image. Inherit the media's own column placement. */
+    if (getComputedStyle(media.parentElement).display.includes("grid")) {
+      tools.style.gridColumn = getComputedStyle(media).gridColumn;
+    }
+
+    const slot = (k) =>
+      media.querySelector(`[data-img="${k}"]`) || tools.querySelector(`[data-img="${k}"]`);
     const fmtOf = (src) =>
       (src.split("?")[0].split(".").pop() || "").toUpperCase().replace("JPG", "JPEG");
 
@@ -415,23 +454,6 @@
     img.addEventListener("load", writeMeta);
     // naturalWidth is 0 until the tab is visible, so fill in again then
     document.addEventListener("visibilitychange", writeMeta);
-
-    /* --- control row, built here rather than in markup ---
-       It only does anything with JS, so it should not exist without it. It
-       goes BELOW the frame: the lens is centred on the pointer, so a button
-       inside the image is hidden by the lens exactly when you reach for it. */
-    const tools = document.createElement("div");
-    tools.className = "media-tools";
-    const btn = document.createElement("button");
-    btn.type = "button";
-    btn.className = "inspect-btn";
-    btn.setAttribute("aria-pressed", "false");
-    btn.textContent = "Show untreated";
-    const hint = document.createElement("span");
-    hint.className = "hint";
-    hint.textContent = "Hover the image to inspect";
-    tools.append(btn, hint);
-    media.insertAdjacentElement("afterend", tools);
 
     btn.addEventListener("click", () => {
       const on = media.classList.toggle("raw");

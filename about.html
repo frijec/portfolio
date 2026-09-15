@@ -9,7 +9,7 @@
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..125,400..800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/css/style.css?v=19">
+<link rel="stylesheet" href="assets/css/style.css?v=22">
 <script>document.documentElement.classList.add("js");try{if(localStorage.getItem("kj-theme")==="crt")document.documentElement.setAttribute("data-theme","crt")}catch(e){}</script>
 </head>
 <body>
@@ -38,8 +38,17 @@
     </div>
     <div class="row" style="align-items:end">
       <h1 class="t-display-xl c8 reveal in">Kenneth<br>Jensen<span style="font-size:.25em;vertical-align:top;margin-left:.06em">®</span></h1>
-      <div class="c4 s9 media" style="aspect-ratio:3/4;position:relative;border:1px solid var(--ink)">
-        <div class="fig-caption bottom muted">Portrait · high-contrast B/W · 3:4</div>
+      <div class="c4 s9 media media--photo" data-credit="Generated portrait — not a photograph" style="aspect-ratio:3/4;position:relative;border:1px solid var(--ink)">
+        <div class="media-photo" data-aspect="1792x2390">
+          <picture>
+            <source type="image/webp" sizes="(max-width:760px) 100vw, 33vw"
+                    srcset="assets/img/portrait-700.webp 700w,
+                            assets/img/portrait-1100.webp 1100w,
+                            assets/img/portrait-1500.webp 1500w">
+            <img src="assets/img/portrait-1100.jpg" width="1100" height="1467"
+                 alt="A stylised portrait: a figure in a matte black helmet with orange light strips, sitting in a workshop of servers, cable spools and code on screens.">
+          </picture>
+        </div>
       </div>
     </div>
     <div class="row" style="margin-top:40px;border-top:1px solid var(--ink);padding-block:16px 64px">
@@ -136,6 +145,6 @@
   </footer>
 </div>
 
-<script src="assets/js/main.js?v=19"></script>
+<script src="assets/js/main.js?v=22"></script>
 </body>
 </html>

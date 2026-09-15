@@ -277,6 +277,12 @@ img{max-width:100%;display:block}
    greyscale, a bone veil to pull it toward the paper, and the same 5px
    halftone screen over the top. */
 .media-photo{position:absolute;inset:0;overflow:hidden;z-index:0}
+/* <picture> is inline with auto height, so an img inside it has nothing to
+   resolve height:100% against. The hero escaped this only because its
+   .media carries an explicit height; on an aspect-ratio box the image
+   collapsed to 47x64. display:contents makes the img a direct child of the
+   absolutely-positioned wrapper, which has a definite size. */
+.media-photo picture{display:contents}
 .media-photo img{
   width:100%;height:100%;object-fit:cover;object-position:center;display:block;
   filter:grayscale(1) contrast(1.06) brightness(1.02);
@@ -363,11 +369,19 @@ img{max-width:100%;display:block}
   display:flex;align-items:center;gap:14px;flex-wrap:wrap;
   padding:12px var(--margin) 0;
 }
+.media-tools .credit{
+  font:400 10px/1.4 var(--font-mono);letter-spacing:.12em;text-transform:uppercase;
+  color:var(--ink);
+}
 .media-tools .hint{
   font:400 10px/1.4 var(--font-mono);letter-spacing:.12em;text-transform:uppercase;
   color:var(--ink-muted);
 }
-@media (hover:none),(pointer:coarse){ .media-tools .hint{display:none} }
+@media (hover:none),(pointer:coarse){ .media-tools .credit{
+  font:400 10px/1.4 var(--font-mono);letter-spacing:.12em;text-transform:uppercase;
+  color:var(--ink);
+}
+.media-tools .hint{display:none} }
 .inspect-btn{
   font:500 10px/1 var(--font-mono);letter-spacing:.14em;text-transform:uppercase;
   color:var(--ink);background:none;border:1px solid var(--accent);
