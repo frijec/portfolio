@@ -413,6 +413,7 @@ img{max-width:100%;display:block}
 @media (max-width:500px){
   .fig-caption .t-display-s{font-size:22px}
 }
+.fig-caption .unit{font-size:.45em;letter-spacing:0;margin-left:3px}
 
 /* ============================================================
    REVEAL

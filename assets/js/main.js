@@ -321,7 +321,18 @@
   document.querySelectorAll(".media-photo img").forEach((img) => {
     const fail = () => img.closest(".media-photo")?.remove();
     img.addEventListener("error", fail);
-    if (img.complete && img.naturalWidth === 0) fail();
+
+    /* "complete with zero width" is only evidence of a broken image while
+       the page is VISIBLE. Browsers defer decoding in a background tab, so
+       a perfectly good image reads complete/naturalWidth 0 there — judging
+       it then deletes a working hero for anyone who opened the page in a
+       background tab. Wait until we can actually trust the reading. */
+    const verify = () => {
+      if (document.visibilityState !== "visible") return;
+      if (img.complete && img.naturalWidth === 0) fail();
+    };
+    addEventListener("load", verify);
+    document.addEventListener("visibilitychange", verify);
   });
 
   /* ---------- fidelity lens ----------
@@ -337,6 +348,73 @@
     const img = photo.querySelector("img");
     const media = photo.parentElement;
     if (!img || !media) return;
+
+    /* --- image tags: report the file actually delivered ---
+       The browser picks a srcset variant by viewport and DPR, so these are
+       read from the loaded resource rather than hard-coded. Byte size comes
+       from PerformanceResourceTiming; encodedBodySize survives a cache hit
+       where transferSize drops to 0. Markup carries sensible fallbacks, so
+       nothing ever renders blank if the timing entry is unavailable. */
+    const slot = (k) => media.querySelector(`[data-img="${k}"]`);
+    const fmtOf = (src) =>
+      (src.split("?")[0].split(".").pop() || "").toUpperCase().replace("JPG", "JPEG");
+
+    // The `w` descriptor next to the URL the browser actually chose.
+    const srcsetWidth = (src) => {
+      for (const el of media.querySelectorAll("source[srcset], img[srcset]")) {
+        for (const part of (el.getAttribute("srcset") || "").split(",")) {
+          const [u, d] = part.trim().split(/\s+/);
+          if (!u || !d || !d.endsWith("w")) continue;
+          if (new URL(u, location.href).href === src) return parseInt(d, 10);
+        }
+      }
+      return null;
+    };
+
+    const writeMeta = () => {
+      const src = img.currentSrc || img.src;
+      if (!src) return;
+      const name = decodeURIComponent(src.split("?")[0].split("/").pop());
+      const fmt = fmtOf(src);
+
+      const f = slot("file");
+      if (f) f.textContent = name;
+
+      /* naturalWidth reports the DECODE, which the browser is free to
+         downscale — it reads 1024 for a 2800px file. The srcset `w`
+         descriptor is by definition the intrinsic width, so take it from
+         there and derive height from the authored aspect ratio. */
+      const res = slot("res");
+      if (res) {
+        const w = srcsetWidth(src) || +img.getAttribute("width") || img.naturalWidth;
+        /* Derive height from the SOURCE aspect when declared. The img's own
+           width/height are already rounded for one variant, so deriving from
+           them compounds the rounding and lands a pixel off on the others. */
+        const [sw, sh] = (photo.dataset.aspect || "").split("x").map(Number);
+        const aw = +img.getAttribute("width"), ah = +img.getAttribute("height");
+        const ratio = sw && sh ? sh / sw
+          : aw && ah ? ah / aw
+          : img.naturalHeight / img.naturalWidth;
+        if (w && ratio) res.textContent = `${w} × ${Math.round(w * ratio)}`;
+      }
+
+      const entry = performance.getEntriesByName(src).pop();
+      const bytes = entry && (entry.encodedBodySize || entry.decodedBodySize);
+      const size = slot("size");
+      if (size && bytes) size.textContent = Math.round(bytes / 1024);
+
+      const t = slot("treatment");
+      if (t) {
+        t.textContent = media.classList.contains("raw")
+          ? `${fmt} · untreated`
+          : `${fmt} · greyscale, halftone 5px`;
+      }
+    };
+
+    if (img.complete) writeMeta();
+    img.addEventListener("load", writeMeta);
+    // naturalWidth is 0 until the tab is visible, so fill in again then
+    document.addEventListener("visibilitychange", writeMeta);
 
     /* --- control row, built here rather than in markup ---
        It only does anything with JS, so it should not exist without it. It
@@ -362,6 +440,7 @@
       hint.textContent = on
         ? "Showing the file as delivered"
         : "Hover the image to inspect";
+      writeMeta();
       document.documentElement.classList.toggle(
         "inspect",
         !!document.querySelector(".raw")

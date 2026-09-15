@@ -130,6 +130,32 @@ the work. Two ways through it, both on `.media--photo`:
 
 The cursor sits at z-index 10000 so the crosshair stays above the lens.
 
+### Image tags
+
+The four corner tags on a photo report the file the visitor actually
+received, not authored copy. The browser picks a srcset variant by viewport
+and DPR, so the numbers change with the device:
+
+| Tag | Source |
+| --- | --- |
+| filename | `img.currentSrc` |
+| resolution | the srcset `w` descriptor + `data-aspect` on `.media-photo` |
+| transfer | `PerformanceResourceTiming.encodedBodySize` |
+| treatment | live, flips to "untreated" with the toggle |
+
+Two traps, both hit while building this:
+
+- **`naturalWidth` is not the file's resolution.** It reports the *decode*,
+  which the browser may downscale — it read 1024 for a 2800px file. The
+  srcset `w` descriptor is the intrinsic width by definition, so read it
+  from there.
+- **Derive height from `data-aspect` (the source dimensions), not from the
+  img's `width`/`height`.** Those are already rounded for one variant, and
+  deriving from them compounds the rounding — 1562 against a real 1563.
+
+Markup carries plausible fallbacks, so a tag never renders blank or `0 × 0`
+if the timing entry is unavailable.
+
 ### Photography
 
 `.media` shows a generated turbulence plate by default. Add `.media--photo`
