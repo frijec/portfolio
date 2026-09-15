@@ -331,9 +331,11 @@
     document.addEventListener("mousemove", (e) => {
       const mx = e.clientX, my = e.clientY;
       cursor.style.transform = `translate(${mx}px, ${my}px) translate(-50%,-50%)`;
-      readout.style.transform = `translate(${mx}px, ${my}px)`;
       readout.textContent =
         `X ${mx} / Y ${my} · SCROLL ${Math.round(scrollPct * 100)}%`;
+      const rw = readout.offsetWidth;
+      const rx = mx + 16 + rw > window.innerWidth ? mx - 16 - rw : mx + 16;
+      readout.style.transform = `translate(${rx}px, ${my + 16}px)`;
     });
 
     document.querySelectorAll("a,button,.magnet").forEach((el) => {
@@ -351,22 +353,24 @@
   const MAGNET_X = 7; // px
   const MAGNET_Y = 5; // px
   document.querySelectorAll(".magnet").forEach((el) => {
+    const target = el.querySelector("[data-magnet-target]") || el;
     let rect = null;
     el.addEventListener("mouseenter", () => {
-      el.style.transform = "";
-      rect = el.getBoundingClientRect();
+      target.style.transform = "";
+      rect = target.getBoundingClientRect();
     });
     el.addEventListener("mousemove", (e) => {
-      if (!rect) rect = el.getBoundingClientRect();
+      if (!rect) rect = target.getBoundingClientRect();
       if (!rect.width || !rect.height) return;
-      const dx = (e.clientX - rect.left) / rect.width - 0.5;
-      const dy = (e.clientY - rect.top) / rect.height - 0.5;
-      el.style.transform =
+      const clamp = (n) => Math.max(-0.5, Math.min(0.5, n));
+      const dx = clamp((e.clientX - rect.left) / rect.width - 0.5);
+      const dy = clamp((e.clientY - rect.top) / rect.height - 0.5);
+      target.style.transform =
         `translate(${(dx * 2 * MAGNET_X).toFixed(2)}px, ${(dy * 2 * MAGNET_Y).toFixed(2)}px)`;
     });
     el.addEventListener("mouseleave", () => {
       rect = null;
-      el.style.transform = "translate(0,0)";
+      target.style.transform = "";
     });
   });
 
