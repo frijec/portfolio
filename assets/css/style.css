@@ -324,7 +324,13 @@ img{max-width:100%;display:block}
 }
 .js .media-photo img{clip-path:inset(0 0 100% 0)}
 .media.in .media-photo img{clip-path:inset(0 0 0 0);transform:scale(1)}
-.media:hover .media-photo img{transform:scale(1.06)}
+/* No hover zoom here, on purpose: the lens is a fixed div sized to the
+   media rect with background-size:cover — mathematically identical to
+   object-fit:cover on the img at scale(1). Scaling the img on hover was
+   desyncing the two the instant the lens turned on: the visible photo
+   cropped in 6% while the lens kept sampling the unscaled frame, so the
+   content under the lens drifted from the content around it. The lens is
+   the "look closer" affordance now; the base image just fits its frame.
 /* veil toward the bone ground — the duotone half of the treatment */
 .media-photo::before{content:"";position:absolute;inset:0;z-index:1;
   background:var(--ground-bone);opacity:.10;pointer-events:none}
@@ -340,7 +346,6 @@ img{max-width:100%;display:block}
 
 @media (prefers-reduced-motion:reduce){
   .media-photo img{transition:none;transform:none}
-  .media:hover .media-photo img{transform:none}
 }
 
 /* Captions over photography. The bone halo below was tuned for the light
