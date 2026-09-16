@@ -95,7 +95,18 @@ should not add inline spacing.** The vocabulary:
 | Layout helpers | `.grid .flex .gap-N .between .row--end .row--baseline .stack .pretty .ink` |
 | Repeated blocks | `.meta-row` (masthead meta), `.pager-body`, `.reg` (the ® mark, one size everywhere) |
 
-Buttons come in two sizes only: `.arrow-link` (primary, 12px, `12px 18px`
+**Craft pass (Sept 2026).** Twelve-rule review, all recommendations applied:
+buttons carry **no glow** — bloom stays on static display type as atmosphere,
+never on a control at hover; every spacing value in the stylesheet itself is
+now a `--sp` token (the inline sweep had left the component internals);
+`.t-m` is 16px and `.mono-s` is 12px/.08em, collapsing two near-duplicate
+type steps; the two CRT-only `box-shadow`s on `.media` and `.todo-block` are
+gone so borders alone carry elevation; `.work-row`, `.pager` and `.nav a`
+have pressed states; the media reveal is 400/500ms instead of 760/1200. The
+infinite loops (marquee, status pulse, grain, flicker, write-head blink) are
+kept deliberately and all guarded under `prefers-reduced-motion`.
+
+Buttons come in two sizes only: `.arrow-link` (primary, 12px, `12px 24px`
 padding) and the utility trio `.inspect-btn .theme-toggle .marquee-pause`
 (11px, `8px 12px`, `--rule-grid` border, accent on hover/pressed). All four
 have a pressed state. Uppercase mono tracks at `.08em` from 12px up and
