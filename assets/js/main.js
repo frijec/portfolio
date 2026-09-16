@@ -30,6 +30,15 @@
     row.style.transitionDelay = (i % 6) * 55 + "ms";
   });
 
+  // Numbered rows fade in with the prose beside them, staggered 40ms per
+  // row within their own group. Same rule as .work-row above: classes are
+  // added here so the page reads fully without this script.
+  document.querySelectorAll(".numbered, .numbered-s").forEach((el) => {
+    const siblings = [...el.parentElement.children].filter((c) => c.matches(".numbered, .numbered-s"));
+    el.classList.add("reveal");
+    el.style.setProperty("--i", siblings.indexOf(el));
+  });
+
   const revealables = document.querySelectorAll(".reveal, .media, .section");
   if (revealables.length) {
     const io = new IntersectionObserver(
@@ -306,15 +315,44 @@
       btn.setAttribute("aria-pressed", isOn() ? "true" : "false");
     }
 
+    /* Turning off mirrors turning on: the picture collapses to a scanline,
+       then the theme swaps once it has gone. Reduced motion and a missing
+       .wrap fall back to the instant swap. */
+    function powerOff(done) {
+      const wrap = document.querySelector(".wrap");
+      if (!wrap || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return done();
+      if (wrap.classList.contains("power-off")) return;      // already collapsing
+      wrap.classList.remove("power-on");
+      wrap.classList.add("power-off");
+      // animationend is the happy path. A background tab throttles or pauses
+      // CSS animations and the event may never come — without a fallback the
+      // page would sit collapsed at opacity 0 with the theme never swapped.
+      let finished = false;
+      const finish = () => {
+        if (finished) return;
+        finished = true;
+        wrap.classList.remove("power-off");
+        done();
+      };
+      wrap.addEventListener("animationend", finish, { once: true });
+      setTimeout(finish, 400);
+    }
+
     btn.addEventListener("click", () => {
       const turningOn = !isOn();
-      if (turningOn) root.setAttribute("data-theme", "crt");
-      else root.removeAttribute("data-theme");
       try {
         localStorage.setItem(KEY, turningOn ? "crt" : "light");
       } catch (e) {}
-      render();
-      if (turningOn) powerOn();
+      if (turningOn) {
+        root.setAttribute("data-theme", "crt");
+        render();
+        powerOn();
+      } else {
+        powerOff(() => {
+          root.removeAttribute("data-theme");
+          render();
+        });
+      }
     });
 
     render();

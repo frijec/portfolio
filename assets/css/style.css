@@ -320,7 +320,8 @@ img{max-width:100%;display:block}
   width:100%;height:100%;object-fit:cover;object-position:center;display:block;
   filter:grayscale(1) contrast(1.06) brightness(1.02);
   transform:scale(1.03);
-  transition:clip-path 400ms var(--ease-snap), transform 500ms var(--ease-snap);
+  transition:clip-path 400ms var(--ease-snap), transform 500ms var(--ease-snap),
+    filter var(--dur-med) var(--ease-hard);
 }
 .js .media-photo img{clip-path:inset(0 0 100% 0)}
 .media.in .media-photo img{clip-path:inset(0 0 0 0);transform:scale(1)}
@@ -333,9 +334,11 @@ img{max-width:100%;display:block}
    the "look closer" affordance now; the base image just fits its frame.
 /* veil toward the bone ground — the duotone half of the treatment */
 .media-photo::before{content:"";position:absolute;inset:0;z-index:1;
-  background:var(--ground-bone);opacity:.10;pointer-events:none}
+  background:var(--ground-bone);opacity:.10;pointer-events:none;
+  transition:opacity var(--dur-med) var(--ease-hard)}
 /* halftone screen, same pitch as the plate */
 .media-photo::after{content:"";position:absolute;inset:0;z-index:2;pointer-events:none;
+  transition:opacity var(--dur-med) var(--ease-hard);
   background-image:radial-gradient(circle, rgb(17 17 17 / .30) 0 1.2px, transparent 1.6px);
   background-size:5px 5px;mix-blend-mode:multiply}
 /* CRT inverts the plate, but an inverted photograph is just a negative —
@@ -436,7 +439,12 @@ img{max-width:100%;display:block}
 .raw .media-photo img{filter:none}
 .raw .media-photo::before,
 .raw .media-photo::after{opacity:0}
-:root.inspect{--grain-opacity:0;--scanline-opacity:0;--vignette-opacity:0}
+/* The page-level overlays lift with the image rather than popping off.
+   .noise is already opacity-driven; .crt is a gradient, so it gets its own
+   opacity to animate instead of the (non-animatable) gradient stops. */
+:root.inspect{--grain-opacity:0}
+:root.inspect .crt{opacity:0}
+.noise,.crt{transition:opacity var(--dur-med) var(--ease-hard)}
 
 /* One-line summary strip: problem / what I did / result, for the reader
    who decides in ten seconds and will not reach the outcome section. */
@@ -479,7 +487,8 @@ img{max-width:100%;display:block}
    ============================================================ */
 /* hidden-until-revealed only when JS is running, so a failed script
    never leaves the page blank */
-.js .reveal{opacity:0;transform:translateY(14px);transition:transform 420ms var(--ease-snap),opacity 320ms linear}
+.js .reveal{opacity:0;transform:translateY(14px);transition:transform 420ms var(--ease-snap),opacity 320ms linear;
+  transition-delay:calc(var(--i, 0) * 40ms)}  /* --i set per numbered row in main.js */
 .js .reveal.in{opacity:1;transform:translateY(0)}
 @media (prefers-reduced-motion:reduce){ .js .reveal{opacity:1;transform:none;transition:none} }
 
@@ -667,10 +676,22 @@ footer{display:flex;flex-wrap:wrap;justify-content:space-between;gap:var(--sp-2)
   100%{transform:none;filter:none;opacity:1}
 }
 
+/* CRT power-off: the picture collapses back to the line it came from —
+   the same path as power-on, and faster, because closing is faster than
+   opening. The theme swaps once the line has gone. */
+.power-off{animation:power-off var(--dur-med) var(--ease-snap) both;transform-origin:50% 50%}
+@keyframes power-off{
+  0%{transform:none;filter:none;opacity:1}
+  55%{transform:scaleY(.02) scaleX(1);filter:brightness(2.4)}
+  100%{transform:scaleY(.002) scaleX(.6);filter:brightness(3.2);opacity:0}
+}
+
 @media (prefers-reduced-motion:reduce){
   .noise{animation:none}
   .crt::after{animation:none}
-  .power-on{animation:none}
+  .power-on,.power-off{animation:none}
+  /* the lift stays, gentler: reduced motion is not zero motion */
+  .media-photo::before,.media-photo::after,.noise,.crt{transition-duration:var(--dur-fast)}
 }
 
 /* ============================================================
@@ -696,7 +717,10 @@ footer{display:flex;flex-wrap:wrap;justify-content:space-between;gap:var(--sp-2)
    case, and at 56-96px they read as a marker, not as body colour. */
 .outcome-tile .num{color:var(--accent)}
 .outcome-tile .num{text-shadow:0 0 var(--glow) var(--glow-accent)}
-a.row[href^="mailto:"]:hover{color:var(--accent)}
+@media (hover:hover) and (pointer:fine){
+  a.row[href^="mailto:"],a.magnet[href^="mailto:"]:not(.arrow-link){transition:color var(--dur-fast) var(--ease-hard)}
+  a.row[href^="mailto:"]:hover,a.magnet[href^="mailto:"]:not(.arrow-link):hover{color:var(--accent)}
+}
 .nav{box-shadow:0 1px var(--glow) rgb(17 17 17 / .05)}
 .section,.decision,.work-row{box-shadow:0 -1px var(--glow) var(--glow-ink)}
 .work-row:hover h2{text-shadow:0 0 calc(var(--glow) * 1.8) var(--glow-accent)}

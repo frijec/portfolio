@@ -283,6 +283,39 @@ measures 7.8:1 on that ground). The choice persists in
 so there's no flash on load. Delete that script, the `.theme-toggle`
 block in `main.js`, and the `[data-theme="crt"]` token block to remove.
 
+### Motion: every state change bridges
+
+An animation-opportunities sweep found that the site's own rule — colour,
+opacity and transform changes bridge over `--dur-fast`/`--dur-med` — had
+three exceptions where a state simply snapped. All fixed, using the existing
+tokens only:
+
+- **Show untreated lifts** instead of popping: the veil, halftone, page grain
+  and scanlines transition `opacity var(--dur-med) var(--ease-hard)`, and the
+  greyscale `filter` runs the same duration (the one non-transform/opacity
+  transition on the site, kept because the lift reads better with it). `.crt`
+  is a gradient, so it gets its own `opacity` to animate rather than trying to
+  animate gradient stops. Reduced motion shortens these to `--dur-fast`,
+  not zero.
+- **CRT off mirrors CRT on**: the picture collapses to a scanline over
+  `--dur-med` (faster than the 520ms power-on — closing is quicker than
+  opening), then the theme swaps. `powerOff()` races `animationend` against
+  a 400ms timeout, because a background tab pauses CSS animations and the
+  event may never fire — without the fallback the page sits collapsed at
+  opacity 0.
+- **The giant mailto** was the one colour hover without a transition; it now
+  uses the same `color var(--dur-fast) var(--ease-hard)` as every other,
+  gated on `(hover:hover) and (pointer:fine)`.
+- **Numbered rows join the reveal**, staggered 40ms per row within their own
+  group via `--i` set in `main.js` (classes are added in JS so the page reads
+  fully without it).
+
+Deliberately not animated, and why: focus rings and the skip link (keyboard-
+initiated — never), the lens position and ring (a precision instrument;
+smoothing reads as lag), the clock and scroll-progress bar (data the visitor
+reads), the marquee pause (must be instant), and the 404 page (already has
+the site's entrance; more is decoration).
+
 ### Terminal write-in
 
 Text resolves as each element enters the viewport, once. Two different
