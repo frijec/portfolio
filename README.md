@@ -85,8 +85,8 @@ should not add inline spacing.** The vocabulary:
 
 | Need | Classes |
 | --- | --- |
-| Spacing | `.mt-N .mb-N .pt-N .pb-N` for N = 0–10, mapped to `--sp-N` (4, 8, 12, 16, 24, 32, 40, 48, 56, 72px) |
-| Section rhythm | `.section > .row` defaults to `16px / 56px`. A row that continues into another opts out with `.pb-0` or `.pb-2`. |
+| Spacing | `.mt-N .mb-N .pt-N .pb-N` for N = 0–11, mapped to `--sp-N` (4, 8, 12, 16, 24, 32, 40, 48, 56, 72, 96px). `--sp-11/12` are section-level air only. |
+| Section rhythm | `.section > :where(.row)` defaults to `32px / 72px`. A row that continues into another opts out with `.pb-0` / `.pb-2`, and the next row brings its own `.pt-N`. The selector is wrapped in `:where()` on purpose: as `.section > .row` it out-ranked every utility and the opt-outs silently did nothing. On mobile, stacked cells get `row-gap: 24px`; rows made only of `.mono-s` labels stay at 8px. |
 | Rules | `.rule-top / .rule-bottom` (ink), `.rule-soft-top / -bottom` (`--rule-soft`, flips in CRT), `.rule-dot-top / -bottom` (leader dotted) |
 | Measure | `.m-prose` 60ch · `.m-lede` 36ch · `.m-short` 22ch — three widths, not ten |
 | Numerals | `.t-num-s / -m / -l` — the three display-number sizes. Work-row, constraint, decision and outcome numerals all sit on these. |

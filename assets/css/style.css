@@ -24,6 +24,7 @@
 
   --sp-1:4px; --sp-2:8px; --sp-3:12px; --sp-4:16px; --sp-5:24px;
   --sp-6:32px; --sp-7:40px; --sp-8:48px; --sp-9:56px; --sp-10:72px;
+  --sp-11:96px; --sp-12:128px;   /* section-level air only */
 
   --margin:48px;
   --gutter:24px;
@@ -81,7 +82,7 @@
 }
 
 @media (max-width:760px){
-  :root{ --margin:20px; --gutter:16px; }
+  :root{ --margin:24px; --gutter:16px; }
 }
 
 /* ============================================================
@@ -152,8 +153,11 @@ img{max-width:100%;display:block}
 .row{position:relative;z-index:1;display:grid;grid-template-columns:repeat(12,1fr);
   column-gap:var(--gutter);padding-inline:var(--margin)}
 @media (max-width:760px){
-  .row{grid-template-columns:repeat(4,1fr)}
+  .row{grid-template-columns:repeat(4,1fr);row-gap:var(--sp-5)}
   .row > *{grid-column:1/-1 !important}
+  /* a row made only of mono labels (mastheads, section heads) is one line
+     of meta, not a list — keep those stacked tight */
+  .row:not(:has(> :not(.mono-s))){row-gap:var(--sp-2)}
 }
 
 .c1{grid-column-end:span 1}.c2{grid-column-end:span 2}.c3{grid-column-end:span 3}
@@ -172,10 +176,12 @@ img{max-width:100%;display:block}
 }
 
 .section{border-top:1px solid var(--rule-hard);position:relative}
-/* one rhythm for every section body: label sits 16px under the rule, the
-   section ends 56px above the next. Rows that continue into a second row
-   opt out with .pb-0 / .pb-2. */
-.section > .row{padding-block:var(--sp-4) var(--sp-9)}
+/* one rhythm for every section body: label sits 32px under the rule, the
+   section ends 72px above the next. Rows that continue into a second row
+   opt out with .pb-0 / .pb-2 and the second row brings its own .pt-N.
+   :where() keeps this at single-class specificity so those utilities,
+   declared later, actually win — as `.section > .row` they never did. */
+.section > :where(.row){padding-block:var(--sp-6) var(--sp-10)}
 /* accent sweeps along a section rule as it enters, then clears */
 .section::before{
   content:"";position:absolute;top:-1px;left:0;right:0;height:1px;background:var(--accent);
@@ -188,7 +194,7 @@ img{max-width:100%;display:block}
   100%{transform:scaleX(1);opacity:0}
 }
 @media (prefers-reduced-motion:reduce){ .section.in::before{animation:none} }
-.section-pad{padding-block:var(--sp-4) var(--sp-9)}
+.section-pad{padding-block:var(--sp-6) var(--sp-10)}
 
 .gutter-label{
   position:absolute;top:50%;font:400 11px/1 var(--font-mono);letter-spacing:.12em;
@@ -250,7 +256,7 @@ img{max-width:100%;display:block}
 /* ============================================================
    KV / SPEC BLOCK
    ============================================================ */
-.kv{display:grid;gap:var(--sp-2);font:400 12px/1.5 var(--font-mono);letter-spacing:.08em;text-transform:uppercase}
+.kv{display:grid;gap:var(--sp-3);font:400 12px/1.5 var(--font-mono);letter-spacing:.08em;text-transform:uppercase}
 .kv-row{display:flex;align-items:baseline;gap:8px}
 .kv-row span:first-child{color:var(--accent);flex-shrink:0}
 .kv-leader{flex:1;border-bottom:1px dotted var(--rule-leader);transform:translateY(-4px);
@@ -408,7 +414,7 @@ img{max-width:100%;display:block}
    is invisible at the exact moment you go to press it. */
 .media-tools{
   display:flex;align-items:center;gap:var(--sp-4);flex-wrap:wrap;
-  padding:12px var(--margin) 0;
+  padding:var(--sp-4) var(--margin) 0;
 }
 .media-tools .credit{
   font:400 10px/1.4 var(--font-mono);letter-spacing:.12em;text-transform:uppercase;
@@ -448,7 +454,7 @@ img{max-width:100%;display:block}
 
 /* One-line summary strip: problem / what I did / result, for the reader
    who decides in ten seconds and will not reach the outcome section. */
-.oneline{border-top:1px solid var(--rule-hard);padding-block:var(--sp-4) var(--sp-6);row-gap:var(--sp-4)}
+.oneline{border-top:1px solid var(--rule-hard);padding-block:var(--sp-6) var(--sp-8);row-gap:var(--sp-5)}
 .oneline .k{font:500 10px/1 var(--font-mono);letter-spacing:.12em;text-transform:uppercase;
   color:var(--accent);margin-bottom:8px}
 .oneline p{margin:0}
@@ -498,11 +504,11 @@ img{max-width:100%;display:block}
 /* ============================================================
    DECISIONS BLOCK
    ============================================================ */
-.decision{border-bottom:1px solid var(--rule-hard);padding:var(--sp-7) var(--margin) var(--sp-8);
+.decision{border-bottom:1px solid var(--rule-hard);padding:var(--sp-9) var(--margin) var(--sp-10);
   display:grid;grid-template-columns:repeat(12,1fr);column-gap:var(--gutter)}
 .decision-index{font:600 clamp(48px,6.5vw,88px)/.85 var(--font-display);letter-spacing:-.05em;color:var(--accent)}
 .decision h3{max-width:16ch;text-wrap:pretty}
-.decision-detail{display:grid;gap:20px;font:400 15px/1.5 var(--font-display)}
+.decision-detail{display:grid;gap:var(--sp-5);font:400 15px/1.5 var(--font-display)}
 .decision-detail .label{font:400 11px/1 var(--font-mono);letter-spacing:.12em;text-transform:uppercase;
   margin-bottom:8px;color:var(--ink-muted)}
 .decision-detail .label.why{color:var(--accent)}
@@ -517,7 +523,7 @@ img{max-width:100%;display:block}
    ARTEFACT GRID
    ============================================================ */
 .artefacts{display:grid;grid-template-columns:repeat(6,1fr);gap:var(--gutter);padding-inline:var(--margin)}
-.artefact{display:flex;flex-direction:column;gap:8px;transition:transform var(--dur-fast) var(--ease-snap)}
+.artefact{display:flex;flex-direction:column;gap:var(--sp-3);transition:transform var(--dur-fast) var(--ease-snap)}
 .artefact:hover{transform:translateY(-3px)}
 .artefact .frame{aspect-ratio:4/3;border:1px solid rgb(17 17 17/.2);position:relative;overflow:hidden;
   background:repeating-linear-gradient(135deg,var(--ground-bone-3) 0 6px,var(--ground-bone-2) 6px 12px)}
@@ -530,7 +536,7 @@ img{max-width:100%;display:block}
    WORK INDEX ROWS
    ============================================================ */
 .work-row{display:grid;grid-template-columns:repeat(12,1fr);column-gap:var(--gutter);
-  padding:28px var(--margin) 32px;border-top:1px solid var(--rule-hard);align-items:start;position:relative}
+  padding:var(--sp-7) var(--margin) var(--sp-8);border-top:1px solid var(--rule-hard);align-items:start;position:relative}
 .work-row .num{font:600 clamp(40px,5vw,56px)/.9 var(--font-display);letter-spacing:-.04em;color:var(--accent)}
 .work-row h2{font:600 clamp(30px,3.5vw,44px)/1 var(--font-display);letter-spacing:-.04em}
 .work-row .prop{font:400 clamp(16px,1.6vw,20px)/1.35 var(--font-display);letter-spacing:-.01em;max-width:34ch;text-wrap:pretty}
@@ -544,13 +550,13 @@ img{max-width:100%;display:block}
 .work-row .peek-track{position:absolute;inset:0;transform:translateY(6%);transition:transform var(--dur-med) var(--ease-snap)}
 .work-row:hover .peek-track{transform:translateY(0)}
 @media (max-width:760px){
-  .work-row{grid-template-columns:repeat(4,1fr);gap:12px}
+  .work-row{grid-template-columns:repeat(4,1fr);gap:var(--sp-4)}
   .work-row > *{grid-column:1/-1 !important}
   .work-row .peek{display:none}
 }
 
 /* client marquee */
-.marquee{overflow:hidden;border-top:1px solid var(--rule-hard);padding-block:var(--sp-5);padding-inline:var(--margin)}
+.marquee{overflow:hidden;border-top:1px solid var(--rule-hard);padding-block:var(--sp-7);padding-inline:var(--margin)}
 .marquee-track{display:flex;gap:var(--sp-10);width:max-content;animation:marquee 32s linear infinite}
 .marquee:hover .marquee-track,
 .marquee:focus-within .marquee-track,
@@ -596,7 +602,7 @@ img{max-width:100%;display:block}
 /* ============================================================
    OUTCOME TILES
    ============================================================ */
-.outcome-tile{border-top:1px solid var(--rule-hard);padding-top:var(--sp-4)}
+.outcome-tile{border-top:1px solid var(--rule-hard);padding-top:var(--sp-5)}
 .outcome-tile .num{font:600 clamp(48px,6.5vw,88px)/.85 var(--font-display);letter-spacing:-.05em}
 .outcome-tile .unit{font-size:.4em;letter-spacing:-.02em;margin-left:4px}
 
@@ -604,7 +610,7 @@ img{max-width:100%;display:block}
    PAGER
    ============================================================ */
 .pager{display:grid;grid-template-columns:repeat(12,1fr);column-gap:var(--gutter);
-  padding:var(--sp-4) var(--margin) var(--sp-8);border-top:1px solid var(--rule-hard);color:var(--ink);
+  padding:var(--sp-5) var(--margin) var(--sp-10);border-top:1px solid var(--rule-hard);color:var(--ink);
   text-decoration:none;position:relative;overflow:hidden}
 @media (max-width:760px){
   .pager{grid-template-columns:repeat(4,1fr);row-gap:8px}
@@ -617,7 +623,7 @@ img{max-width:100%;display:block}
 /* ============================================================
    FOOTER
    ============================================================ */
-footer{display:flex;flex-wrap:wrap;justify-content:space-between;gap:var(--sp-2) var(--sp-5);padding:var(--sp-4) var(--margin);
+footer{display:flex;flex-wrap:wrap;justify-content:space-between;gap:var(--sp-2) var(--sp-5);padding:var(--sp-5) var(--margin);
   border-top:1px solid var(--rule-hard);font:400 11px/1 var(--font-mono);letter-spacing:.12em;
   text-transform:uppercase;color:var(--ink-muted)}
 
@@ -843,7 +849,7 @@ footer{display:flex;flex-wrap:wrap;justify-content:space-between;gap:var(--sp-2)
 .mt-8{margin-top:var(--sp-8)}
 .ta-r{text-align:right}
 .ta-c{text-align:center}
-.record-row{display:grid;grid-template-columns:140px 1fr 1fr 160px;gap:var(--sp-5);padding-block:var(--sp-3);border-top:1px dotted var(--rule-leader)}
+.record-row{display:grid;grid-template-columns:140px 1fr 1fr 160px;gap:var(--sp-5);padding-block:var(--sp-4);border-top:1px dotted var(--rule-leader)}
 .record-row.first{border-top:1px solid var(--rule-hard)}.record-row.last{border-bottom:1px solid var(--rule-hard)}
 @media (max-width:760px){
   .record-row{grid-template-columns:1fr;gap:4px}
@@ -868,6 +874,7 @@ footer{display:flex;flex-wrap:wrap;justify-content:space-between;gap:var(--sp-2)
 .mt-8{margin-top:var(--sp-8)}.mb-8{margin-bottom:var(--sp-8)}.pt-8{padding-top:var(--sp-8)}.pb-8{padding-bottom:var(--sp-8)}
 .mt-9{margin-top:var(--sp-9)}.mb-9{margin-bottom:var(--sp-9)}.pt-9{padding-top:var(--sp-9)}.pb-9{padding-bottom:var(--sp-9)}
 .mt-10{margin-top:var(--sp-10)}.mb-10{margin-bottom:var(--sp-10)}.pt-10{padding-top:var(--sp-10)}.pb-10{padding-bottom:var(--sp-10)}
+.mt-11{margin-top:var(--sp-11)}.mb-11{margin-bottom:var(--sp-11)}.pt-11{padding-top:var(--sp-11)}.pb-11{padding-bottom:var(--sp-11)}
 .mt-0{margin-top:0}.mb-0{margin-bottom:0}.pt-0{padding-top:0}.pb-0{padding-bottom:0}
 
 .s12{grid-column-start:12}
@@ -890,16 +897,16 @@ footer{display:flex;flex-wrap:wrap;justify-content:space-between;gap:var(--sp-2)
 .reg{font-size:.25em;vertical-align:top;letter-spacing:0;margin-left:.06em}
 /* masthead meta row and the pager body — repeated inline eight times each */
 .meta-row{display:flex;gap:var(--sp-6);flex-wrap:wrap}
-.pager-body{padding-top:var(--sp-5);display:flex;align-items:end;justify-content:space-between;gap:var(--sp-5);flex-wrap:wrap}
+.pager-body{padding-top:var(--sp-6);display:flex;align-items:end;justify-content:space-between;gap:var(--sp-5);flex-wrap:wrap}
 
 /* ============================================================
    NUMBERED ROWS — the constraint / principle lists. Was an inline grid
    typed 23 times with two column widths and four border variants.
    ============================================================ */
-.numbered{display:grid;grid-template-columns:120px 1fr;gap:var(--sp-5);padding-block:var(--sp-5);
+.numbered{display:grid;grid-template-columns:120px 1fr;gap:var(--sp-5);padding-block:var(--sp-6);
   border-bottom:1px solid var(--rule-soft)}
-.numbered.last{border-bottom:0;padding-bottom:var(--sp-7)}
-.numbered-s{display:grid;grid-template-columns:48px 1fr;gap:var(--sp-4);padding-block:var(--sp-4);
+.numbered.last{border-bottom:0}
+.numbered-s{display:grid;grid-template-columns:48px 1fr;gap:var(--sp-4);padding-block:var(--sp-5);
   border-bottom:1px solid var(--rule-soft)}
 .numbered-s.last{border-bottom:0}
 @media (max-width:760px){
