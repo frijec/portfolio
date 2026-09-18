@@ -694,4 +694,9 @@
     });
   });
 
+  // Document revision. Read from the asset version on the script tag, so
+  // the "Rev" in the masthead and the cache-buster can never disagree.
+  const rev = (document.querySelector('script[src*="main.js"]')?.getAttribute("src") || "").match(/[?&]v=(\d+)/);
+  if (rev) document.querySelectorAll("[data-rev]").forEach((el) => { el.textContent = "Rev " + rev[1].padStart(2, "0"); });
+
 })();

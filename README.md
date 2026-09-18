@@ -94,6 +94,25 @@ should not add inline spacing.** The vocabulary:
 | Numbered rows | `.numbered` (120px number column) and `.numbered-s` (48px); add `.last` on the final row. Collapse to one column under 760px. |
 | Layout helpers | `.grid .flex .gap-N .between .row--end .row--baseline .stack .pretty .ink` |
 | Repeated blocks | `.meta-row` (masthead meta), `.pager-body`, `.reg` (the ® mark, one size everywhere) |
+| Heavy rule | `.rule-top-heavy` (4px ink) — once per page, above the masthead spec block. `work.html` has no spec block, so its first `.section` carries `.rule-heavy` instead. |
+| Media frames | `.media--hero` (`.media--short` for the Golisto height), `.media--shot` (2880×2000 surface screenshot), `.media--portrait`, `.media--plate` (the Tagga share banner). Frames are `<figure>`; a single caption is a `<figcaption class="fig-caption">`, multi-corner tags stay `<div>`s. |
+| Device plates | `.device` / `.device--android` — square 2px ink plates around a `.media`. No radius anywhere on the site except the app's own marker ring and the two LEDs. |
+| Tagga specimens | `.chip` (+ `style="--c:#hex"`, the colour is data) / `.chip--edge`, `.cols-4`, `.t-code`, `.t-title`, `.no-caps`, `.marker-demo .tri.age-1/2/3`, `.marker-demo .ring` |
+| Mailto, page fill | `.mailto-xl` (home), `.mailto-xl.mailto-xxl` (contact), `.wrap--fill` + `.grow` (contact page fills the viewport), `.px-margin`, `.end`, `.items-c` |
+
+### Telemetry markup
+
+Spec blocks are definition lists: `<dl class="kv"><div class="kv-row"><dt>Label</dt><dd>Value</dd></div></dl>`.
+The dotted leader and its accent hover fill are the row's `::before`/`::after`,
+both placed in the middle grid track, so nothing sits between `dt` and `dd`.
+Years are `<time datetime>`, the outcome counters are `<data value>`, and all
+mono metadata is set with `tabular-nums`.
+
+Every masthead carries a document reference, `Ref KJ-26/<page> · Rev NN`.
+The page codes are IDX, WRK, ABT, CNT, 404, C01 (Golisto), C02 (Tagga). The
+revision is filled by `main.js` from the `?v=` on its own script tag, so
+bumping the cache-buster bumps the printed revision; the static text in the
+HTML is only a no-JS fallback and should be kept in step.
 
 **Craft pass (Sept 2026).** Twelve-rule review, all recommendations applied:
 buttons carry **no glow** — bloom stays on static display type as atmosphere,

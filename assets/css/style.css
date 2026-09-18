@@ -122,6 +122,7 @@ img{max-width:100%;display:block}
 .t-xl{ font:500 clamp(20px,2vw,26px)/1.15 var(--font-display); letter-spacing:-.025em; }
 .t-l{ font:400 clamp(17px,1.4vw,20px)/1.45 var(--font-display); }
 .t-m{ font:400 16px/1.5 var(--font-display); }
+.mono-m,.mono-s,.mono-xs,.kv,.record-row{font-variant-numeric:tabular-nums}
 .mono-m{ font:400 12px/1.5 var(--font-mono); letter-spacing:.08em; text-transform:uppercase; }
 .mono-s{ font:400 12px/1.5 var(--font-mono); letter-spacing:.08em; text-transform:uppercase; }
 .mono-xs{ font:400 10px/1 var(--font-mono); letter-spacing:.12em; text-transform:uppercase; }
@@ -199,10 +200,13 @@ img{max-width:100%;display:block}
 .gutter-label{
   position:absolute;top:50%;font:400 11px/1 var(--font-mono);letter-spacing:.12em;
   text-transform:uppercase;color:var(--ink-muted);white-space:nowrap;pointer-events:none;
-  transform-origin:center;
+  writing-mode:vertical-rl;transform:translateY(-50%);
 }
-.gutter-label.left{left:14px;transform:translateY(-50%) rotate(-90deg)}
-.gutter-label.right{right:14px;transform:translateY(-50%) rotate(90deg)}
+/* writing-mode, not rotate: a rotated horizontal box is positioned by its
+   unrotated width, so a 700px label "at right:14px" landed 360px into the
+   content column and ran through the copy. */
+.gutter-label.left{left:14px;transform:translateY(-50%) rotate(180deg)}
+.gutter-label.right{right:14px}
 @media (max-width:900px){ .gutter-label{display:none} }
 
 /* ============================================================
@@ -256,29 +260,33 @@ img{max-width:100%;display:block}
 /* ============================================================
    KV / SPEC BLOCK
    ============================================================ */
+dl,dt,dd,figure{margin:0}
 .kv{display:grid;gap:var(--sp-3);font:400 12px/1.5 var(--font-mono);letter-spacing:.08em;text-transform:uppercase}
-.kv-row{display:flex;align-items:baseline;gap:8px}
-.kv-row span:first-child{color:var(--accent);flex-shrink:0}
-.kv-leader{flex:1;border-bottom:1px dotted var(--rule-leader);transform:translateY(-4px);
-  position:relative;overflow:hidden}
-.kv-leader::after{content:"";position:absolute;inset:0;border-bottom:1px solid var(--accent);
-  transform:scaleX(0);transform-origin:left;transition:transform var(--dur-med) var(--ease-snap)}
-.kv-row:hover .kv-leader::after{transform:scaleX(1)}
-.kv-row span:last-child{text-align:right}
+/* <dl> > <div.kv-row> > <dt> <dd>. The dotted leader and its accent fill
+   are the row's two pseudo-elements, both placed in the middle track, so
+   the markup stays a valid definition list with nothing between dt and dd. */
+.kv-row{display:grid;grid-template-columns:auto 1fr auto;column-gap:8px;align-items:baseline}
+.kv-row dt{color:var(--accent);grid-column:1}
+.kv-row dd{text-align:right;grid-column:3}
+.kv-row::before,.kv-row::after{content:"";grid-column:2;grid-row:1;height:1px;transform:translateY(-4px)}
+.kv-row::after{border-bottom:1px dotted var(--rule-leader)}
+.kv-row::before{border-bottom:1px solid var(--accent);transform:translateY(-4px) scaleX(0);transform-origin:left;
+  transition:transform var(--dur-med) var(--ease-snap)}
+.kv-row:hover::before{transform:translateY(-4px) scaleX(1)}
 /* A spec block responds to ITS OWN width, not the viewport: in a 3-column
    cell the right-aligned values wrapped into ragged 2-3 line rows. Under
    ~260px the row stacks label over value and drops the leader — the same
    shape the mobile breakpoint already uses. */
 .kv{container-type:inline-size}
 @container (max-width:260px){
-  .kv-row{flex-wrap:wrap;gap:2px 8px}
-  .kv-leader{display:none}
-  .kv-row span:last-child{text-align:left;flex-basis:100%}
+  .kv-row{grid-template-columns:1fr;row-gap:2px}
+  .kv-row::before,.kv-row::after{display:none}
+  .kv-row dd{text-align:left;grid-column:1}
 }
 @media (max-width:520px){
-  .kv-row{flex-wrap:wrap}
-  .kv-row span:last-child{width:100%;text-align:left;margin-top:-4px}
-  .kv-leader{display:none}
+  .kv-row{grid-template-columns:1fr}
+  .kv-row::before,.kv-row::after{display:none}
+  .kv-row dd{text-align:left;grid-column:1;margin-top:-4px}
 }
 
 /* ============================================================
@@ -504,6 +512,8 @@ img{max-width:100%;display:block}
 /* ============================================================
    DECISIONS BLOCK
    ============================================================ */
+/* the last decision's bottom rule would sit on the next section's top rule */
+.decision:last-of-type{border-bottom:0}
 .decision{border-bottom:1px solid var(--rule-hard);padding:var(--sp-9) var(--margin) var(--sp-10);
   display:grid;grid-template-columns:repeat(12,1fr);column-gap:var(--gutter)}
 .decision-index{font:600 clamp(48px,6.5vw,88px)/.85 var(--font-display);letter-spacing:-.05em;color:var(--accent)}
@@ -554,6 +564,41 @@ img{max-width:100%;display:block}
   .work-row > *{grid-column:1/-1 !important}
   .work-row .peek{display:none}
 }
+
+/* ============================================================
+   DEVICE PLATES + MEDIA VARIANTS
+   Square plates, not rounded bezels: the only curved geometry on the
+   site was three phone mockups. The screenshot carries the device.
+   ============================================================ */
+.device{border:2px solid var(--ink);padding:10px;background:var(--ink)}
+.device .media{aspect-ratio:9/19.5;display:grid;place-items:center;border:0}
+.device--android .media{aspect-ratio:9/20}
+.media--hero{height:max(240px,min(640px,60vw))}
+.media--hero.media--short{height:min(480px,50vw)}
+.media--shot{aspect-ratio:2880/2000}
+.media--portrait{aspect-ratio:3/4;border:1px solid var(--ink)}
+.media--plate{margin:0 var(--margin) var(--sp-10);height:max(160px,min(480px,50vw))}
+.artefact .frame.tall{aspect-ratio:3/4}
+.artefact .frame.wide{aspect-ratio:16/9}
+/* Tagga system specimens */
+.chip{height:56px;background:var(--c)}
+.chip--edge{border:1px solid var(--rule-soft)}
+.cols-4{grid-template-columns:repeat(4,1fr)}
+.t-code{font:600 40px/1 var(--font-display);letter-spacing:.06em}
+.t-title{font:600 24px/1 var(--font-display);letter-spacing:-.02em}
+.no-caps{text-transform:none}
+.marker-demo .tri.age-1{opacity:.7}
+.marker-demo .tri.age-2{opacity:.4}
+.marker-demo .tri.age-3{opacity:.18}
+.marker-demo .ring{width:16px;height:16px;border:2px dashed var(--ink-muted);border-radius:50%} /* the app's own marker */
+/* giant mailto on the home and contact pages */
+.mailto-xl{display:block;padding:var(--sp-8) var(--margin) var(--sp-6);
+  font:700 clamp(40px,10vw,128px)/.86 var(--font-display);font-stretch:88%;letter-spacing:-.05em}
+.mailto-xxl{padding:0 var(--margin);font-size:clamp(48px,13.5vw,176px);letter-spacing:-.055em}
+.wrap--fill{min-height:calc(100vh - 62px);display:flex;flex-direction:column}
+.grow{flex:1}
+.px-margin{padding-inline:var(--margin)}
+.end{justify-content:flex-end}.items-c{align-items:center}
 
 /* client marquee */
 .marquee{overflow:hidden;border-top:1px solid var(--rule-hard);padding-block:var(--sp-7);padding-inline:var(--margin)}
@@ -711,7 +756,7 @@ footer{display:flex;flex-wrap:wrap;justify-content:space-between;gap:var(--sp-2)
   text-shadow:0 0 var(--glow) var(--glow-ink);
 }
 .accent,.todo,.decision-index,.work-row .num,
-.kv-row span:first-child,.decision-detail .label.why{
+.kv-row dt,.decision-detail .label.why{
   text-shadow:0 0 var(--glow) var(--glow-accent);
 }
 .nav a,.mono-s.accent{text-shadow:0 0 8px var(--glow-accent)}
@@ -889,6 +934,9 @@ footer{display:flex;flex-wrap:wrap;justify-content:space-between;gap:var(--sp-2)
 .rule-bottom{border-bottom:1px solid var(--rule-hard)}
 .rule-soft-top{border-top:1px solid var(--rule-soft)}
 .rule-soft-bottom{border-bottom:1px solid var(--rule-soft)}
+.rule-top-heavy{border-top:4px solid var(--ink)}   /* one per page: the masthead anchor */
+.section.rule-heavy{border-top-width:4px}
+.section.rule-heavy::before{top:-4px;height:4px}
 .rule-dot-top{border-top:1px dotted var(--rule-leader)}
 .rule-dot-bottom{border-bottom:1px dotted var(--rule-leader)}
 /* measure — three widths, not ten */
