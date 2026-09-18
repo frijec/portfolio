@@ -100,6 +100,24 @@ should not add inline spacing.** The vocabulary:
 | Tagga specimens | `.chip` (+ `style="--c:#hex"`, the colour is data) / `.chip--edge`, `.cols-4`, `.t-code`, `.t-title`, `.no-caps`, `.marker-demo .tri.age-1/2/3`, `.marker-demo .ring` |
 | Mailto, page fill | `.mailto-xl` (home), `.mailto-xl.mailto-xxl` (contact), `.wrap--fill` + `.grow` (contact page fills the viewport), `.px-margin`, `.end`, `.items-c` |
 
+### Company links
+
+Every structured company mention links out: the client marquee, the nav
+context, the footer, the spec-block values, the About two-hats strip and the
+record rows. External links carry `rel="noopener"` and open in the same tab,
+matching the LinkedIn link. The marquee's second copy is `.marquee-fill`
+(`aria-hidden`, `tabindex="-1"` on its links) so the loop adds no tab stops.
+Prose mentions are left as text on purpose.
+
+Two names have no destination: **:Dribe** (liquidated May 2024, `dribe.dk`
+no longer resolves) and **AJU — Digital Agency** (no site). Verified Sept 2026:
+Danske Spil `danskespil.dk` · DBU `dbu.dk` · ForDanmark `fordanmark.dk` ·
+Norlys `norlys.dk` · Vild Mad `vildmad.dk` · Kahoot! `kahoot.com` · Native
+Instruments `native-instruments.com` · Roskilde Festival `roskilde-festival.dk`
+· Aula `aulainfo.dk` (the public site, not the login portal) · TDC Erhverv
+`tdc.dk` · Tuborgfondet `tuborgfondet.dk` · KOMBIT `kombit.dk` · Consid
+`consid.com/da/` · Golisto `golisto.com` · Tagga `tagga.io`.
+
 ### Telemetry markup
 
 Spec blocks are definition lists: `<dl class="kv"><div class="kv-row"><dt>Label</dt><dd>Value</dd></div></dl>`.
